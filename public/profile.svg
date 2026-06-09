@@ -1,0 +1,21 @@
+<svg width="720" height="720" viewBox="0 0 720 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylized profile portrait">
+  <rect width="720" height="720" fill="#353b36"/>
+  <path d="M0 0h230v720H0z" fill="#6f6a59" opacity=".55"/>
+  <g opacity=".24">
+    <path d="M0 70h230M0 120h230M0 170h230M0 220h230M0 270h230M0 320h230M0 370h230M0 420h230M0 470h230M0 520h230M0 570h230M0 620h230M0 670h230" stroke="#d9d0b6"/>
+    <path d="M28 0v720M72 0v720M116 0v720M160 0v720M204 0v720" stroke="#d9d0b6"/>
+  </g>
+  <path d="M232 0v720M520 0v720M0 298h720M0 606h720" stroke="#22261f" stroke-width="4" opacity=".45"/>
+  <path d="M237 720c31-143 88-226 171-249 75 16 125 99 154 249H237z" fill="#d8d9cf"/>
+  <path d="M325 271c2-71 43-117 100-112 60 5 97 59 86 133l-12 79c-8 53-44 89-91 89-48 0-83-38-89-90l-6-54c-2-20 2-36 12-45z" fill="#b49a84"/>
+  <path d="M321 256c18-57 61-91 114-83 55 8 86 45 95 102-42-10-72-27-91-51-32 34-69 52-118 56v-24z" fill="#111412"/>
+  <rect x="438" y="108" width="119" height="250" rx="28" fill="#0d1111"/>
+  <rect x="463" y="231" width="68" height="82" rx="12" fill="#171d1d"/>
+  <circle cx="484" cy="254" r="10" fill="#263030"/>
+  <circle cx="513" cy="286" r="10" fill="#263030"/>
+  <path d="M520 115c49 8 89 54 106 137l74 356h-95l-64-286c-9-39-15-82-13-128l-28-36 20-43z" fill="#9f806a"/>
+  <path d="M247 490c67 35 147 52 242 51l23 179H193l54-230z" fill="#e1e2d8"/>
+  <path d="M298 514h72v28h-72z" fill="#232923" opacity=".8"/>
+  <path d="M308 529h87" stroke="#f7f2dd" stroke-width="6" opacity=".6"/>
+  <rect width="720" height="720" fill="#0a0d0c" opacity=".22"/>
+</svg>
