@@ -14,7 +14,8 @@ defineProps<{ content: ResumeContent }>();
     <address>
       <a :href="`mailto:${content.meta.email}`">{{ content.meta.email }}</a>
       <a :href="`tel:${content.meta.phone.replaceAll(' ', '')}`">{{ content.meta.phone }}</a>
-      <span>{{ content.meta.github }} / {{ content.meta.linkedin }}</span>
+      <a :href="content.meta.githubUrl" target="_blank" rel="noreferrer">{{ content.meta.github }}</a>
+      <a :href="content.meta.linkedinUrl" target="_blank" rel="noreferrer">{{ content.meta.linkedin }}</a>
       <span v-for="language in content.languages" :key="language">{{ language }}</span>
     </address>
   </section>

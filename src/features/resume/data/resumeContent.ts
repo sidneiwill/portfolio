@@ -10,17 +10,19 @@ const baseMeta = {
   name: "Sidnei William de Oliveira",
   role: "Computer Engineer",
   location: "Parobé, Rio Grande do Sul",
-  email: "sidnei.deolive@example.com",
+  email: "sidnei.deolive@gmail.com",
   phone: "+55 51 99682-8258",
   github: "GitHub",
+  githubUrl: "https://github.com/sidneiwill",
   linkedin: "LinkedIn",
+  linkedinUrl: "https://br.linkedin.com/in/sidnei-william-de-oliveira-215b8022b",
 };
 
 export const resumeContent: Record<Locale, ResumeContent> = {
   "en-US": {
     meta: baseMeta,
     hero: {
-      eyebrow: "Operations-minded engineer",
+      eyebrow: "Computer engineer",
       headline:
         "I build systems that keep field work, fleets, and internal teams moving.",
       summary:
@@ -125,15 +127,15 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       location: "Parobé, Rio Grande do Sul",
     },
     hero: {
-      eyebrow: "Engenharia com visão operacional",
+      eyebrow: "Soluções práticas para desafios operacionais",
       headline:
-        "Construo sistemas para equipes internas, frotas e trabalho de campo continuarem fluindo.",
+        "Construo sistemas para que equipes internas, frotas e trabalho de campo continuem fluindo.",
       summary:
-        "Engenheiro de Computação com foco em Vue, Node, Go, apps mobile e infraestrutura. Uno vivência operacional no setor público com entrega de software prático, adotável e direto ao ponto.",
+        "Engenheiro de Computação com foco em desenvolvimento de aplicações web, mobile e desktop utilizando Vue.js, Node.js e Go, além de experiência em sistemas embarcados, IoT e integração hardware-software. Vivência no setor público, desenvolvendo soluções práticas e eficientes para automação e gestão de processos.",
       primaryCta: "Contato",
       secondaryCta: "Ver projetos",
       availability:
-        "Base no Rio Grande do Sul. Aberto a vagas remotas e híbridas em software.",
+        "Residente do estado do Rio Grande do Sul. Aberto a novas experiências de trabalho.",
     },
     sections: {
       skills: "Stack",
@@ -169,14 +171,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         place: "Prefeitura de Sapiranga",
         period: "Abr 2023 - Atual",
         description:
-          "Gerencia processos digitais administrativos, controles de manutenção da frota municipal e fluxos de documentos internos.",
+          "Gerenciamento de processos digitais administrativos, controle de manutenção da frota municipal e fluxos de documentos internos.",
       },
       {
         title: "Técnico de Suporte",
         place: "ITEK Soluções em TI",
         period: "Mai 2021 - Out 2022",
         description:
-          "Atuou com suporte remoto e presencial, manutenção de computadores e redes, servidores, e-mails corporativos, sistemas legados, hospedagem, SSH/SFTP/FTP e ambientes Windows/Linux.",
+          "Atuação no suporte remoto e presencial, manutenção de computadores e redes, servidores, e-mails corporativos, sistemas legados, hospedagem, SSH/SFTP/FTP e ambientes Windows/Linux.",
       },
     ],
     education: [
@@ -217,11 +219,11 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       "Espanhol: básico",
     ],
     contact: {
-      title: "Precisa de software que encaixe na operação?",
-      body: "Envie uma mensagem para vagas ou projetos com Vue, Go, Node, ferramentas mobile, frotas, plataformas internas ou infraestrutura.",
+      title: "Precisa de um software que encaixe às suas necessidades?",
+      body: "Envie uma mensagem para oportunidades ou projetos envolvendo Vue, Go, Node, ferramentas móveis, sistemas de gestão, plataformas internas ou infraestrutura.",
     },
     footer:
-      "Portfólio feito com Vue 3, Vite, conteúdo tipado e tokens responsivos de tema.",
+      "Portfólio feito com Vue 3",
   },
   "es-AR": {
     meta: {

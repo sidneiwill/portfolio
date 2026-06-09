@@ -359,7 +359,7 @@ h3 {
 }
 
 .skill-card li,
-.project-card span {
+.project-footer span {
   display: inline-flex;
   padding: 0.38rem 0.55rem;
   border: 1px solid var(--line);
@@ -400,9 +400,50 @@ h3 {
   flex-direction: column;
 }
 
-.project-card span {
-  width: fit-content;
+.project-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
   margin-top: auto;
+}
+
+.project-footer span {
+  width: fit-content;
+}
+
+.project-downloads {
+  display: flex;
+  gap: 0.45rem;
+  margin-left: auto;
+}
+
+.platform-button {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel-strong);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.platform-button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.platform-button svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
+.platform-button .linux-icon {
+  transform: translateX(-1px);
 }
 
 .contact-section {

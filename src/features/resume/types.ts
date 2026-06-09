@@ -25,7 +25,9 @@ export type ResumeContent = {
     email: string;
     phone: string;
     github: string;
+    githubUrl: string;
     linkedin: string;
+    linkedinUrl: string;
   };
   hero: {
     eyebrow: string;
