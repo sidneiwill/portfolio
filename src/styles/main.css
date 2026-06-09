@@ -446,6 +446,94 @@ h3 {
   transform: translateX(-1px);
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+}
+
+.macos-warning {
+  width: min(100%, 430px);
+  margin: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--panel-strong) 44%, transparent),
+      transparent
+    ),
+    var(--panel);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.modal-eyebrow {
+  margin: 0 0 0.85rem;
+  color: var(--accent);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.macos-warning h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1.25rem;
+}
+
+.macos-warning p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.macos-warning > a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.35rem;
+}
+
+.secondary-action,
+.primary-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 1.1rem;
+  border-radius: var(--radius);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.secondary-action {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+}
+
+.primary-action {
+  border: 0;
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+}
+
 .contact-section {
   display: grid;
   grid-template-columns: 1fr 0.82fr;
