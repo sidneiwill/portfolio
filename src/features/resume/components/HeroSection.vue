@@ -20,7 +20,7 @@ defineProps<{ content: ResumeContent }>();
 
     <aside class="hero-card" aria-label="Profile">
       <div class="photo-frame">
-        <img src="/profile.svg" alt="Sidnei William de Oliveira" />
+        <img src="/profile.jpeg" alt="Sidnei William de Oliveira" />
       </div>
       <div class="status-panel">
         <span class="status-dot" aria-hidden="true"></span>
