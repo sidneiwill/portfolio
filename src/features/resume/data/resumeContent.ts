@@ -15,22 +15,23 @@ const baseMeta = {
   github: "GitHub",
   githubUrl: "https://github.com/sidneiwill",
   linkedin: "LinkedIn",
-  linkedinUrl: "https://br.linkedin.com/in/sidnei-william-de-oliveira-215b8022b",
+  linkedinUrl:
+    "https://br.linkedin.com/in/sidnei-william-de-oliveira-215b8022b",
 };
 
 export const resumeContent: Record<Locale, ResumeContent> = {
   "en-US": {
     meta: baseMeta,
     hero: {
-      eyebrow: "Computer engineer",
+      eyebrow: "Practical solutions for operational challenges",
       headline:
         "I build systems that keep field work, fleets, and internal teams moving.",
       summary:
-        "Computer Engineering graduate focused on Vue, Node, Go, mobile apps, and infrastructure. I combine public-sector operations experience with software delivery for practical tools that teams can adopt without friction.",
+        "Computer Engineer focused on web, mobile, and desktop application development using Vue.js, Node.js, and Go, with experience in embedded systems, IoT, and hardware-software integration. Public-sector background developing practical and efficient solutions for process automation and management.",
       primaryCta: "Contact",
       secondaryCta: "View projects",
       availability:
-        "Based in Rio Grande do Sul. Open to remote and hybrid software roles.",
+        "Resident of Rio Grande do Sul. Open to new work experiences.",
     },
     sections: {
       skills: "Stack",
@@ -66,14 +67,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         place: "Sapiranga City Hall",
         period: "Apr 2023 - Present",
         description:
-          "Manages digital administrative processes, municipal fleet maintenance records, and internal documentation workflows.",
+          "Management of digital administrative processes, municipal fleet maintenance control, and internal document workflows.",
       },
       {
         title: "Support Technician",
         place: "ITEK Soluções em TI",
         period: "May 2021 - Oct 2022",
         description:
-          "Handled remote and on-site support, computer and network maintenance, server administration, corporate email setup, legacy systems, web hosting, SSH/SFTP/FTP access, and Windows/Linux troubleshooting.",
+          "Remote and on-site support, computer and network maintenance, servers, corporate email, legacy systems, hosting, SSH/SFTP/FTP, and Windows/Linux environments.",
       },
     ],
     education: [
@@ -82,23 +83,23 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         place: "Universidade de Marília",
         period: "Aug 2020 - Dec 2025",
         description:
-          "Focused on embedded systems, IoT, hardware development, electronics, microcontrollers, automation, and connected software solutions.",
+          "Program focused on embedded systems, IoT, hardware, electronics, microcontrollers, automation, and connected solutions.",
       },
       {
         title: "Technologist in Chemistry",
         place: "Escola Técnica Estadual",
         period: "Jan 2017 - May 2020",
         description:
-          "Studied chemical analysis, quality control, process management, product development, materials treatment, and technical compliance.",
+          "Training in chemical analysis, quality control, process management, product development, materials treatment, and technical standards.",
       },
     ],
     projects: [
       {
         name: "quiCheck",
         title: "Asset verification scanner",
-        stack: "Expo Go + React Native",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Mobile app for public and private organizations to scan asset labels, consult registered item data in real time, and speed up inventory control.",
+          "Mobile app for public and private companies to consult assets in real time through labels, accelerating inventory and asset control.",
       },
       {
         name: "Aylon",
@@ -115,10 +116,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     ],
     contact: {
       title: "Need software that fits real operations?",
-      body: "Send a message for roles or projects involving Vue, Go, Node, mobile tools, fleet systems, internal platforms, or infrastructure.",
+      body: "Send a message for opportunities or projects involving Vue, Go, Node, mobile tools, management systems, internal platforms, or infrastructure.",
     },
-    footer:
-      "Portfolio built with Vue 3, Vite, typed content, and responsive theme tokens.",
+    footer: "Portfolio built with Vue 3",
   },
   "pt-BR": {
     meta: {
@@ -201,7 +201,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       {
         name: "quiCheck",
         title: "Scanner para conferência patrimonial",
-        stack: "Expo Go + React Native",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
           "App mobile para empresas públicas e privadas consultarem bens em tempo real por etiquetas, acelerando inventário e controle patrimonial.",
       },
@@ -222,8 +222,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       title: "Precisa de um software que encaixe às suas necessidades?",
       body: "Envie uma mensagem para oportunidades ou projetos envolvendo Vue, Go, Node, ferramentas móveis, sistemas de gestão, plataformas internas ou infraestrutura.",
     },
-    footer:
-      "Portfólio feito com Vue 3",
+    footer: "Portfólio feito com Vue 3",
   },
   "es-AR": {
     meta: {
@@ -232,15 +231,15 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       location: "Parobé, Rio Grande do Sul",
     },
     hero: {
-      eyebrow: "Ingeniería con mirada operativa",
+      eyebrow: "Soluciones prácticas para desafíos operativos",
       headline:
         "Creo sistemas para que equipos internos, flotas y trabajo de campo sigan en marcha.",
       summary:
-        "Ingeniero en Computación enfocado en Vue, Node, Go, apps móviles e infraestructura. Combino experiencia operativa en sector público con software práctico para equipos reales.",
+        "Ingeniero en Computación enfocado en el desarrollo de aplicaciones web, móviles y desktop con Vue.js, Node.js y Go, además de experiencia en sistemas embebidos, IoT e integración hardware-software. Experiencia en el sector público, desarrollando soluciones prácticas y eficientes para automatización y gestión de procesos.",
       primaryCta: "Contacto",
       secondaryCta: "Ver proyectos",
       availability:
-        "Base en Río Grande do Sul. Abierto a roles remotos e híbridos en software.",
+        "Residente del estado de Rio Grande do Sul. Abierto a nuevas experiencias laborales.",
     },
     sections: {
       skills: "Stack",
@@ -276,14 +275,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         place: "Municipalidad de Sapiranga",
         period: "Abr 2023 - Actualidad",
         description:
-          "Gestiona procesos administrativos digitales, registros de mantenimiento de flota municipal y documentación interna.",
+          "Gestión de procesos administrativos digitales, control de mantenimiento de la flota municipal y flujos de documentos internos.",
       },
       {
         title: "Técnico de Soporte",
         place: "ITEK Soluções em TI",
         period: "May 2021 - Oct 2022",
         description:
-          "Trabajo con soporte remoto y presencial, mantenimiento de computadoras y redes, servidores, e-mail corporativo, sistemas legados, hosting, SSH/SFTP/FTP y Windows/Linux.",
+          "Actuación en soporte remoto y presencial, mantenimiento de computadoras y redes, servidores, e-mails corporativos, sistemas legados, hosting, SSH/SFTP/FTP y entornos Windows/Linux.",
       },
     ],
     education: [
@@ -292,23 +291,23 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         place: "Universidade de Marília",
         period: "Ago 2020 - Dic 2025",
         description:
-          "Formación en sistemas embebidos, IoT, hardware, electrónica, microcontroladores, automatización y soluciones conectadas.",
+          "Carrera con foco en sistemas embebidos, IoT, hardware, electrónica, microcontroladores, automatización y soluciones conectadas.",
       },
       {
         title: "Tecnólogo en Química",
         place: "Escola Técnica Estadual",
         period: "Ene 2017 - May 2020",
         description:
-          "Estudios en análisis químicos, control de calidad, gestión de procesos, desarrollo de productos, tratamiento de materiales y normas técnicas.",
+          "Formación en análisis químicos, control de calidad, gestión de procesos, desarrollo de productos, tratamiento de materiales y normas técnicas.",
       },
     ],
     projects: [
       {
         name: "quiCheck",
         title: "Scanner para control patrimonial",
-        stack: "Expo Go + React Native",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "App móvil para consultar bienes por etiquetas en tiempo real y acelerar inventario en organizaciones públicas y privadas.",
+          "App móvil para que empresas públicas y privadas consulten bienes en tiempo real mediante etiquetas, acelerando inventario y control patrimonial.",
       },
       {
         name: "Aylon",
@@ -320,10 +319,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     ],
     languages: ["Portugués: fluido", "Inglés: intermedio", "Español: básico"],
     contact: {
-      title: "¿Necesitás software que encaje con la operación?",
-      body: "Escribime por roles o proyectos con Vue, Go, Node, herramientas móviles, flotas, plataformas internas o infraestructura.",
+      title: "¿Necesitas un software que encaje con tus necesidades?",
+      body: "Envía un mensaje para oportunidades o proyectos relacionados con Vue, Go, Node, herramientas móviles, sistemas de gestión, plataformas internas o infraestructura.",
     },
-    footer:
-      "Portfolio hecho con Vue 3, Vite, contenido tipado y tokens responsivos de tema.",
+    footer: "Portfolio hecho con Vue 3",
   },
 };
