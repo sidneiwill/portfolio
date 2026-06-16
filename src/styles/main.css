@@ -210,8 +210,13 @@ textarea {
 
 .segment {
   position: relative;
+  display: grid;
+  place-items: center;
+  flex: 1 0 calc(100% / var(--locale-count));
   min-width: 48px;
+  padding: 0;
   background: transparent;
+  line-height: 1;
 }
 
 .segment.active {
@@ -739,8 +744,12 @@ address span {
     justify-content: flex-end;
   }
 
+  .language-selector {
+    width: calc(var(--locale-count) * 42px);
+  }
+
   .segment {
-    min-width: 42px;
+    min-width: 0;
   }
 
   .hero-actions,
