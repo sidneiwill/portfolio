@@ -9,12 +9,57 @@ const storageKey = "sidnei.locale";
 const fallbackLocale: Locale = "en-US";
 const locales = Object.keys(resumeContent) as Locale[];
 
+const normalizeLanguage = (language: string) =>
+  language.trim().replace("_", "-").toLowerCase();
+
+const localeMatchesLanguage = (locale: Locale, language: string) =>
+  normalizeLanguage(locale) === normalizeLanguage(language);
+
+const localeMatchesBaseLanguage = (locale: Locale, language: string) =>
+  normalizeLanguage(locale).split("-")[0] ===
+  normalizeLanguage(language).split("-")[0];
+
+const isLocale = (value: string | null): value is Locale =>
+  locales.includes(value as Locale);
+
+export const resolveLocale = (languages: readonly string[]): Locale => {
+  for (const language of languages) {
+    const exactMatch = locales.find((candidate) =>
+      localeMatchesLanguage(candidate, language),
+    );
+
+    if (exactMatch) return exactMatch;
+
+    const baseLanguageMatch = locales.find((candidate) =>
+      localeMatchesBaseLanguage(candidate, language),
+    );
+
+    if (baseLanguageMatch) return baseLanguageMatch;
+  }
+
+  return fallbackLocale;
+};
+
+export const resolveInitialLocale = (
+  storedLocale: string | null,
+  browserLanguages: readonly string[],
+): Locale =>
+  isLocale(storedLocale) ? storedLocale : resolveLocale(browserLanguages);
+
+const readBrowserLanguages = (): readonly string[] =>
+  typeof navigator === "undefined"
+    ? [fallbackLocale]
+    : navigator.languages.length > 0
+      ? navigator.languages
+      : [navigator.language];
+
 const readStoredLocale = (): Locale => {
-  if (typeof localStorage === "undefined") return fallbackLocale;
-  const stored = localStorage.getItem(storageKey);
-  return locales.includes(stored as Locale)
-    ? (stored as Locale)
-    : fallbackLocale;
+  if (typeof localStorage === "undefined")
+    return resolveLocale(readBrowserLanguages());
+  return resolveInitialLocale(
+    localStorage.getItem(storageKey),
+    readBrowserLanguages(),
+  );
 };
 
 const locale = ref<Locale>(readStoredLocale());
