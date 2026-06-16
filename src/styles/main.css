@@ -11,6 +11,7 @@
   --shadow: 0 24px 80px rgb(0 0 0 / 32%);
   --radius: 8px;
   --max: 1180px;
+  --theme-transition: 220ms ease;
   font-family:
     Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -37,6 +38,7 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -57,6 +59,44 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body,
+  html,
+  .site-header,
+  .segmented,
+  .icon-button,
+  .segment,
+  .button,
+  .hero-card::before,
+  .photo-frame,
+  .status-panel,
+  .skill-card,
+  .timeline-item,
+  .project-card,
+  .contact-section,
+  .site-footer,
+  .platform-button,
+  .macos-warning,
+  .secondary-action,
+  .primary-action,
+  .language-selector::before,
+  address a,
+  address span {
+    transition:
+      background-color var(--theme-transition),
+      border-color var(--theme-transition),
+      color var(--theme-transition),
+      box-shadow var(--theme-transition),
+      opacity var(--theme-transition);
+  }
+
+  .language-selector::before {
+    transition:
+      transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+      background-color var(--theme-transition);
+  }
 }
 
 .app-shell {
@@ -141,6 +181,25 @@ textarea {
   box-shadow: var(--shadow);
 }
 
+.language-selector {
+  --active-index: 0;
+  --locale-count: 3;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: calc(var(--locale-count) * 48px);
+}
+
+.language-selector::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: -1;
+  width: calc(100% / var(--locale-count));
+  background: var(--accent);
+  transform: translateX(calc(var(--active-index) * 100%));
+}
+
 .segment,
 .icon-button {
   min-height: 42px;
@@ -150,29 +209,40 @@ textarea {
 }
 
 .segment {
+  position: relative;
   min-width: 48px;
   background: transparent;
 }
 
 .segment.active {
-  background: var(--accent);
   color: var(--bg);
 }
 
 .icon-button {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.45rem;
+  width: 7.5rem;
   padding: 0 0.85rem;
+}
+
+.theme-label {
+  min-width: 4rem;
+  text-align: left;
 }
 
 .hero-section {
   min-height: calc(100vh - 76px);
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(2rem, 6vw, 5rem);
   padding: 3rem 0 4rem;
+}
+
+.hero-copy {
+  align-self: center;
 }
 
 .eyebrow,
@@ -265,6 +335,8 @@ h3 {
 
 .hero-card {
   position: relative;
+  align-self: start;
+  margin-top: clamp(2rem, 8vh, 5rem);
 }
 
 .hero-card::before {
@@ -611,6 +683,11 @@ address span {
     display: none;
   }
 
+  .icon-button {
+    width: 42px;
+    padding: 0;
+  }
+
   .hero-section,
   .timeline-layout,
   .contact-section {
@@ -624,6 +701,7 @@ address span {
 
   .hero-card {
     max-width: 520px;
+    margin-top: 0;
   }
 
   .skills-grid,

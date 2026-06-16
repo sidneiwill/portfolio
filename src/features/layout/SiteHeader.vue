@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { localeLabels } from "@/features/resume/data/resumeContent";
 import type { Locale } from "@/features/resume/types";
 import type { Theme } from "@/shared/theme/useTheme";
 
-defineProps<{
+const props = defineProps<{
   locale: Locale;
   locales: Locale[];
   theme: Theme;
@@ -19,6 +20,11 @@ defineEmits<{
   setLocale: [locale: Locale];
   toggleTheme: [];
 }>();
+
+const languageSliderStyle = computed(() => ({
+  "--active-index": props.locales.indexOf(props.locale),
+  "--locale-count": props.locales.length,
+}));
 </script>
 
 <template>
@@ -30,7 +36,12 @@ defineEmits<{
       </a>
 
       <nav class="header-actions" :aria-label="labels.language">
-        <div class="segmented" role="group" :aria-label="labels.language">
+        <div
+          class="segmented language-selector"
+          role="group"
+          :aria-label="labels.language"
+          :style="languageSliderStyle"
+        >
           <button
             v-for="item in locales"
             :key="item"
