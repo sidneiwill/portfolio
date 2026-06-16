@@ -78,7 +78,6 @@ textarea {
   top: 1rem;
 }
 
-.site-header,
 .site-footer,
 .hero-section,
 .section-block,
@@ -88,15 +87,22 @@ textarea {
 }
 
 .site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  width: 100%;
   padding: 1rem 0;
+  display: flex;
   position: sticky;
   top: 0;
   z-index: 10;
   backdrop-filter: blur(18px);
+}
+
+.site-header-inner {
+  width: min(var(--max), calc(100% - 32px));
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .brand,
@@ -631,7 +637,6 @@ address span {
 }
 
 @media (max-width: 520px) {
-  .site-header,
   .site-footer,
   .hero-section,
   .section-block,
@@ -639,11 +644,15 @@ address span {
     width: min(100% - 22px, var(--max));
   }
 
+  .site-header-inner {
+    width: min(100% - 22px, var(--max));
+  }
+
   h1 {
     font-size: clamp(3.2rem, 18vw, 5rem);
   }
 
-  .site-header {
+  .site-header-inner {
     align-items: flex-start;
   }
 
