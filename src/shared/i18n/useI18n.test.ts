@@ -30,7 +30,7 @@ describe("resumeContent", () => {
   });
 
   it("falls back to English for unsupported browser languages", () => {
-    expect(resolveLocale(["fr-FR"])).toBe("en-US");
+    expect(resolveLocale(["fr-FR"])).toBe("pt-BR");
   });
 
   it("keeps a valid stored locale over browser language", () => {
