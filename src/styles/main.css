@@ -68,7 +68,7 @@ textarea {
   .segmented,
   .icon-button,
   .segment,
-  .button,
+  .base-action,
   .hero-card::before,
   .photo-frame,
   .status-panel,
@@ -79,8 +79,6 @@ textarea {
   .site-footer,
   .platform-button,
   .macos-warning,
-  .secondary-action,
-  .primary-action,
   .language-selector::before,
   address a,
   address span {
@@ -318,24 +316,27 @@ h3 {
   margin-top: 2rem;
 }
 
-.button {
+.base-action {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 48px;
   padding: 0 1.1rem;
   border-radius: var(--radius);
   text-decoration: none;
   font-weight: 800;
   border: 1px solid var(--line);
+  cursor: pointer;
 }
 
-.button.primary {
+.base-action--primary {
   background: var(--accent);
   color: var(--bg);
 }
 
-.button.secondary {
+.base-action--secondary {
   background: var(--panel);
+  color: var(--text);
 }
 
 .hero-card {
@@ -592,31 +593,6 @@ h3 {
   margin-top: 1.35rem;
 }
 
-.secondary-action,
-.primary-action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 1.1rem;
-  border-radius: var(--radius);
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.secondary-action {
-  border: 1px solid var(--line);
-  background: var(--panel);
-  color: var(--text);
-}
-
-.primary-action {
-  border: 0;
-  background: var(--accent);
-  color: var(--bg);
-  text-decoration: none;
-}
-
 .contact-section {
   display: grid;
   grid-template-columns: 1fr 0.82fr;
@@ -753,11 +729,7 @@ address span {
   }
 
   .hero-actions,
-  .button {
+  .hero-actions .base-action {
     width: 100%;
-  }
-
-  .button {
-    justify-content: center;
   }
 }

@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import type { ResumeContent } from "@/features/resume/types";
 import { useI18n } from "@/i18n/useI18n";
+import BaseAction from "@/shared/components/base/BaseAction.vue";
+import BaseSectionHeading from "@/shared/components/base/BaseSectionHeading.vue";
 
 defineProps<{ content: ResumeContent }>();
 
@@ -15,10 +17,9 @@ const isMacosWarningOpen = ref(false);
 
 <template>
   <section id="projects" class="section-block" aria-labelledby="projects-title">
-    <div class="section-heading">
-      <span class="rail-number">04</span>
-      <h2 id="projects-title">{{ content.sections.projects }}</h2>
-    </div>
+    <BaseSectionHeading number="04" heading-id="projects-title">
+      {{ content.sections.projects }}
+    </BaseSectionHeading>
     <div class="projects-grid">
       <article v-for="project in content.projects" :key="project.name" class="project-card">
         <p class="project-name">{{ project.name }}</p>
@@ -56,12 +57,12 @@ const isMacosWarningOpen = ref(false);
             {{ t("downloads.macos.appleGuide") }}
           </a>
           <div class="modal-actions">
-            <button type="button" class="secondary-action" @click="isMacosWarningOpen = false">
+            <BaseAction @click="isMacosWarningOpen = false">
               {{ t("downloads.macos.cancel") }}
-            </button>
-            <a :href="macosDownloadUrl" class="primary-action" @click="isMacosWarningOpen = false">
+            </BaseAction>
+            <BaseAction :href="macosDownloadUrl" variant="primary" @click="isMacosWarningOpen = false">
               {{ t("downloads.macos.continue") }}
-            </a>
+            </BaseAction>
           </div>
         </div>
       </div>
