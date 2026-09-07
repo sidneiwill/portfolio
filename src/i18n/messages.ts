@@ -11,6 +11,10 @@ const enUSMessages = {
   "downloads.aylon.windows": "Download Aylon for Windows",
   "downloads.aylon.macos": "Download Aylon for macOS",
   "downloads.aylon.linux": "Download Aylon for Linux",
+  "downloads.aylon.macosTitle": "Aylon for macOS",
+  "downloads.repository": "Open GitHub repository",
+  "downloads.project": "Download project",
+  "downloads.simpleRpg.comingSoon": "Download coming soon",
   "downloads.macos.noticeTitle": "macOS security notice",
   "downloads.macos.noticeBody":
     "This macOS version is not digitally signed. To run it, you may need to allow the app in macOS Privacy & Security settings and confirm that you trust the app.",
@@ -35,6 +39,10 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     "downloads.aylon.windows": "Baixar o Aylon para Windows",
     "downloads.aylon.macos": "Baixar o Aylon para macOS",
     "downloads.aylon.linux": "Baixar o Aylon para Linux",
+    "downloads.aylon.macosTitle": "Aylon para macOS",
+    "downloads.repository": "Abrir repositório no GitHub",
+    "downloads.project": "Baixar projeto",
+    "downloads.simpleRpg.comingSoon": "Download disponível em breve",
     "downloads.macos.noticeTitle": "Aviso de segurança do macOS",
     "downloads.macos.noticeBody":
       "Esta versão para macOS não é assinada digitalmente. Para executá-la, talvez seja necessário permitir o app nos ajustes de Privacidade e Segurança do macOS e confirmar que você confia no app.",
@@ -54,6 +62,10 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     "downloads.aylon.windows": "Descargar Aylon para Windows",
     "downloads.aylon.macos": "Descargar Aylon para macOS",
     "downloads.aylon.linux": "Descargar Aylon para Linux",
+    "downloads.aylon.macosTitle": "Aylon para macOS",
+    "downloads.repository": "Abrir repositorio de GitHub",
+    "downloads.project": "Descargar proyecto",
+    "downloads.simpleRpg.comingSoon": "Descarga disponible próximamente",
     "downloads.macos.noticeTitle": "Aviso de seguridad de macOS",
     "downloads.macos.noticeBody":
       "Esta versión para macOS no está firmada digitalmente. Para ejecutarla, puede que tengas que permitir la app en la configuración de Privacidad y Seguridad de macOS y confirmar que confías en ella.",
