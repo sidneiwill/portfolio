@@ -9,7 +9,7 @@ describe("resumeContent", () => {
       "es-AR",
       "pt-BR",
     ]);
-    expect(resumeContent["en-US"].projects).toHaveLength(2);
+    expect(resumeContent["en-US"].projects).toHaveLength(4);
     expect(resumeContent["pt-BR"].skillGroups).toHaveLength(7);
     expect(resumeContent["es-AR"].experience).toHaveLength(2);
 

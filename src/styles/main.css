@@ -536,10 +536,6 @@ h3 {
   fill: currentColor;
 }
 
-.platform-button .linux-icon {
-  transform: translateX(-1px);
-}
-
 .platform-button .lucide {
   fill: none;
   stroke: currentColor;
