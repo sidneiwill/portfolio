@@ -1,12 +1,7 @@
-import type { Locale, ResumeContent } from "@/features/resume/types";
+import type { ResumeContent } from "@/features/resume/types";
+import type { Locale } from "@/i18n/config";
 
-export const localeLabels: Record<Locale, string> = {
-  "en-US": "EN",
-  "pt-BR": "PT",
-  "es-AR": "ES",
-};
-
-const baseMeta = {
+const baseMeta: ResumeContent["meta"] = {
   name: "Sidnei William de Oliveira",
   role: "Computer Engineer",
   location: "Parobé, Rio Grande do Sul",
@@ -32,6 +27,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       secondaryCta: "View projects",
       availability:
         "Resident of Rio Grande do Sul. Open to new work experiences.",
+      profileLabel: "Profile",
     },
     sections: {
       skills: "Stack",
@@ -58,7 +54,18 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
       {
         title: "Practice",
-        items: ["Clean Code", "OOP", "Agentic Coding", "Codex", "Cursor"],
+        items: [
+          "Clean Code",
+          "OOP",
+          "Agentic Coding",
+          "Codex",
+          "Cursor",
+          "Claude",
+        ],
+      },
+      {
+        title: "Testing and Security",
+        items: ["Vitest", "Jest"],
       },
     ],
     experience: [
@@ -136,6 +143,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       secondaryCta: "Ver projetos",
       availability:
         "Residente do estado do Rio Grande do Sul. Aberto a novas experiências de trabalho.",
+      profileLabel: "Perfil",
     },
     sections: {
       skills: "Stack",
@@ -162,7 +170,18 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
       {
         title: "Prática",
-        items: ["Clean Code", "POO", "Agentic Coding", "Codex", "Cursor"],
+        items: [
+          "Clean Code",
+          "POO",
+          "Agentic Coding",
+          "Codex",
+          "Cursor",
+          "Claude",
+        ],
+      },
+      {
+        title: "Testes e Segurança",
+        items: ["Vitest", "Jest"],
       },
     ],
     experience: [
@@ -240,6 +259,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       secondaryCta: "Ver proyectos",
       availability:
         "Residente del estado de Rio Grande do Sul. Abierto a nuevas experiencias laborales.",
+      profileLabel: "Perfil",
     },
     sections: {
       skills: "Stack",
@@ -266,7 +286,18 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
       {
         title: "Práctica",
-        items: ["Clean Code", "POO", "Agentic Coding", "Codex", "Cursor"],
+        items: [
+          "Clean Code",
+          "POO",
+          "Agentic Coding",
+          "Codex",
+          "Cursor",
+          "Claude",
+        ],
+      },
+      {
+        title: "Pruebas y Seguridad",
+        items: ["Vitest", "Jest"],
       },
     ],
     experience: [

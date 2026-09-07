@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { localeLabels } from "@/features/resume/data/resumeContent";
-import type { Locale } from "@/features/resume/types";
+import { type Locale, localeLabels } from "@/i18n/config";
 import type { Theme } from "@/shared/theme/useTheme";
 
 const props = defineProps<{
@@ -13,6 +12,7 @@ const props = defineProps<{
     theme: string;
     light: string;
     dark: string;
+    site: string;
   };
 }>();
 
@@ -28,7 +28,7 @@ const languageSliderStyle = computed(() => ({
 </script>
 
 <template>
-  <header class="site-header" aria-label="Site">
+  <header class="site-header" :aria-label="labels.site">
     <div class="site-header-inner">
       <a class="brand" href="#main" aria-label="Sidnei William de Oliveira">
         <span class="brand-mark">SW</span>

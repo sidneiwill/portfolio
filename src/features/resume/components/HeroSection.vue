@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ResumeContent } from "@/features/resume/types";
+import BaseAction from "@/shared/components/base/BaseAction.vue";
 
 defineProps<{ content: ResumeContent }>();
 </script>
@@ -13,12 +14,12 @@ defineProps<{ content: ResumeContent }>();
       <p class="hero-headline">{{ content.hero.headline }}</p>
       <p class="hero-summary">{{ content.hero.summary }}</p>
       <div class="hero-actions">
-        <a class="button primary" href="#contact">{{ content.hero.primaryCta }}</a>
-        <a class="button secondary" href="#projects">{{ content.hero.secondaryCta }}</a>
+        <BaseAction href="#contact" variant="primary">{{ content.hero.primaryCta }}</BaseAction>
+        <BaseAction href="#projects">{{ content.hero.secondaryCta }}</BaseAction>
       </div>
     </div>
 
-    <aside class="hero-card" aria-label="Profile">
+    <aside class="hero-card" :aria-label="content.hero.profileLabel">
       <div class="photo-frame">
         <img src="/profile.jpeg" alt="Sidnei William de Oliveira" />
       </div>
