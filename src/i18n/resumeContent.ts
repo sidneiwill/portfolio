@@ -115,6 +115,23 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         description:
           "Native desktop system for public and private fleets, covering vehicles, maintenance, invoices, balances, and service payment tracking.",
       },
+      {
+        name: "Portfolio",
+        title: "Personal developer portfolio",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Multilingual portfolio presenting my experience, technical stack, and projects in a responsive interface.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+      },
+      {
+        name: "SimpleRPG",
+        title: "2D RPG movement prototype",
+        stack: "Go + Ebiten + go:embed",
+        description:
+          "Top-down RPG prototype with animated movement, camera tracking, an inventory overlay, and looping background music.",
+        repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
+        isDownloadComingSoon: true,
+      },
     ],
     languages: [
       "Portuguese: fluent",
@@ -231,6 +248,23 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         description:
           "Sistema desktop nativo para frotas públicas e privadas, com veículos, manutenções, notas fiscais, saldos e pagamentos de serviços.",
       },
+      {
+        name: "Portfólio",
+        title: "Portfólio pessoal de desenvolvimento",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Portfólio multilíngue que apresenta minha experiência, stack técnica e projetos em uma interface responsiva.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+      },
+      {
+        name: "SimpleRPG",
+        title: "Protótipo de RPG 2D",
+        stack: "Go + Ebiten + go:embed",
+        description:
+          "Protótipo de RPG visto de cima com movimento animado, câmera de acompanhamento, menu de inventário e música ambiente contínua.",
+        repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
+        isDownloadComingSoon: true,
+      },
     ],
     languages: [
       "Português: fluente",
@@ -346,6 +380,23 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         stack: "Vue 3 + Go + Wails",
         description:
           "Sistema desktop nativo para flotas públicas y privadas con vehículos, mantenimientos, facturas, saldos y pagos de servicios.",
+      },
+      {
+        name: "Portafolio",
+        title: "Portafolio personal de desarrollo",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Portafolio multilingüe que presenta mi experiencia, stack técnica y proyectos en una interfaz responsiva.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+      },
+      {
+        name: "SimpleRPG",
+        title: "Prototipo de RPG 2D",
+        stack: "Go + Ebiten + go:embed",
+        description:
+          "Prototipo de RPG de vista superior con movimiento animado, cámara de seguimiento, menú de inventario y música ambiental continua.",
+        repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
+        isDownloadComingSoon: true,
       },
     ],
     languages: ["Portugués: fluido", "Inglés: intermedio", "Español: básico"],

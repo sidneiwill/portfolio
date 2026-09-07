@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Download } from "@lucide/vue";
 import { ref } from "vue";
 import type { ResumeContent } from "@/features/resume/types";
 import { useI18n } from "@/i18n/useI18n";
@@ -27,8 +28,17 @@ const isMacosWarningOpen = ref(false);
         <p>{{ project.description }}</p>
         <div class="project-footer">
           <span>{{ project.stack }}</span>
-          <div v-if="project.name === 'Aylon'" class="project-downloads" :aria-label="t('downloads.aylon.group')">
-            <a href="https://drive.google.com/uc?export=download&id=1gG2cu29xaZEtkrLgNyQSV5LidoO9qk1N" class="platform-button" :aria-label="t('downloads.aylon.windows')">
+          <div class="project-actions">
+            <div
+              v-if="project.name === 'Aylon'"
+              class="project-downloads"
+              :aria-label="t('downloads.aylon.group')"
+            >
+              <a
+                href="https://drive.google.com/uc?export=download&id=1gG2cu29xaZEtkrLgNyQSV5LidoO9qk1N"
+                class="platform-button"
+                :aria-label="t('downloads.aylon.windows')"
+              >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M3 5.1 10.6 4v7.3H3V5.1Zm8.6-1.25L21 2.5v8.8h-9.4V3.85ZM3 12.3h7.6v7.35L3 18.6v-6.3Zm8.6 0H21v9.2l-9.4-1.3v-7.9Z" />
               </svg>
@@ -43,6 +53,37 @@ const isMacosWarningOpen = ref(false);
                 <path d="M12.1 2.1c-2.35 0-3.72 1.95-3.72 4.52 0 1.2.28 2.18.18 3.16-.1.9-.62 1.7-1.18 2.62-.82 1.35-1.72 2.82-1.86 5.12-.04.66.32 1.14.84 1.14.4 0 .72-.22 1.1-.5.48-.35 1.06-.78 2-.78.72 0 1.33.2 1.9.38.52.17 1 .33 1.52.33s1-.16 1.52-.33c.57-.18 1.18-.38 1.9-.38.94 0 1.52.43 2 .78.38.28.7.5 1.1.5.52 0 .88-.48.84-1.14-.14-2.3-1.04-3.77-1.86-5.12-.56-.92-1.08-1.72-1.18-2.62-.1-.98.18-1.96.18-3.16 0-2.57-1.37-4.52-3.72-4.52h-1.56Zm-1.18 4.08c.42 0 .76.42.76.94s-.34.94-.76.94-.76-.42-.76-.94.34-.94.76-.94Zm3.34 0c.42 0 .76.42.76.94s-.34.94-.76.94-.76-.42-.76-.94.34-.94.76-.94Zm-4.04 4.82h3.76c-.24.72-.92 1.18-1.88 1.18s-1.64-.46-1.88-1.18Z" />
               </svg>
             </a>
+            </div>
+            <a
+              v-if="project.repositoryUrl"
+              :href="project.repositoryUrl"
+              class="platform-button"
+              target="_blank"
+              rel="noreferrer"
+              :aria-label="`Open ${project.name} repository on GitHub`"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.58 2 12.23c0 4.52 2.87 8.35 6.84 9.71.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.2-3.37-1.2-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.35 1.12 2.92.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.9c.85 0 1.7.12 2.5.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.93.68 1.88 0 1.36-.01 2.46-.01 2.8 0 .27.18.6.69.49A10.23 10.23 0 0 0 22 12.23C22 6.58 17.52 2 12 2Z" />
+              </svg>
+            </a>
+            <a
+              v-if="project.downloadUrl"
+              :href="project.downloadUrl"
+              class="platform-button"
+              :aria-label="`Download ${project.name}`"
+            >
+              <Download aria-hidden="true" />
+            </a>
+            <button
+              v-else-if="project.isDownloadComingSoon"
+              type="button"
+              class="platform-button"
+              disabled
+              :aria-label="`Download for ${project.name} coming soon`"
+              title="Download coming soon"
+            >
+              <Download aria-hidden="true" />
+            </button>
           </div>
         </div>
       </article>
