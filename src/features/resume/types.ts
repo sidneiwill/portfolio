@@ -15,6 +15,9 @@ export type Project = {
   title: string;
   stack: string;
   description: string;
+  repositoryUrl?: string;
+  downloadUrl?: string;
+  isDownloadComingSoon?: boolean;
 };
 
 export type ResumeContent = {

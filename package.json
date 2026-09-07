@@ -16,6 +16,7 @@
     "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
+    "@lucide/vue": "^1.41.0",
     "vue": "^3.5.0"
   },
   "devDependencies": {
