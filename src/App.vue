@@ -6,7 +6,7 @@ import HeroSection from "@/features/resume/components/HeroSection.vue";
 import ProjectsSection from "@/features/resume/components/ProjectsSection.vue";
 import ResumeSection from "@/features/resume/components/ResumeSection.vue";
 import SkillsSection from "@/features/resume/components/SkillsSection.vue";
-import { useI18n } from "@/shared/i18n/useI18n";
+import { useI18n } from "@/i18n/useI18n";
 import { useTheme } from "@/shared/theme/useTheme";
 
 const i18n = useI18n();
@@ -24,7 +24,8 @@ const theme = useTheme();
         language: i18n.t('controls.language'),
         theme: i18n.t('controls.theme'),
         light: i18n.t('controls.light'),
-        dark: i18n.t('controls.dark')
+        dark: i18n.t('controls.dark'),
+        site: i18n.t('layout.site')
       }"
       @set-locale="i18n.setLocale"
       @toggle-theme="theme.toggleTheme"

@@ -36,6 +36,7 @@ export type ResumeContent = {
     primaryCta: string;
     secondaryCta: string;
     availability: string;
+    profileLabel: string;
   };
   sections: {
     skills: string;
@@ -55,5 +56,3 @@ export type ResumeContent = {
   };
   footer: string;
 };
-
-export type Locale = "en-US" | "pt-BR" | "es-AR";

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { resumeContent } from "@/features/resume/data/resumeContent";
-import { resolveInitialLocale, resolveLocale } from "@/shared/i18n/useI18n";
+import { resumeContent } from "@/i18n/resumeContent";
+import { resolveInitialLocale, resolveLocale } from "@/i18n/useI18n";
 
 describe("resumeContent", () => {
   it("ships three complete locales", () => {
@@ -10,8 +10,13 @@ describe("resumeContent", () => {
       "pt-BR",
     ]);
     expect(resumeContent["en-US"].projects).toHaveLength(2);
-    expect(resumeContent["pt-BR"].skillGroups).toHaveLength(6);
+    expect(resumeContent["pt-BR"].skillGroups).toHaveLength(7);
     expect(resumeContent["es-AR"].experience).toHaveLength(2);
+
+    const skillGroupCounts = Object.values(resumeContent).map(
+      (content) => content.skillGroups.length,
+    );
+    expect(new Set(skillGroupCounts)).toEqual(new Set([7]));
   });
 
   it("keeps core identity consistent across locales", () => {
@@ -30,7 +35,7 @@ describe("resumeContent", () => {
   });
 
   it("falls back to English for unsupported browser languages", () => {
-    expect(resolveLocale(["fr-FR"])).toBe("pt-BR");
+    expect(resolveLocale(["fr-FR"])).toBe("en-US");
   });
 
   it("keeps a valid stored locale over browser language", () => {
