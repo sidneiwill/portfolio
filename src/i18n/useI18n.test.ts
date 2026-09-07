@@ -34,8 +34,8 @@ describe("resumeContent", () => {
     expect(resolveLocale(["pt-PT", "en-US"])).toBe("pt-BR");
   });
 
-  it("falls back to English for unsupported browser languages", () => {
-    expect(resolveLocale(["fr-FR"])).toBe("en-US");
+  it("falls back to Portuguese for unsupported browser languages", () => {
+    expect(resolveLocale(["fr-FR"])).toBe("pt-BR");
   });
 
   it("keeps a valid stored locale over browser language", () => {
