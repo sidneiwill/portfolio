@@ -42,16 +42,19 @@ const isMacosWarningOpen = ref(false);
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M3 5.1 10.6 4v7.3H3V5.1Zm8.6-1.25L21 2.5v8.8h-9.4V3.85ZM3 12.3h7.6v7.35L3 18.6v-6.3Zm8.6 0H21v9.2l-9.4-1.3v-7.9Z" />
               </svg>
+              <span>{{ t("downloads.aylon.windowsShort") }}</span>
             </a>
             <button type="button" class="platform-button" :aria-label="t('downloads.aylon.macos')" @click="isMacosWarningOpen = true">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M16.1 2.4c.05 1.15-.4 2.25-1.18 3.05-.82.85-1.98 1.45-3.08 1.36-.08-1.1.42-2.25 1.16-3.03.8-.86 2.15-1.52 3.1-1.38ZM20.5 17.45c-.44 1.02-.65 1.47-1.2 2.38-.78 1.28-1.88 2.88-3.25 2.9-1.22.02-1.53-.84-3.18-.83-1.65.01-1.99.85-3.22.83-1.37-.02-2.42-1.46-3.2-2.74-2.18-3.56-2.4-7.74-1.06-9.96.96-1.58 2.47-2.5 3.9-2.5 1.45 0 2.36.86 3.56.86 1.16 0 1.87-.86 3.55-.86 1.27 0 2.62.69 3.57 1.88-3.14 1.72-2.63 6.18.53 8.04Z" />
               </svg>
+              <span>{{ t("downloads.aylon.macosShort") }}</span>
             </button>
             <a href="https://drive.google.com/uc?export=download&id=13522-XsG7dQthKLpHY0aSZ8SyaT2XRHL" class="platform-button" :aria-label="t('downloads.aylon.linux')">
               <svg class="linux-icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12.1 2.1c-2.35 0-3.72 1.95-3.72 4.52 0 1.2.28 2.18.18 3.16-.1.9-.62 1.7-1.18 2.62-.82 1.35-1.72 2.82-1.86 5.12-.04.66.32 1.14.84 1.14.4 0 .72-.22 1.1-.5.48-.35 1.06-.78 2-.78.72 0 1.33.2 1.9.38.52.17 1 .33 1.52.33s1-.16 1.52-.33c.57-.18 1.18-.38 1.9-.38.94 0 1.52.43 2 .78.38.28.7.5 1.1.5.52 0 .88-.48.84-1.14-.14-2.3-1.04-3.77-1.86-5.12-.56-.92-1.08-1.72-1.18-2.62-.1-.98.18-1.96.18-3.16 0-2.57-1.37-4.52-3.72-4.52h-1.56Zm-1.18 4.08c.42 0 .76.42.76.94s-.34.94-.76.94-.76-.42-.76-.94.34-.94.76-.94Zm3.34 0c.42 0 .76.42.76.94s-.34.94-.76.94-.76-.42-.76-.94.34-.94.76-.94Zm-4.04 4.82h3.76c-.24.72-.92 1.18-1.88 1.18s-1.64-.46-1.88-1.18Z" />
               </svg>
+              <span>{{ t("downloads.aylon.linuxShort") }}</span>
             </a>
             </div>
             <a
@@ -65,6 +68,7 @@ const isMacosWarningOpen = ref(false);
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2C6.48 2 2 6.58 2 12.23c0 4.52 2.87 8.35 6.84 9.71.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.2-3.37-1.2-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.35 1.12 2.92.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.73 0 0 .84-.28 2.75 1.05A9.3 9.3 0 0 1 12 6.9c.85 0 1.7.12 2.5.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.42.2 2.47.1 2.73.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.93.68 1.88 0 1.36-.01 2.46-.01 2.8 0 .27.18.6.69.49A10.23 10.23 0 0 0 22 12.23C22 6.58 17.52 2 12 2Z" />
               </svg>
+              <span>{{ t("downloads.repositoryShort") }}</span>
             </a>
             <a
               v-if="project.downloadUrl"
@@ -73,6 +77,7 @@ const isMacosWarningOpen = ref(false);
               :aria-label="`${t('downloads.project')}: ${project.name}`"
             >
               <Download aria-hidden="true" />
+              <span>{{ t("downloads.projectShort") }}</span>
             </a>
             <button
               v-else-if="project.isDownloadComingSoon"
@@ -83,6 +88,7 @@ const isMacosWarningOpen = ref(false);
               :title="t('downloads.simpleRpg.comingSoon')"
             >
               <Download aria-hidden="true" />
+              <span>{{ t("downloads.simpleRpg.comingSoonShort") }}</span>
             </button>
           </div>
         </div>
