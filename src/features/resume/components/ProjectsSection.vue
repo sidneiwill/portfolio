@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Download } from "@lucide/vue";
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import type { ResumeContent } from "@/features/resume/types";
 import { useI18n } from "@/i18n/useI18n";
 import BaseAction from "@/shared/components/base/BaseAction.vue";
@@ -14,6 +14,53 @@ const macosDownloadUrl =
 const appleUnknownDeveloperHelpUrl =
   "https://support.apple.com/guide/mac-help/open-a-mac-app-from-an-unknown-developer-mh40616/mac";
 const isMacosWarningOpen = ref(false);
+const dialogRef = ref<HTMLElement | null>(null);
+let macosTrigger: HTMLElement | null = null;
+
+const openMacosWarning = async (event: MouseEvent) => {
+  macosTrigger = event.currentTarget as HTMLElement;
+  isMacosWarningOpen.value = true;
+  await nextTick();
+  dialogRef.value?.focus();
+};
+
+const closeMacosWarning = async () => {
+  isMacosWarningOpen.value = false;
+  await nextTick();
+  macosTrigger?.focus();
+};
+
+const onDialogKeydown = (event: KeyboardEvent) => {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    void closeMacosWarning();
+    return;
+  }
+
+  if (event.key !== "Tab" || !dialogRef.value) return;
+
+  const focusable = Array.from(
+    dialogRef.value.querySelectorAll<HTMLElement>(
+      "a[href], button:not([disabled])",
+    ),
+  );
+  const first = focusable[0];
+  const last = focusable.at(-1);
+
+  if (!first || !last) {
+    event.preventDefault();
+  } else if (
+    event.shiftKey &&
+    (document.activeElement === first ||
+      document.activeElement === dialogRef.value)
+  ) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+};
 </script>
 
 <template>
@@ -44,7 +91,7 @@ const isMacosWarningOpen = ref(false);
               </svg>
               <span>{{ t("downloads.aylon.windowsShort") }}</span>
             </a>
-            <button type="button" class="platform-button" :aria-label="t('downloads.aylon.macos')" @click="isMacosWarningOpen = true">
+            <button type="button" class="platform-button" :aria-label="t('downloads.aylon.macos')" @click="openMacosWarning">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M16.1 2.4c.05 1.15-.4 2.25-1.18 3.05-.82.85-1.98 1.45-3.08 1.36-.08-1.1.42-2.25 1.16-3.03.8-.86 2.15-1.52 3.1-1.38ZM20.5 17.45c-.44 1.02-.65 1.47-1.2 2.38-.78 1.28-1.88 2.88-3.25 2.9-1.22.02-1.53-.84-3.18-.83-1.65.01-1.99.85-3.22.83-1.37-.02-2.42-1.46-3.2-2.74-2.18-3.56-2.4-7.74-1.06-9.96.96-1.58 2.47-2.5 3.9-2.5 1.45 0 2.36.86 3.56.86 1.16 0 1.87-.86 3.55-.86 1.27 0 2.62.69 3.57 1.88-3.14 1.72-2.63 6.18.53 8.04Z" />
               </svg>
@@ -95,19 +142,19 @@ const isMacosWarningOpen = ref(false);
       </article>
     </div>
     <Teleport to="body">
-      <div v-if="isMacosWarningOpen" class="modal-backdrop" @click.self="isMacosWarningOpen = false">
-        <div class="macos-warning" role="dialog" aria-modal="true" aria-labelledby="macos-warning-title">
+      <div v-if="isMacosWarningOpen" class="modal-backdrop" @click.self="closeMacosWarning">
+        <div ref="dialogRef" class="macos-warning" role="dialog" aria-modal="true" aria-labelledby="macos-warning-title" aria-describedby="macos-warning-body" tabindex="-1" @keydown="onDialogKeydown">
           <p class="modal-eyebrow">{{ t("downloads.aylon.macosTitle") }}</p>
           <h3 id="macos-warning-title">{{ t("downloads.macos.noticeTitle") }}</h3>
-          <p>{{ t("downloads.macos.noticeBody") }}</p>
+          <p id="macos-warning-body">{{ t("downloads.macos.noticeBody") }}</p>
           <a :href="appleUnknownDeveloperHelpUrl" target="_blank" rel="noreferrer">
             {{ t("downloads.macos.appleGuide") }}
           </a>
           <div class="modal-actions">
-            <BaseAction @click="isMacosWarningOpen = false">
+            <BaseAction @click="closeMacosWarning">
               {{ t("downloads.macos.cancel") }}
             </BaseAction>
-            <BaseAction :href="macosDownloadUrl" variant="primary" @click="isMacosWarningOpen = false">
+            <BaseAction :href="macosDownloadUrl" variant="primary" @click="closeMacosWarning">
               {{ t("downloads.macos.continue") }}
             </BaseAction>
           </div>
