@@ -409,6 +409,11 @@ h3 {
   padding: clamp(2.5rem, 7vw, 5.5rem) 0;
 }
 
+.section-block[id],
+.contact-section[id] {
+  scroll-margin-top: 7rem;
+}
+
 .section-heading {
   display: grid;
   grid-template-columns: 4rem minmax(0, 1fr);
