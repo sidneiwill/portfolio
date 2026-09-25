@@ -7,10 +7,12 @@ import ProjectsSection from "@/features/resume/components/ProjectsSection.vue";
 import ResumeSection from "@/features/resume/components/ResumeSection.vue";
 import SkillsSection from "@/features/resume/components/SkillsSection.vue";
 import { useI18n } from "@/i18n/useI18n";
+import { useSectionReveal } from "@/shared/motion/useSectionReveal";
 import { useTheme } from "@/shared/theme/useTheme";
 
 const i18n = useI18n();
 const theme = useTheme();
+useSectionReveal();
 </script>
 
 <template>

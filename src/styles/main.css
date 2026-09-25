@@ -37,7 +37,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scrollbar-gutter: stable;
 }
 
@@ -62,6 +61,10 @@ textarea {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body,
   html,
   .site-header,
@@ -87,7 +90,8 @@ textarea {
       border-color var(--theme-transition),
       color var(--theme-transition),
       box-shadow var(--theme-transition),
-      opacity var(--theme-transition);
+      opacity var(--theme-transition),
+      transform 180ms ease;
   }
 
   .language-selector::before {
@@ -650,15 +654,58 @@ address span {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-copy,
-  .hero-card,
-  .section-block,
-  .contact-section {
-    animation: rise 0.65s ease both;
+  .hero-copy > *,
+  .hero-card {
+    animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .hero-copy > :nth-child(2) {
+    animation-delay: 0.06s;
+  }
+
+  .hero-copy > :nth-child(3) {
+    animation-delay: 0.12s;
+  }
+
+  .hero-copy > :nth-child(4) {
+    animation-delay: 0.18s;
+  }
+
+  .hero-copy > :nth-child(5) {
+    animation-delay: 0.24s;
+  }
+
+  .hero-copy > :nth-child(6) {
+    animation-delay: 0.3s;
   }
 
   .hero-card {
-    animation-delay: 0.08s;
+    animation-delay: 0.15s;
+  }
+
+  main > section[data-reveal="pending"] {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  main > section[data-reveal="visible"] {
+    animation: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (
+    prefers-reduced-motion: no-preference
+  ) {
+  .base-action:hover,
+  .platform-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .skill-card:hover,
+  .timeline-item:hover,
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-3px);
   }
 }
 
