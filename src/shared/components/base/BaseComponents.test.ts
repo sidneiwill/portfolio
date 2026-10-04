@@ -47,20 +47,16 @@ describe("base components", () => {
     wrapper.unmount();
   });
 
-  it("connects a section heading id while hiding its decorative number", () => {
+  it("connects a section heading id without a decorative number", () => {
     const wrapper = mount(
       BaseSectionHeading,
-      { headingId: "skills-title", number: "01" },
+      { headingId: "skills-title" },
       "Skills",
     );
 
     expect(wrapper.element.querySelector("h2")?.id).toBe("skills-title");
     expect(wrapper.element.querySelector("h2")?.textContent).toBe("Skills");
-    expect(
-      wrapper.element
-        .querySelector(".rail-number")
-        ?.getAttribute("aria-hidden"),
-    ).toBe("true");
+    expect(wrapper.element.querySelector(".rail-number")).toBeNull();
 
     wrapper.unmount();
   });
