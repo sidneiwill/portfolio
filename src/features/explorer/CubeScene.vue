@@ -48,6 +48,11 @@ const host = ref<HTMLDivElement>();
 const canOpen = computed(() => props.interactive && props.section === "home");
 let renderer: WebGLRenderer | undefined;
 let observer: ResizeObserver | undefined;
+let viewportObserver: IntersectionObserver | undefined;
+let inViewport = true;
+let contextLost = false;
+let mobileRendering = false;
+let animationTime = 0;
 let frame = 0;
 let dead = false;
 const scene = new Scene();
@@ -87,7 +92,16 @@ let intro = 0;
 let lastTime = 0;
 let active: Group | undefined;
 let dragging:
-  | { id: number; x: number; y: number; distance: number }
+  | {
+      id: number;
+      x: number;
+      y: number;
+      startX: number;
+      startY: number;
+      touch: boolean;
+      axis: "pending" | "horizontal" | "vertical";
+      distance: number;
+    }
   | undefined;
 
 function wire(
@@ -223,14 +237,9 @@ function build() {
   const programming = new Group();
   for (const [i, id] of props.stackIds.entries()) {
     const model = new Group();
-    const lastRow = i >= 6;
-    model.position.set(
-      lastRow ? (i - 6) * 0.95 : ((i % 3) - 1) * 0.95,
-      0.95 - Math.floor(i / 3) * 0.95,
-      0,
-    );
+    const angle = (i * Math.PI * 2) / props.stackIds.length - Math.PI / 2;
+    model.position.set(Math.cos(angle) * 1.3, Math.sin(angle) * 1.3, 0);
     model.userData.part = id;
-    model.userData.baseY = model.position.y;
     programming.add(model);
     stackModels.push(model);
     const box = (
@@ -289,11 +298,21 @@ function build() {
         segment(points, i, model);
         break;
       }
-      case 5: // Practice: interlocking modules.
-        box(0.24, 0.24, 0.24, -0.13, -0.13);
-        box(0.24, 0.24, 0.24, 0.13, -0.13);
-        box(0.24, 0.24, 0.24, 0, 0.13);
+      case 5: {
+        // Practice: an open book with two angled pages and a central spine.
+        for (const side of [-1, 1]) {
+          const page = new Group();
+          page.rotation.y = -side * 0.35;
+          model.add(page);
+          const sheet = wire(new BoxGeometry(0.3, 0.48, 0.045), i, page);
+          sheet.position.x = side * 0.15;
+          for (const y of [-0.12, 0, 0.12]) {
+            segment([side * 0.06, y, 0.024, side * 0.25, y, 0.024], i, page);
+          }
+        }
+        segment([0, -0.24, 0.025, 0, 0.24, 0.025], i, model);
         break;
+      }
       default: {
         // Testing/security: padlock body, curved shackle and keyhole.
         box(0.46, 0.32, 0.2, 0, -0.12);
@@ -445,6 +464,39 @@ function build() {
       electronics,
     );
   interiors.set("electronics", electronics);
+
+  const about = new Group();
+  wire(new SphereGeometry(0.42, 12, 8), 0, about);
+  for (let orbit = 0; orbit < 4; orbit++) {
+    const ring = wire(new TorusGeometry(1.05, 0.012, 3, 48), orbit, about);
+    ring.rotation.set(Math.PI / 3, (orbit * Math.PI) / 4, 0);
+  }
+  interiors.set("about", about);
+
+  const contact = new Group();
+  wire(new SphereGeometry(0.22, 8, 6), 0, contact);
+  for (const [index, channel] of [
+    "email",
+    "phone",
+    "github",
+    "linkedin",
+  ].entries()) {
+    const angle = (index * Math.PI) / 2 + Math.PI / 4;
+    const position = new Vector3(
+      Math.cos(angle) * 1.12,
+      Math.sin(angle) * 1.12,
+      0,
+    );
+    part(
+      contact,
+      `contact-${channel}`,
+      new SphereGeometry(0.25, 10, 8),
+      index,
+      position,
+    );
+    segment([0, 0, 0, ...position.toArray()], index, contact);
+  }
+  interiors.set("contact", contact);
   for (const group of interiors.values()) {
     root.add(group);
     group.visible = false;
@@ -465,6 +517,28 @@ function updateColors() {
     if (id)
       material.opacity = props.selected && props.selected !== id ? 0.25 : 1;
   }
+  updateActiveOpacity();
+}
+
+function updateActiveOpacity() {
+  if (!active) return;
+  const moving = !props.reducedMotion && !props.paused;
+  const opacity = moving
+    ? Math.max(0, Math.min(1, (active.scale.x - 0.2) / 0.8))
+    : 1;
+  active.traverse((object) => {
+    if (!(object instanceof LineSegments2)) return;
+    const id = object.material.userData.part;
+    const focus = props.selected && id && props.selected !== id ? 0.25 : 1;
+    const pulse =
+      moving &&
+      active === interiors.get("electronics") &&
+      object.parent === active
+        ? 0.55 +
+          Math.sin(animationTime / 300 + active.children.indexOf(object)) * 0.4
+        : 1;
+    object.material.opacity = opacity * focus * pulse;
+  });
 }
 
 function updateSection() {
@@ -475,13 +549,27 @@ function updateSection() {
   if (active)
     active.scale.setScalar(props.reducedMotion || props.paused ? 1 : 0.2);
   if (props.reducedMotion || props.paused) shellProgress = shellTarget;
+  updateActiveOpacity();
 }
 
 function render(time: number) {
-  if (dead || !renderer) return;
+  if (
+    dead ||
+    !renderer ||
+    !inViewport ||
+    document.hidden ||
+    contextLost ||
+    (props.section === "projects" && props.paused)
+  )
+    return;
+  if (mobileRendering && time - lastTime < 1000 / 30 - 1) {
+    frame = requestAnimationFrame(render);
+    return;
+  }
   const dt = Math.min((time - lastTime) / 1000 || 0, 0.05);
   lastTime = time;
   const moving = !props.paused && !props.reducedMotion;
+  if (moving) animationTime += dt * 1000;
   if (moving) deformationTime += dt * 0.6;
   if (props.reducedMotion) deformationTime = 0;
   if (shell.visible || props.section === "home") updatePolyhedron();
@@ -508,6 +596,13 @@ function render(time: number) {
         ? 1
         : active.scale.x + (1 - active.scale.x) * (1 - Math.exp(-dt * 8));
     active.scale.setScalar(scale);
+  }
+  if (moving && active && active === interiors.get("about")) {
+    for (const [index, ring] of active.children.slice(1).entries()) {
+      const direction = index % 2 === 0 ? 1 : -1;
+      ring.rotation.x += dt * (0.18 + index * 0.04) * direction;
+      ring.rotation.y += dt * (0.28 + index * 0.06) * direction;
+    }
   }
   if (active === interiors.get("reverse")) {
     const reconstructing = props.selected === "reconstruction";
@@ -557,64 +652,94 @@ function render(time: number) {
           : target,
       );
       if (!props.paused) {
-        model.position.y =
-          model.userData.baseY +
-          (moving ? Math.sin(time / 1200 + index) * 0.025 : 0);
-        model.rotation.y = moving ? Math.sin(time / 1800 + index) * 0.12 : 0;
+        const angle =
+          (index * Math.PI * 2) / stackModels.length -
+          Math.PI / 2 +
+          (moving ? animationTime / 10000 : 0);
+        model.position.set(Math.cos(angle) * 1.3, Math.sin(angle) * 1.3, 0);
+        model.rotation.y = moving
+          ? Math.sin(animationTime / 1800 + index) * 0.12
+          : 0;
         for (const child of model.children) {
-          if (child.userData.spin) child.rotation.z = moving ? time / 5000 : 0;
+          if (child.userData.spin)
+            child.rotation.z = moving ? animationTime / 5000 : 0;
           if (child.userData.layer !== undefined) {
             const offset = child.userData.layer - 1;
             child.position.z =
-              offset * (0.1 + (moving ? Math.sin(time / 1500) * 0.025 : 0));
+              offset *
+              (0.1 + (moving ? Math.sin(animationTime / 1500) * 0.025 : 0));
           }
         }
       }
     }
   } else if (moving && !dragging && props.section !== "home")
     root.rotation.y += dt * 0.13;
-  if (moving && active && active === interiors.get("electronics")) {
-    active.children.forEach((child, i) => {
-      if (child instanceof LineSegments2)
-        child.material.opacity = 0.55 + Math.sin(time / 300 + i) * 0.4;
-    });
-  }
+  updateActiveOpacity();
   if (shell.visible) shadePolyhedron();
   renderer.render(scene, camera);
   if (!document.hidden) frame = requestAnimationFrame(render);
 }
 
+function cancelGesture() {
+  if (dragging && host.value?.hasPointerCapture(dragging.id))
+    host.value.releasePointerCapture(dragging.id);
+  dragging = undefined;
+}
 function down(event: PointerEvent) {
   if (event.button !== 0) return;
+  if (
+    event.isPrimary === false ||
+    (dragging && dragging.id !== event.pointerId)
+  ) {
+    cancelGesture();
+    return;
+  }
   dragging = {
     id: event.pointerId,
     x: event.clientX,
     y: event.clientY,
+    startX: event.clientX,
+    startY: event.clientY,
+    touch: event.pointerType === "touch",
+    axis: "pending",
     distance: 0,
   };
-  host.value?.setPointerCapture(event.pointerId);
+  if (!dragging.touch) host.value?.setPointerCapture(event.pointerId);
 }
 function move(event: PointerEvent) {
   if (!dragging) {
-    const hit = hitAt(event);
-    emit("hover", hit?.object.userData.part ?? null);
+    if (event.pointerType !== "touch")
+      emit("hover", hitAt(event)?.object.userData.part ?? null);
     return;
   }
   if (dragging.id !== event.pointerId) return;
   const dx = event.clientX - dragging.x;
   const dy = event.clientY - dragging.y;
   dragging.distance += Math.abs(dx) + Math.abs(dy);
-  root.rotation.y += dx * 0.008;
-  root.rotation.x = Math.max(-1.2, Math.min(1.2, root.rotation.x + dy * 0.008));
+  if (dragging.touch && dragging.axis === "pending") {
+    const totalX = event.clientX - dragging.startX;
+    const totalY = event.clientY - dragging.startY;
+    if (Math.hypot(totalX, totalY) < 8) return;
+    dragging.axis =
+      Math.abs(totalX) > Math.abs(totalY) ? "horizontal" : "vertical";
+    if (dragging.axis === "horizontal")
+      host.value?.setPointerCapture(event.pointerId);
+  }
+  if (!dragging.touch || dragging.axis === "horizontal") {
+    root.rotation.y += dx * 0.008;
+    if (!dragging.touch)
+      root.rotation.x = Math.max(
+        -1.2,
+        Math.min(1.2, root.rotation.x + dy * 0.008),
+      );
+  }
   dragging.x = event.clientX;
   dragging.y = event.clientY;
 }
 function up(event: PointerEvent) {
   if (!dragging || dragging.id !== event.pointerId) return;
   const click = dragging.distance < 8;
-  dragging = undefined;
-  if (host.value?.hasPointerCapture(event.pointerId))
-    host.value.releasePointerCapture(event.pointerId);
+  cancelGesture();
   if (!click) return;
   if (canOpen.value) {
     emit("open");
@@ -639,19 +764,38 @@ function hitAt(event: PointerEvent) {
 
 function visibility() {
   cancelAnimationFrame(frame);
-  if (!document.hidden && !dead) {
+  if (
+    !document.hidden &&
+    !dead &&
+    inViewport &&
+    !contextLost &&
+    !(props.section === "projects" && props.paused)
+  ) {
     lastTime = performance.now();
     frame = requestAnimationFrame(render);
   }
 }
 function lost(event: Event) {
   event.preventDefault();
+  contextLost = true;
   cancelAnimationFrame(frame);
   emit("failed");
 }
-watch(() => props.section, updateSection);
+watch(
+  () => props.section,
+  (section, previous) => {
+    updateSection();
+    if (section === "projects" || previous === "projects") visibility();
+  },
+);
 watch(() => [props.theme, props.selected], updateColors);
-watch(() => [props.reducedMotion, props.paused], updateSection);
+watch(
+  () => [props.reducedMotion, props.paused],
+  () => {
+    updateSection();
+    if (props.section === "projects") visibility();
+  },
+);
 watch(
   () => props.reset,
   () => root.rotation.set(0.28, 0.55, 0.04),
@@ -666,13 +810,18 @@ onMounted(() => {
   try {
     renderer = new WebGLRenderer({ alpha: true, antialias: true });
     renderer.setClearColor(new Color(0), 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
     renderer.domElement.setAttribute("aria-hidden", "true");
     renderer.domElement.addEventListener("webglcontextlost", lost);
     host.value.append(renderer.domElement);
     build();
     const resize = () => {
       if (!host.value || !renderer) return;
+      mobileRendering =
+        window.matchMedia?.("(max-width: 800px) and (pointer: coarse)")
+          .matches ?? false;
+      renderer.setPixelRatio(
+        Math.min(window.devicePixelRatio || 1, mobileRendering ? 1.25 : 1.75),
+      );
       const { width, height } = host.value.getBoundingClientRect();
       renderer.setSize(Math.max(width, 1), Math.max(height, 1), false);
       camera.aspect = Math.max(width, 1) / Math.max(height, 1);
@@ -682,6 +831,15 @@ onMounted(() => {
     resize();
     observer = new ResizeObserver(resize);
     observer.observe(host.value);
+    if (typeof IntersectionObserver !== "undefined") {
+      viewportObserver = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry || entry.isIntersecting === inViewport) return;
+        inViewport = entry.isIntersecting;
+        visibility();
+      });
+      viewportObserver.observe(host.value);
+    }
     document.addEventListener("visibilitychange", visibility);
     frame = requestAnimationFrame(render);
   } catch {
@@ -692,6 +850,8 @@ onBeforeUnmount(() => {
   dead = true;
   cancelAnimationFrame(frame);
   observer?.disconnect();
+  viewportObserver?.disconnect();
+  cancelGesture();
   document.removeEventListener("visibilitychange", visibility);
   renderer?.domElement.removeEventListener("webglcontextlost", lost);
   const geometries = new Set<BufferGeometry>();
@@ -711,7 +871,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="host" class="cube-canvas" :aria-label="canOpen ? label : undefined"
+  <div ref="host" class="cube-canvas" :aria-label="label"
     :role="canOpen ? 'button' : 'img'" :tabindex="canOpen ? 0 : undefined"
-    @keydown="keydown" @pointerdown="down" @pointermove="move" @pointerup="up" @pointercancel="dragging = undefined" @pointerleave="emit('hover', null)" />
+    @keydown="keydown" @pointerdown="down" @pointermove="move" @pointerup="up" @pointercancel="cancelGesture" @pointerleave="emit('hover', null)" />
 </template>

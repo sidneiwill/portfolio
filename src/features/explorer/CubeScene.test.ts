@@ -26,6 +26,7 @@ const rendererState = vi.hoisted(() => ({
   instances: [] as {
     domElement: HTMLCanvasElement;
     setSize: ReturnType<typeof vi.fn>;
+    setPixelRatio: ReturnType<typeof vi.fn>;
     dispose: ReturnType<typeof vi.fn>;
     render: ReturnType<typeof vi.fn>;
   }[],
@@ -61,6 +62,7 @@ describe("CubeScene lifecycle and interaction", () => {
   let nextFrame: number;
   let failed: ReturnType<typeof vi.fn>;
   let selected: ReturnType<typeof vi.fn>;
+  let opened: ReturnType<typeof vi.fn>;
   let props: {
     section: SectionId;
     stackIds: string[];
@@ -82,6 +84,7 @@ describe("CubeScene lifecycle and interaction", () => {
     disconnect = vi.fn();
     failed = vi.fn();
     selected = vi.fn();
+    opened = vi.fn();
     vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
       frames.set(++nextFrame, callback);
       return nextFrame;
@@ -113,7 +116,12 @@ describe("CubeScene lifecycle and interaction", () => {
     app = createApp(
       defineComponent({
         setup: () => () =>
-          h(CubeScene, { ...props, onFailed: failed, onSelect: selected }),
+          h(CubeScene, {
+            ...props,
+            onFailed: failed,
+            onSelect: selected,
+            onOpen: opened,
+          }),
       }),
     );
   });
@@ -259,11 +267,7 @@ describe("CubeScene lifecycle and interaction", () => {
         .size,
     ).toBe(7);
     for (const cube of cubes) {
-      expect(
-        cube.parent?.position
-          .toArray()
-          .every((coordinate) => Math.abs(coordinate) <= 0.95),
-      ).toBe(true);
+      expect(cube.parent?.position.length()).toBeCloseTo(1.3);
     }
     if (!logic) throw new Error("Logic geometry missing");
     const projected = logic.getWorldPosition(new Vector3()).project(camera);
@@ -332,6 +336,164 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(programming.children.every((model) => model.scale.x === 1)).toBe(
       true,
     );
+  });
+
+  it("orbits stack topics in a circle and respects pause and reduced motion", async () => {
+    props.section = "programming";
+    props.reducedMotion = false;
+    mount();
+    frame(50);
+    const programming = rendered().root.children.find(
+      (group) => group !== rendered().root.children[0] && group.visible,
+    ) as Group;
+    const positions = () =>
+      programming.children.map((model) => model.position.toArray());
+    const initial = positions();
+    frame(100);
+    expect(positions()).not.toEqual(initial);
+    for (const model of programming.children) {
+      expect(model.position.length()).toBeCloseTo(1.3);
+      expect(model.position.z).toBe(0);
+    }
+    for (let index = 1; index < programming.children.length; index++) {
+      expect(
+        programming.children[index].position.distanceTo(
+          programming.children[index - 1].position,
+        ),
+      ).toBeCloseTo(2 * 1.3 * Math.sin(Math.PI / props.stackIds.length));
+    }
+    props.paused = true;
+    await nextTick();
+    const paused = positions();
+    frame(150);
+    expect(positions()).toEqual(paused);
+    props.paused = false;
+    await nextTick();
+    frame(200);
+    expect(positions()).not.toEqual(paused);
+    props.reducedMotion = true;
+    await nextTick();
+    frame(250);
+    const reduced = positions();
+    frame(300);
+    expect(positions()).toEqual(reduced);
+  });
+
+  it("rotates about rings independently and respects pause and reduced motion", async () => {
+    props.section = "about";
+    props.reducedMotion = false;
+    mount();
+    frame(50);
+    const about = rendered().root.children.find(
+      (group) => group !== rendered().root.children[0] && group.visible,
+    ) as Group;
+    const sphere = about.children[0];
+    const rings = about.children.slice(1);
+    const initial = rings.map((ring) => ring.rotation.clone());
+    frame(100);
+    for (const [index, ring] of rings.entries()) {
+      const direction = index % 2 === 0 ? 1 : -1;
+      expect((ring.rotation.x - initial[index].x) * direction).toBeGreaterThan(
+        0,
+      );
+      expect((ring.rotation.y - initial[index].y) * direction).toBeGreaterThan(
+        0,
+      );
+    }
+    expect(sphere.rotation.toArray()).toEqual([0, 0, 0, "XYZ"]);
+    const rotations = rings.map((ring) => ring.rotation.toArray());
+    props.paused = true;
+    await nextTick();
+    frame(150);
+    expect(rings.map((ring) => ring.rotation.toArray())).toEqual(rotations);
+    props.paused = false;
+    props.reducedMotion = true;
+    await nextTick();
+    frame(200);
+    expect(rings.map((ring) => ring.rotation.toArray())).toEqual(rotations);
+    props.reducedMotion = false;
+    await nextTick();
+    frame(250);
+    expect(rings.map((ring) => ring.rotation.toArray())).not.toEqual(rotations);
+  });
+
+  it("shows decorative about orbits and selects each contact channel", async () => {
+    props.section = "about";
+    const host = mount();
+    host.hasPointerCapture = vi.fn(() => false);
+    host.setPointerCapture = vi.fn();
+    frame();
+    const { root, scene, camera } = rendered();
+    const about = root.children.find(
+      (group) => group !== root.children[0] && group.visible,
+    ) as Group;
+    expect(about.children).toHaveLength(5);
+    expect(
+      about.children.every((child) => child.type === "LineSegments2"),
+    ).toBe(true);
+    props.section = "contact";
+    await nextTick();
+    frame(100);
+    const nodes: Mesh[] = [];
+    scene.traverse((object) => {
+      if (
+        object.type === "Mesh" &&
+        object.userData.part?.startsWith("contact-")
+      )
+        nodes.push(object as Mesh);
+    });
+    expect(nodes.map((node) => node.userData.part)).toEqual([
+      "contact-email",
+      "contact-phone",
+      "contact-github",
+      "contact-linkedin",
+    ]);
+    for (const node of nodes) {
+      const point = node.getWorldPosition(new Vector3()).project(camera);
+      pointer(host, "pointerdown", (point.x + 1) * 300, (1 - point.y) * 300);
+      pointer(host, "pointerup", (point.x + 1) * 300, (1 - point.y) * 300);
+      expect(selected).toHaveBeenLastCalledWith(node.userData.part);
+    }
+    props.section = "projects";
+    props.paused = true;
+    await nextTick();
+    expect(frames.size).toBe(0);
+    props.section = "contact";
+    props.paused = false;
+    await nextTick();
+    expect(frames.size).toBe(1);
+  });
+
+  it("fades section models in while preserving selected-part dimming and reduced motion", async () => {
+    props.reducedMotion = false;
+    mount();
+    frame(50);
+    props.section = "contact";
+    props.selected = "contact-email";
+    await nextTick();
+    frame(100);
+    const { root } = rendered();
+    const contact = root.children.find(
+      (group) => group !== root.children[0] && group.visible,
+    ) as Group;
+    const email = contact.children.find((group) =>
+      group.children.some((child) => child.userData.part === "contact-email"),
+    ) as Group;
+    const phone = contact.children.find((group) =>
+      group.children.some((child) => child.userData.part === "contact-phone"),
+    ) as Group;
+    const emailMaterial = (email.children[0] as LineSegments2).material;
+    const phoneMaterial = (phone.children[0] as LineSegments2).material;
+    expect(emailMaterial.opacity).toBeGreaterThan(0);
+    expect(emailMaterial.opacity).toBeLessThan(1);
+    expect(phoneMaterial.opacity).toBeCloseTo(emailMaterial.opacity * 0.25);
+    const opacity = emailMaterial.opacity;
+    frame(150);
+    expect(emailMaterial.opacity).toBeGreaterThan(opacity);
+    props.reducedMotion = true;
+    await nextTick();
+    expect(emailMaterial.opacity).toBe(1);
+    expect(phoneMaterial.opacity).toBe(0.25);
   });
 
   it("keeps each reverse-engineering chip part selectable", () => {
@@ -555,6 +717,95 @@ describe("CubeScene lifecycle and interaction", () => {
     for (let time = 1550; time <= 2800; time += 50) frame(time);
     expect(shell.scale.x).toBe(1);
     expect(material.opacity).toBe(1);
+  });
+
+  it("rotates horizontal touch gestures, leaving scroll, zoom and cancellation unselected", () => {
+    const host = mount();
+    host.setPointerCapture = vi.fn();
+    host.hasPointerCapture = vi.fn(() => false);
+    frame();
+    const { root } = rendered();
+    const initialX = root.rotation.x;
+    const initialY = root.rotation.y;
+    const touch = (type: string, x: number, y: number, id = 1) => {
+      const event = new MouseEvent(type, { clientX: x, clientY: y, button: 0 });
+      Object.defineProperties(event, {
+        pointerId: { value: id },
+        pointerType: { value: "touch" },
+      });
+      host.dispatchEvent(event);
+    };
+    touch("pointerdown", 100, 100);
+    touch("pointermove", 102, 140);
+    touch("pointerup", 102, 140);
+    expect(root.rotation.y).toBe(initialY);
+    touch("pointerdown", 100, 100);
+    touch("pointermove", 140, 102);
+    touch("pointerup", 140, 102);
+    expect(root.rotation.y).not.toBe(initialY);
+    expect(root.rotation.x).toBe(initialX);
+    expect(selected).not.toHaveBeenCalled();
+    touch("pointerdown", 100, 100);
+    touch("pointercancel", 100, 100);
+    touch("pointerup", 100, 100);
+    touch("pointerdown", 100, 100);
+    touch("pointerdown", 120, 100, 2);
+    const rotation = root.rotation.y;
+    touch("pointermove", 170, 100);
+    touch("pointerup", 170, 100);
+    expect(root.rotation.y).toBe(rotation);
+    expect(selected).not.toHaveBeenCalled();
+    expect(opened).not.toHaveBeenCalled();
+    touch("pointerdown", 100, 100);
+    touch("pointerup", 100, 100);
+    expect(opened).toHaveBeenCalledOnce();
+  });
+
+  it("limits mobile resolution and frames and suspends rendering outside the viewport", () => {
+    let intersect: IntersectionObserverCallback = () => {};
+    const intersectionDisconnect = vi.fn();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class {
+        constructor(callback: IntersectionObserverCallback) {
+          intersect = callback;
+        }
+        observe = vi.fn();
+        disconnect = intersectionDisconnect;
+      },
+    );
+    vi.stubGlobal("matchMedia", () => ({ matches: true }));
+    vi.stubGlobal("devicePixelRatio", 3);
+    vi.spyOn(performance, "now").mockReturnValue(0);
+    mount();
+    frame(50);
+    const { renderer, root } = rendered();
+    expect(renderer.setPixelRatio).toHaveBeenLastCalledWith(1.25);
+    const renders = renderer.render.mock.calls.length;
+    frame(60);
+    expect(renderer.render).toHaveBeenCalledTimes(renders);
+    frame(90);
+    expect(renderer.render).toHaveBeenCalledTimes(renders + 1);
+    const notify = (visible: boolean) =>
+      intersect(
+        [{ isIntersecting: visible } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    notify(false);
+    expect(frames.size).toBe(0);
+    const position = root.position.y;
+    frame(5000);
+    expect(root.position.y).toBe(position);
+    notify(true);
+    expect(frames.size).toBe(1);
+    notify(true);
+    expect(frames.size).toBe(1);
+    frame(50);
+    expect(renderer.render).toHaveBeenCalledTimes(renders + 2);
+    app.unmount();
+    mounted = false;
+    expect(intersectionDisconnect).toHaveBeenCalledOnce();
+    expect(frames.size).toBe(0);
   });
 
   it("handles collapsed resize, releases GPU resources, and stops callbacks on unmount", () => {
