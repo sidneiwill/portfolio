@@ -602,7 +602,7 @@ describe("PortfolioExplorer", () => {
           expect(element("[data-scene]").dataset.selected).toBe(
             `stack-${index}`,
           );
-          expect(button.getAttribute("aria-pressed")).toBe("true");
+          expect(button.getAttribute("aria-expanded")).toBe("true");
         }
         continue;
       }
@@ -626,10 +626,37 @@ describe("PortfolioExplorer", () => {
     }
   });
 
+  it("reveals one stack group at a time through scene and list selection", async () => {
+    await navigate("programming");
+    const lists = () =>
+      Array.from(container.querySelectorAll<HTMLElement>(".stack-details"));
+    const visible = () =>
+      lists().filter((list) => list.getAttribute("aria-hidden") === "false");
+    expect(visible()).toHaveLength(0);
+    expect(container.querySelectorAll(".stack-topic")).toHaveLength(7);
+    await click("[data-select]");
+    expect(visible()).toHaveLength(1);
+    expect(visible()[0].id).toBe("stack-details-0");
+    expect(visible()[0].textContent).toContain("TypeScript");
+    expect(visible()[0].hasAttribute("inert")).toBe(false);
+    await click('.stack-topic[aria-controls="stack-details-1"]');
+    expect(visible()).toHaveLength(1);
+    expect(visible()[0].id).toBe("stack-details-1");
+    expect(element("#stack-details-0").hasAttribute("inert")).toBe(true);
+    expect(element("[data-scene]").dataset.selected).toBe("stack-1");
+    await click('.stack-topic[aria-controls="stack-details-1"]');
+    expect(visible()).toHaveLength(0);
+    expect(element("[data-scene]").dataset.selected).toBe("");
+    await click("[data-select]");
+    await navigate("about");
+    await navigate("programming");
+    expect(visible()).toHaveLength(0);
+  });
+
   it("receives scene selections, applies the latest rapid navigation, and clears details on home", async () => {
     await navigate("programming");
     await click("[data-select]");
-    expect(element(".stack-topic").getAttribute("aria-pressed")).toBe("true");
+    expect(element(".stack-topic").getAttribute("aria-expanded")).toBe("true");
     for (const section of ["reverse", "electronics", "modeling"] as const) {
       const target = element(`.explorer-nav a[href="#${section}"]`);
       target.addEventListener("click", (event) => event.preventDefault(), {
