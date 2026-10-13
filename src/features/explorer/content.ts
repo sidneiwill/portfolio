@@ -13,6 +13,10 @@ type ExplorerContent = {
   navigation: Record<SectionId, string>;
   intro: string;
   openCube: string;
+  chooseSection: string;
+  collapseMenu: string;
+  expandModel: string;
+  collapseModel: string;
   details: string;
   fallback: string;
   areas: Record<
@@ -29,7 +33,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     navigation: {
       home: "Início",
       programming: "Programação",
-      reverse: "Engenharia reversa",
+      reverse: "Engenharia Reversa",
       modeling: "Modelagem 3D",
       electronics: "Eletrônica",
       about: "Sobre",
@@ -38,6 +42,10 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     },
     intro: "Explore o que há por dentro.",
     openCube: "Clique para explorar o portfólio.",
+    chooseSection: "Escolher seção",
+    collapseMenu: "Fechar menu e voltar ao início",
+    expandModel: "Ampliar modelo",
+    collapseModel: "Reduzir modelo",
     details: "Explore as partes",
     fallback:
       "A visualização 3D não está disponível. Explore as áreas pelo menu.",
@@ -153,6 +161,10 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     },
     intro: "Explore what is inside.",
     openCube: "Click to explore the portfolio.",
+    chooseSection: "Choose section",
+    collapseMenu: "Close menu and return home",
+    expandModel: "Expand model",
+    collapseModel: "Collapse model",
     details: "Explore the parts",
     fallback: "The 3D view is unavailable. Explore the areas using the menu.",
     areas: {
@@ -267,6 +279,10 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     },
     intro: "Explorá lo que hay adentro.",
     openCube: "Hacé clic para explorar el portfolio.",
+    chooseSection: "Elegir sección",
+    collapseMenu: "Cerrar menú y volver al inicio",
+    expandModel: "Ampliar modelo",
+    collapseModel: "Reducir modelo",
     details: "Explorá las partes",
     fallback:
       "La vista 3D no está disponible. Explorá las áreas desde el menú.",

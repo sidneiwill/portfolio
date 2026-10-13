@@ -19,7 +19,7 @@ const theme = useTheme();
       :labels="{ language: i18n.t('controls.language'), theme: i18n.t('controls.theme'), light: i18n.t('controls.light'), dark: i18n.t('controls.dark'), site: i18n.t('layout.site') }"
       @set-locale="i18n.setLocale" @toggle-theme="theme.toggleTheme" />
     </div></div>
-    <main id="main" tabindex="-1"><PortfolioExplorer :theme="theme.theme.value" @open="opened = true" /></main>
-    <SiteFooter :content="i18n.resume.value" />
+    <main id="main" tabindex="-1"><PortfolioExplorer :theme="theme.theme.value" @open="opened = true" @close="opened = false" /></main>
+    <SiteFooter v-if="opened" :content="i18n.resume.value" />
   </div>
 </template>
