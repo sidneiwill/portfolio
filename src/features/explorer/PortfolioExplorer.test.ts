@@ -257,27 +257,28 @@ describe("PortfolioExplorer", () => {
     };
   }
 
-  it.each([
-    50, 100,
-  ])("corrects trackpad inertia overshooting a section initially %i px away", async (offset) => {
-    expect(wheel(120).defaultPrevented).toBe(false);
-    await click("[data-open]");
-    vi.useFakeTimers();
-    const geometry = documentGeometry(64 + offset);
-    for (const delta of [120, 110, 95, 80, 65, 50, 38, 28, 20, 12, 7, 3, 1]) {
-      expect(wheel(delta, geometry.target).defaultPrevented).toBe(true);
-      vi.advanceTimersByTime(16);
-    }
-    expect(geometry.target.getBoundingClientRect().top).toBeLessThan(64);
-    expect(
-      geometry.scroll.mock.calls.some(
-        ([options]) => (options as ScrollToOptions).behavior === "smooth",
-      ),
-    ).toBe(false);
-    wheel(0);
-    vi.advanceTimersByTime(220);
-    expect(geometry.target.getBoundingClientRect().top).toBeCloseTo(64);
-  });
+  it.each([50, 100])(
+    "corrects trackpad inertia overshooting a section initially %i px away",
+    async (offset) => {
+      expect(wheel(120).defaultPrevented).toBe(false);
+      await click("[data-open]");
+      vi.useFakeTimers();
+      const geometry = documentGeometry(64 + offset);
+      for (const delta of [120, 110, 95, 80, 65, 50, 38, 28, 20, 12, 7, 3, 1]) {
+        expect(wheel(delta, geometry.target).defaultPrevented).toBe(true);
+        vi.advanceTimersByTime(16);
+      }
+      expect(geometry.target.getBoundingClientRect().top).toBeLessThan(64);
+      expect(
+        geometry.scroll.mock.calls.some(
+          ([options]) => (options as ScrollToOptions).behavior === "smooth",
+        ),
+      ).toBe(false);
+      wheel(0);
+      vi.advanceTimersByTime(220);
+      expect(geometry.target.getBoundingClientRect().top).toBeCloseTo(64);
+    },
+  );
 
   it.each([
     {
@@ -353,30 +354,28 @@ describe("PortfolioExplorer", () => {
       });
   });
 
-  it.each([
-    "navigation",
-    "keyboard",
-    "pointer",
-    "reduced motion",
-  ])("cancels pending alignment on %s", async (action) => {
-    await click("[data-open]");
-    vi.useFakeTimers();
-    const geometry = documentGeometry(184);
-    wheel(1, geometry.target);
-    const position = geometry.position;
-    if (action === "navigation") await navigate("projects");
-    else if (action === "keyboard")
-      window.dispatchEvent(new KeyboardEvent("keydown", { key: "PageDown" }));
-    else if (action === "pointer")
-      window.dispatchEvent(new Event("pointerdown"));
-    else {
-      motion.matches = true;
-      motionChange();
-      await nextTick();
-    }
-    vi.advanceTimersByTime(220);
-    expect(geometry.position).toBe(position);
-  });
+  it.each(["navigation", "keyboard", "pointer", "reduced motion"])(
+    "cancels pending alignment on %s",
+    async (action) => {
+      await click("[data-open]");
+      vi.useFakeTimers();
+      const geometry = documentGeometry(184);
+      wheel(1, geometry.target);
+      const position = geometry.position;
+      if (action === "navigation") await navigate("projects");
+      else if (action === "keyboard")
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: "PageDown" }));
+      else if (action === "pointer")
+        window.dispatchEvent(new Event("pointerdown"));
+      else {
+        motion.matches = true;
+        motionChange();
+        await nextTick();
+      }
+      vi.advanceTimersByTime(220);
+      expect(geometry.position).toBe(position);
+    },
+  );
 
   it("lets the visitor reach the footer without pulling Contact back into alignment", async () => {
     await navigate("contact");
