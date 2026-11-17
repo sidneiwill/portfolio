@@ -253,19 +253,37 @@ describe("PortfolioExplorer", () => {
     expect(scroll).not.toHaveBeenCalled();
   });
 
-  it("selects contact channels through the scene and accessible buttons", async () => {
+  it("selects contact channels through the scene and the channel markers", async () => {
     await navigate("contact");
     await click("[data-select-contact]");
     expect(
-      element('[data-contact-channel="contact-email"]').getAttribute(
-        "aria-pressed",
-      ),
-    ).toBe("true");
+      element('[data-contact-channel="contact-email"]').classList,
+    ).toContain("active");
     expect(
       element('#contact a[href^="mailto:"]').classList.contains("active"),
     ).toBe(true);
     await click('[data-contact-channel="contact-github"]');
     expect(element("[data-scene]").dataset.selected).toBe("contact-github");
+  });
+
+  it("gives each contact channel a single keyboard target that labels the scene", async () => {
+    await navigate("contact");
+    for (const channel of container.querySelectorAll(".contact-channel")) {
+      const focusable = channel.querySelectorAll(
+        'a[href], button:not([tabindex="-1"])',
+      );
+      expect(focusable).toHaveLength(1);
+      expect(channel.querySelector("button")?.getAttribute("aria-hidden")).toBe(
+        "true",
+      );
+    }
+    const email = element('#contact a[href^="mailto:"]');
+    email.dispatchEvent(new FocusEvent("focus"));
+    await nextTick();
+    expect(element(".model-label").textContent).toBe(email.textContent);
+    email.dispatchEvent(new FocusEvent("blur"));
+    await nextTick();
+    expect(container.querySelector(".model-label")).toBeNull();
   });
 
   it("honors initial URLs, hash navigation, and live reduced-motion preferences", async () => {

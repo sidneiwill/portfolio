@@ -40,14 +40,14 @@ const channels = computed(() => [
     </div>
     <address>
       <div v-for="channel in channels" :key="channel.id" class="contact-channel">
-        <button type="button" :data-contact-channel="channel.id" :aria-label="channel.label"
-          :aria-pressed="selected === channel.id" :class="{ active: selected === channel.id }"
-          @click="$emit('select', channel.id)" @focus="$emit('hover', channel.id)" @blur="$emit('hover', null)">
-          <span aria-hidden="true">◇</span>
-        </button>
+        <!-- Pointer shortcut for the 3D highlight; the link below is the single keyboard/AT target. -->
+        <button type="button" tabindex="-1" aria-hidden="true" :data-contact-channel="channel.id"
+          :class="{ active: selected === channel.id }" @click="$emit('select', channel.id)">◇</button>
         <a :href="channel.href" :class="{ active: selected === channel.id }"
           :target="channel.href.startsWith('https:') ? '_blank' : undefined"
-          :rel="channel.href.startsWith('https:') ? 'noreferrer' : undefined">{{ channel.label }}</a>
+          :rel="channel.href.startsWith('https:') ? 'noreferrer' : undefined"
+          @focus="$emit('hover', channel.id)" @blur="$emit('hover', null)"
+          @mouseenter="$emit('hover', channel.id)" @mouseleave="$emit('hover', null)">{{ channel.label }}</a>
       </div>
       <span v-for="language in content.languages" :key="language">{{ language }}</span>
     </address>
