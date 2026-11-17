@@ -295,22 +295,26 @@ describe("PortfolioExplorer", () => {
     expect(element("[data-scene]").dataset.section).toBe("home");
   });
 
-  it("hides the header and footer on startup and reveals them when the cube opens", async () => {
+  it("keeps header controls on the landing screen and reveals the footer when the cube opens", async () => {
     app.unmount();
     app = createApp(PortfolioApp);
     app.mount(container);
     await vi.waitFor(() =>
       expect(container.querySelector("[data-open]")).not.toBeNull(),
     );
-    expect(container.querySelector(".site-header")).toBeNull();
+    const shell = element(".app-shell");
+    expect(container.querySelector(".site-header")).not.toBeNull();
     expect(container.querySelector(".site-footer")).toBeNull();
+    expect(shell.classList).not.toContain("is-open");
     await click("[data-open]");
     expect(container.querySelector(".site-header")).not.toBeNull();
     expect(container.querySelector(".site-footer")).not.toBeNull();
+    expect(shell.classList).toContain("is-open");
     await navigate("programming");
     await navigate("home");
-    expect(container.querySelector(".site-header")).toBeNull();
+    expect(container.querySelector(".site-header")).not.toBeNull();
     expect(container.querySelector(".site-footer")).toBeNull();
+    expect(shell.classList).not.toContain("is-open");
   });
 
   it("keeps the side menu hidden until the cube is clicked", async () => {
@@ -342,7 +346,7 @@ describe("PortfolioExplorer", () => {
     await click(".menu-toggle");
     expect(container.querySelector(".explorer-nav")).toBeNull();
     expect(container.querySelector(".explorer-content")).toBeNull();
-    expect(container.querySelector(".site-header")).toBeNull();
+    expect(element(".app-shell").classList).not.toContain("is-open");
     expect(container.querySelector(".site-footer")).toBeNull();
     expect(element("[data-scene]").dataset.section).toBe("home");
     expect(element("[data-scene]").dataset.selected).toBe("");

@@ -1177,6 +1177,15 @@ address a:hover {
   z-index: 10;
   background: var(--bg);
 }
+/* On the landing screen the header floats over the scene so it adds no scroll. */
+.app-shell:not(.is-open) .header-reveal {
+  position: absolute;
+  inset: 0 0 auto;
+  background: transparent;
+}
+.app-shell:not(.is-open) .site-header {
+  border-bottom-color: transparent;
+}
 .portfolio-explorer.menu-open,
 .portfolio-explorer.menu-open.has-panel {
   --reading-top: 64px;

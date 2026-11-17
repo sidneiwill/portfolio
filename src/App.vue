@@ -12,9 +12,9 @@ const theme = useTheme();
 </script>
 
 <template>
-  <div class="app-shell">
+  <div class="app-shell" :class="{ 'is-open': opened }">
     <a class="skip-link" href="#main">{{ i18n.t("nav.skip") }}</a>
-    <div v-if="opened" class="header-reveal"><div class="header-reveal-inner">
+    <div class="header-reveal"><div class="header-reveal-inner">
     <SiteHeader :locale="i18n.locale.value" :locales="i18n.locales" :theme="theme.theme.value"
       :labels="{ language: i18n.t('controls.language'), theme: i18n.t('controls.theme'), light: i18n.t('controls.light'), dark: i18n.t('controls.dark'), site: i18n.t('layout.site') }"
       @set-locale="i18n.setLocale" @toggle-theme="theme.toggleTheme" />
