@@ -9,6 +9,17 @@
       content="Portfolio of Sidnei William de Oliveira, Computer Engineer building web, mobile, fleet, and operations systems."
     />
     <title>Sidnei William de Oliveira</title>
+    <!-- Apply the stored theme before first paint. Mirrors src/shared/theme/useTheme.ts. -->
+    <script id="theme-bootstrap">
+      (() => {
+        try {
+          let theme = localStorage.getItem("sidnei.theme");
+          if (theme !== "light" && theme !== "dark")
+            theme = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+          document.documentElement.dataset.theme = theme;
+        } catch {}
+      })();
+    </script>
     <link rel="canonical" href="https://www.sidneiwill.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.sidneiwill.dev/" />
