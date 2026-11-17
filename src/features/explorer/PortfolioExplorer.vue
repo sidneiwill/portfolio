@@ -231,7 +231,7 @@ onBeforeUnmount(() => {
         </button>
       </div>
     </div>
-    <div v-if="menuOpen" ref="content" class="explorer-content">
+    <div v-show="menuOpen" ref="content" class="explorer-content">
       <div id="about" data-section="about" class="scroll-section" role="region" :aria-label="text.navigation.about">
         <HeroSection :content="resume" /><ResumeSection :content="resume" />
       </div>
