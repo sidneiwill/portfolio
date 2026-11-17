@@ -1194,6 +1194,12 @@ address a:hover {
   z-index: 10;
   background: var(--bg);
 }
+/* Keep the header on one line so the sticky mobile navigation (top: 64px) never overlaps it. */
+@media (max-width: 360px) {
+  .site-header .terminal-setting {
+    display: none;
+  }
+}
 /* On the landing screen the header floats over the scene so it adds no scroll. */
 .app-shell:not(.is-open) .header-reveal {
   position: absolute;
