@@ -317,6 +317,15 @@ describe("PortfolioExplorer", () => {
     expect(shell.classList).not.toContain("is-open");
   });
 
+  it("opens the portfolio from the visible explore button", async () => {
+    expect(element(".explore-button").textContent).toContain("explore");
+    await click(".explore-button");
+    expect(container.querySelector(".explorer-nav")).not.toBeNull();
+    expect(element("[data-scene]").dataset.section).toBe("about");
+    expect(window.location.hash).toBe("#about");
+    expect(container.querySelector(".explore-button")).toBeNull();
+  });
+
   it("keeps the side menu hidden until the cube is clicked", async () => {
     expect(container.querySelector(".explorer-nav")).toBeNull();
     await click("[data-open]");
