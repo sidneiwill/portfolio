@@ -692,7 +692,7 @@ describe("CubeScene lifecycle and interaction", () => {
     frame(50);
     const { root } = rendered();
     const shell = root.children[0] as Group;
-    const material = (shell.children[0]?.children[0] as LineSegments2).material;
+    const material = (shell.children[0].children[0] as LineSegments2).material;
     props.section = "programming";
     await nextTick();
     frame(100);
