@@ -64,14 +64,6 @@ const part = computed(() =>
 );
 let motion: MediaQueryList | undefined;
 let sectionObserver: IntersectionObserver | undefined;
-let settleTimer: ReturnType<typeof setTimeout> | undefined;
-let scrollDirection = 0;
-let crossedBoundary: HTMLElement | undefined;
-function cancelSettle() {
-  clearTimeout(settleTimer);
-  settleTimer = undefined;
-  crossedBoundary = undefined;
-}
 function activateSection(id: SectionId) {
   if (section.value === id) return;
   section.value = id;
@@ -80,7 +72,6 @@ function activateSection(id: SectionId) {
   expanded.value = false;
 }
 async function closeMenu(pushHistory = true) {
-  cancelSettle();
   sectionObserver?.disconnect();
   activateSection("home");
   menuOpen.value = false;
@@ -98,7 +89,6 @@ async function selectSection(id: SectionId, pushHistory = true) {
     await closeMenu(pushHistory);
     return;
   }
-  cancelSettle();
   menuOpen.value = true;
   activateSection(id);
   if (pushHistory && window.location.hash !== `#${id}`)
@@ -134,53 +124,7 @@ function readingTop() {
       )
     : 64;
 }
-function settleSection() {
-  settleTimer = undefined;
-  if (!menuOpen.value || reducedMotion.value || !scrollDirection) return;
-  const items = Array.from(
-    content.value?.querySelectorAll<HTMLElement>("[data-section]") ?? [],
-  );
-  const top = readingTop();
-  const range = Math.min(320, (window.innerHeight - top) * 0.45);
-  // Let the visitor reach the footer instead of returning to Contact's heading.
-  if (
-    scrollDirection > 0 &&
-    (items.at(-1)?.getBoundingClientRect().bottom ?? Infinity) <
-      window.innerHeight - 1
-  )
-    return;
-  const candidates = items
-    .map((item, index) => {
-      const bounds = item.getBoundingClientRect();
-      const offset =
-        scrollDirection > 0
-          ? bounds.top - top
-          : bounds.bottom - window.innerHeight;
-      const previousContent = Array.from(items[index - 1]?.children ?? [])
-        .reverse()
-        .find((child) => child.textContent?.trim());
-      const unreadTail =
-        scrollDirection > 0 &&
-        offset > 0 &&
-        previousContent &&
-        previousContent.getBoundingClientRect().bottom > top;
-      return { offset, unreadTail, index, item };
-    })
-    .filter(
-      ({ offset, unreadTail, index, item }) =>
-        !unreadTail &&
-        (offset * scrollDirection > 0 || item === crossedBoundary) &&
-        (scrollDirection < 0 || index > 0) &&
-        Math.abs(offset) > 1 &&
-        Math.abs(offset) <= range,
-    );
-  const closest = candidates.sort(
-    (a, b) => Math.abs(a.offset) - Math.abs(b.offset),
-  )[0];
-  if (closest) alignSection(closest.item);
-}
 function observeSections() {
-  cancelSettle();
   sectionObserver?.disconnect();
   if (!menuOpen.value || typeof IntersectionObserver === "undefined") return;
   const height = window.innerHeight;
@@ -220,93 +164,7 @@ function hoverPart(id: SectionId, partId: string | null) {
   if (partId) activateSection(id);
   hovered.value = partId;
 }
-function isNativeScroll(target: EventTarget | null) {
-  const element = target instanceof Element ? target : null;
-  if (
-    element?.closest(
-      'dialog, [role="dialog"], select, input, textarea, [contenteditable="true"]',
-    )
-  )
-    return true;
-  for (
-    let item = element;
-    item && item !== document.body && item !== document.documentElement;
-    item = item.parentElement
-  ) {
-    if (
-      item.scrollHeight > item.clientHeight &&
-      /auto|scroll/.test(getComputedStyle(item).overflowY)
-    )
-      return true;
-  }
-  return false;
-}
-function onWheel(event: WheelEvent) {
-  const hadSettle = settleTimer !== undefined;
-  clearTimeout(settleTimer);
-  settleTimer = undefined;
-  if (!hadSettle) crossedBoundary = undefined;
-  if (
-    !menuOpen.value ||
-    reducedMotion.value ||
-    event.defaultPrevented ||
-    !event.cancelable ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    Math.abs(event.deltaX) > Math.abs(event.deltaY) ||
-    isNativeScroll(event.target)
-  )
-    return;
-  const unit =
-    event.deltaMode === WheelEvent.DOM_DELTA_PAGE
-      ? window.innerHeight
-      : event.deltaMode === WheelEvent.DOM_DELTA_LINE
-        ? 16
-        : 1;
-  const delta = event.deltaY * unit;
-  if (!Number.isFinite(delta)) return;
-  const top = readingTop();
-  const items = Array.from(
-    content.value?.querySelectorAll<HTMLElement>("[data-section]") ?? [],
-  );
-  if (delta && Math.sign(delta) !== scrollDirection)
-    crossedBoundary = undefined;
-  const boundaries = items
-    .slice(1)
-    .map((element) => element.getBoundingClientRect().top - top);
-  const steps = Math.max(1, Math.ceil(Math.abs(delta) / 12));
-  const step = delta / steps;
-  let distance = 0;
-  for (let index = 0; index < steps; index++) {
-    const nearest = Math.min(
-      ...boundaries.map((boundary) => Math.abs(boundary - distance - step / 2)),
-    );
-    const proximity = Math.max(0, 1 - nearest / 220);
-    distance += step * (1 - 0.9 * proximity * proximity);
-  }
-  if (delta) {
-    for (const item of delta > 0 ? items : [...items].reverse()) {
-      const bounds = item.getBoundingClientRect();
-      const offset =
-        delta > 0 ? bounds.top - top : bounds.bottom - window.innerHeight;
-      if (
-        offset * Math.sign(delta) > 0 &&
-        (offset - distance) * Math.sign(delta) <= 0
-      )
-        crossedBoundary = item;
-    }
-  }
-  // Control the gesture from its first event so Safari's momentum stays cancelable.
-  event.preventDefault();
-  if (!event.defaultPrevented) return;
-  window.scrollBy({ top: distance, behavior: "instant" });
-  if (delta || hadSettle) {
-    if (delta) scrollDirection = Math.sign(delta);
-    settleTimer = setTimeout(settleSection, 220);
-  }
-}
 function updateMotion() {
-  cancelSettle();
   reducedMotion.value = motion?.matches ?? false;
 }
 onMounted(() => {
@@ -317,20 +175,13 @@ onMounted(() => {
   window.addEventListener("hashchange", readHash);
   window.addEventListener("popstate", readHash);
   window.addEventListener("resize", observeSections);
-  window.addEventListener("wheel", onWheel, { passive: false });
-  window.addEventListener("pointerdown", cancelSettle);
-  window.addEventListener("keydown", cancelSettle);
 });
 onBeforeUnmount(() => {
-  cancelSettle();
   sectionObserver?.disconnect();
   motion?.removeEventListener("change", updateMotion);
   window.removeEventListener("hashchange", readHash);
   window.removeEventListener("popstate", readHash);
   window.removeEventListener("resize", observeSections);
-  window.removeEventListener("wheel", onWheel);
-  window.removeEventListener("pointerdown", cancelSettle);
-  window.removeEventListener("keydown", cancelSettle);
 });
 </script>
 
