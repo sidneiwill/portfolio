@@ -9,6 +9,13 @@ export const areaIds = [
 export type AreaId = (typeof areaIds)[number];
 export type SectionId = AreaId | "home" | "about" | "projects" | "contact";
 
+// Tool names are proper nouns, so they are shared by every locale.
+export const areaTools: Partial<Record<AreaId, string[]>> = {
+  reverse: ["Ghidra"],
+  modeling: ["FreeCAD", "Fusion 360"],
+  electronics: ["KiCad"],
+};
+
 type ExplorerContent = {
   navigation: Record<SectionId, string>;
   intro: string;
@@ -19,6 +26,7 @@ type ExplorerContent = {
   expandModel: string;
   collapseModel: string;
   details: string;
+  tools: string;
   fallback: string;
   areas: Record<
     AreaId,
@@ -49,6 +57,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     expandModel: "Ampliar modelo",
     collapseModel: "Reduzir modelo",
     details: "Explore as partes",
+    tools: "Ferramentas",
     fallback:
       "A visualização 3D não está disponível. Explore as áreas pelo menu.",
     areas: {
@@ -169,6 +178,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     expandModel: "Expand model",
     collapseModel: "Collapse model",
     details: "Explore the parts",
+    tools: "Tools",
     fallback: "The 3D view is unavailable. Explore the areas using the menu.",
     areas: {
       programming: {
@@ -288,6 +298,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     expandModel: "Ampliar modelo",
     collapseModel: "Reducir modelo",
     details: "Explorá las partes",
+    tools: "Herramientas",
     fallback:
       "La vista 3D no está disponible. Explorá las áreas desde el menú.",
     areas: {

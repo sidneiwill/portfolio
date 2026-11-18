@@ -15,7 +15,7 @@ import ResumeSection from "@/features/resume/components/ResumeSection.vue";
 import SkillsSection from "@/features/resume/components/SkillsSection.vue";
 import { useI18n } from "@/i18n/useI18n";
 import type { Theme } from "@/shared/theme/useTheme";
-import { areaIds, explorerContent, type SectionId } from "./content";
+import { areaIds, areaTools, explorerContent, type SectionId } from "./content";
 
 const emit = defineEmits<{ open: []; close: [] }>();
 const props = defineProps<{ theme: Theme }>();
@@ -242,6 +242,7 @@ onBeforeUnmount(() => {
         <p class="eyebrow">{{ resume.meta.name }}</p>
         <h2>{{ text.navigation[id] }}</h2>
         <p class="area-summary">{{ text.areas[id].summary }}</p>
+        <p v-if="areaTools[id]" class="area-tools"><span>{{ text.tools }}:</span> {{ areaTools[id]?.join(" · ") }}</p>
         <SkillsSection v-if="id === 'programming'" :content="resume" :selected="section === id ? selected : null"
           @select="selectPart(id, $event)" @hover="hoverPart(id, $event)" />
         <template v-else>
