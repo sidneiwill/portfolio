@@ -25,7 +25,7 @@ defineEmits<{
   <header class="site-header" :aria-label="labels.site">
     <div class="site-header-inner">
       <a class="brand" href="#main" aria-label="Sidnei William de Oliveira">
-        <span class="brand-text">sidnei<span class="terminal-at">@</span>portfolio</span>
+        <span class="brand-text">sidnei<span class="terminal-at">@</span>william</span>
         <span class="brand-mark" aria-hidden="true">:~ $</span>
         <span class="terminal-cursor" aria-hidden="true">▌</span>
       </a>
