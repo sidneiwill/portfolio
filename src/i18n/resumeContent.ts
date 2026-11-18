@@ -18,16 +18,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
   "en-US": {
     meta: baseMeta,
     hero: {
-      eyebrow: "Practical solutions for operational challenges",
+      region: "Rio Grande do Sul, Brazil",
       headline:
         "I build management systems that keep field work and internal teams moving.",
       summary:
         "Computer Engineer focused on web, mobile, and desktop application development using Vue.js, Node.js, and Go, with experience in embedded systems, IoT, and hardware-software integration. Public-sector background developing practical and efficient solutions for process automation and management.",
       primaryCta: "Contact",
       secondaryCta: "View projects",
-      availability:
-        "Resident of Rio Grande do Sul. Open to new work experiences.",
-      profileLabel: "Profile",
+      availability: "Open to opportunities",
     },
     sections: {
       skills: "Stack",
@@ -177,16 +175,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       location: "Parobé, Rio Grande do Sul",
     },
     hero: {
-      eyebrow: "Soluções práticas para desafios operacionais",
+      region: "Rio Grande do Sul, Brasil",
       headline:
         "Construo sistemas de gestão para que equipes internas e trabalho de campo continuem fluindo.",
       summary:
         "Engenheiro de Computação com foco em desenvolvimento de aplicações web, mobile e desktop utilizando Vue.js, Node.js e Go, além de experiência em sistemas embarcados, IoT e integração hardware-software. Vivência no setor público, desenvolvendo soluções práticas e eficientes para automação e gestão de processos.",
       primaryCta: "Contato",
       secondaryCta: "Ver projetos",
-      availability:
-        "Residente do estado do Rio Grande do Sul. Aberto a novas experiências de trabalho.",
-      profileLabel: "Perfil",
+      availability: "Aberto a oportunidades",
     },
     sections: {
       skills: "Stack",
@@ -336,16 +332,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       location: "Parobé, Rio Grande do Sul",
     },
     hero: {
-      eyebrow: "Soluciones prácticas para desafíos operativos",
+      region: "Rio Grande do Sul, Brasil",
       headline:
         "Creo sistemas de gestión para que equipos internos y trabajo de campo sigan en marcha.",
       summary:
         "Ingeniero en Computación enfocado en el desarrollo de aplicaciones web, móviles y desktop con Vue.js, Node.js y Go, además de experiencia en sistemas embebidos, IoT e integración hardware-software. Experiencia en el sector público, desarrollando soluciones prácticas y eficientes para automatización y gestión de procesos.",
       primaryCta: "Contacto",
       secondaryCta: "Ver proyectos",
-      availability:
-        "Residente del estado de Rio Grande do Sul. Abierto a nuevas experiencias laborales.",
-      profileLabel: "Perfil",
+      availability: "Abierto a oportunidades",
     },
     sections: {
       skills: "Stack",

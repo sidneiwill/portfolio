@@ -420,15 +420,25 @@ textarea {
   margin: 0;
   padding: 0 0 1.6rem;
 }
-.hero-section {
-  min-height: 0;
+.hero-identity {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 1.5rem;
+  grid-template-columns: 88px minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
 }
-.hero-copy {
-  align-self: start;
+.hero-identity h1,
+.hero-identity p {
+  margin-bottom: 0.25rem;
+}
+@media (max-width: 480px) {
+  .hero-identity {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .hero-identity h1 {
+    font-size: 20px;
+  }
 }
 .eyebrow,
 .period,
@@ -501,12 +511,6 @@ h3 {
   background: transparent;
   color: var(--accent);
 }
-.hero-card {
-  width: 88px;
-}
-.hero-card::before {
-  content: none;
-}
 .photo-frame {
   overflow: hidden;
   border: 1px solid var(--line);
@@ -517,23 +521,17 @@ h3 {
   height: auto;
   filter: grayscale(1);
 }
-.status-panel {
+.status-line {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.45rem;
-  margin-top: 0.5rem;
-}
-.status-panel p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.4;
+  color: var(--accent-2);
+  font-size: 13px;
 }
 .status-dot {
   flex: none;
   width: 6px;
   height: 6px;
-  margin-top: 0.35rem;
   background: var(--accent-2);
 }
 .section-block {
