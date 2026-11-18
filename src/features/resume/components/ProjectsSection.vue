@@ -131,11 +131,11 @@ const onDialogKeydown = (event: KeyboardEvent) => {
               type="button"
               class="platform-button"
               disabled
-              :aria-label="t('downloads.simpleRpg.comingSoon')"
-              :title="t('downloads.simpleRpg.comingSoon')"
+              :aria-label="`${t('downloads.comingSoon')}: ${project.name}`"
+              :title="t('downloads.comingSoon')"
             >
               <Download aria-hidden="true" />
-              <span>{{ t("downloads.simpleRpg.comingSoonShort") }}</span>
+              <span>{{ t("downloads.comingSoonShort") }}</span>
             </button>
           </div>
         </div>

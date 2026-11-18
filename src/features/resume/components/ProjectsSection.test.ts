@@ -63,3 +63,25 @@ describe("ProjectsSection macOS warning", () => {
     }
   });
 });
+
+describe("ProjectsSection coming soon downloads", () => {
+  it("shows a disabled coming soon button for each unreleased project", () => {
+    const container = document.createElement("div");
+    const app = createApp(ProjectsSection, {
+      content: resumeContent["en-US"],
+    });
+    app.mount(container);
+    try {
+      const labels = Array.from(
+        container.querySelectorAll<HTMLButtonElement>("button[disabled]"),
+        (button) => button.getAttribute("aria-label"),
+      );
+      expect(labels).toEqual([
+        "Download coming soon: quiCheck",
+        "Download coming soon: SimpleRPG",
+      ]);
+    } finally {
+      app.unmount();
+    }
+  });
+});

@@ -19,8 +19,8 @@ const enUSMessages = {
   "downloads.repositoryShort": "GitHub",
   "downloads.project": "Download project",
   "downloads.projectShort": "Download",
-  "downloads.simpleRpg.comingSoon": "Download coming soon",
-  "downloads.simpleRpg.comingSoonShort": "Coming soon",
+  "downloads.comingSoon": "Download coming soon",
+  "downloads.comingSoonShort": "Coming soon",
   "downloads.macos.noticeTitle": "macOS security notice",
   "downloads.macos.noticeBody":
     "This macOS version is not digitally signed. To run it, you may need to allow the app in macOS Privacy & Security settings and confirm that you trust the app.",
@@ -53,8 +53,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     "downloads.repositoryShort": "GitHub",
     "downloads.project": "Baixar projeto",
     "downloads.projectShort": "Baixar",
-    "downloads.simpleRpg.comingSoon": "Download disponível em breve",
-    "downloads.simpleRpg.comingSoonShort": "Em breve",
+    "downloads.comingSoon": "Download disponível em breve",
+    "downloads.comingSoonShort": "Em breve",
     "downloads.macos.noticeTitle": "Aviso de segurança do macOS",
     "downloads.macos.noticeBody":
       "Esta versão para macOS não é assinada digitalmente. Para executá-la, talvez seja necessário permitir o app nos ajustes de Privacidade e Segurança do macOS e confirmar que você confia no app.",
@@ -82,8 +82,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     "downloads.repositoryShort": "GitHub",
     "downloads.project": "Descargar proyecto",
     "downloads.projectShort": "Descargar",
-    "downloads.simpleRpg.comingSoon": "Descarga disponible próximamente",
-    "downloads.simpleRpg.comingSoonShort": "Próximamente",
+    "downloads.comingSoon": "Descarga disponible próximamente",
+    "downloads.comingSoonShort": "Próximamente",
     "downloads.macos.noticeTitle": "Aviso de seguridad de macOS",
     "downloads.macos.noticeBody":
       "Esta versión para macOS no está firmada digitalmente. Para ejecutarla, puede que tengas que permitir la app en la configuración de Privacidad y Seguridad de macOS y confirmar que confías en ella.",

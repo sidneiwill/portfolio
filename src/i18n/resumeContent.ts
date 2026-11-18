@@ -139,6 +139,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         stack: "Expo Go + React Native + Google Sheets API",
         description:
           "Mobile app for public and private companies to consult assets in real time through labels, accelerating inventory and asset control.",
+        isDownloadComingSoon: true,
       },
       {
         name: "SimpleRPG",
@@ -297,6 +298,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         stack: "Expo Go + React Native + Google Sheets API",
         description:
           "App mobile para empresas públicas e privadas consultarem bens em tempo real por etiquetas, acelerando inventário e controle patrimonial.",
+        isDownloadComingSoon: true,
       },
       {
         name: "SimpleRPG",
@@ -455,6 +457,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         stack: "Expo Go + React Native + Google Sheets API",
         description:
           "App móvil para que empresas públicas y privadas consulten bienes en tiempo real mediante etiquetas, acelerando inventario y control patrimonial.",
+        isDownloadComingSoon: true,
       },
       {
         name: "SimpleRPG",
