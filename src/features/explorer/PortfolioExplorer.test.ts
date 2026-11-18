@@ -347,6 +347,38 @@ describe("PortfolioExplorer", () => {
     expect(container.querySelector(".explore-button")).toBeNull();
   });
 
+  it("opens the portfolio with Enter like the explore button", async () => {
+    const enter = (target: EventTarget, init: KeyboardEventInit = {}) => {
+      const event = new KeyboardEvent("keydown", {
+        key: "Enter",
+        bubbles: true,
+        cancelable: true,
+        ...init,
+      });
+      target.dispatchEvent(event);
+      return event;
+    };
+    const control = document.createElement("button");
+    document.body.append(control);
+    try {
+      enter(control);
+      enter(document.body, { repeat: true });
+      enter(document.body, { metaKey: true });
+      await nextTick();
+      expect(element("[data-scene]").dataset.section).toBe("home");
+
+      expect(enter(document.body).defaultPrevented).toBe(true);
+      await nextTick();
+      expect(container.querySelector(".explorer-nav")).not.toBeNull();
+      expect(element("[data-scene]").dataset.section).toBe("about");
+      expect(window.location.hash).toBe("#about");
+
+      expect(enter(document.body).defaultPrevented).toBe(false);
+    } finally {
+      control.remove();
+    }
+  });
+
   it("renders every section in the DOM before the explorer opens", async () => {
     const content = element(".explorer-content");
     expect(content.style.display).toBe("none");
