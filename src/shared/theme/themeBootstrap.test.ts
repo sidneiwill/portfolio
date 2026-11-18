@@ -15,6 +15,8 @@ const preferLight = (matches: boolean) =>
 
 describe("theme bootstrap script", () => {
   beforeEach(() => {
+    document.head.innerHTML =
+      '<link id="favicon" rel="icon" href="/favicon-dark.svg" />';
     localStorage.clear();
     document.documentElement.removeAttribute("data-theme");
     preferLight(false);
@@ -24,6 +26,9 @@ describe("theme bootstrap script", () => {
     localStorage.setItem("sidnei.theme", "light");
     run();
     expect(document.documentElement.dataset.theme).toBe("light");
+    expect(document.getElementById("favicon")?.getAttribute("href")).toBe(
+      "/favicon-light.svg",
+    );
   });
 
   it("follows the system preference when nothing valid is stored", () => {

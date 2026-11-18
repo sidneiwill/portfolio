@@ -25,6 +25,10 @@ export const useTheme = () => {
     theme,
     (nextTheme) => {
       document.documentElement.dataset.theme = nextTheme;
+      // The favicon cannot read the page theme, so swap to the matching file.
+      document
+        .getElementById("favicon")
+        ?.setAttribute("href", `/favicon-${nextTheme}.svg`);
       localStorage.setItem(storageKey, nextTheme);
     },
     { immediate: true },

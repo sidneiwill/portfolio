@@ -164,6 +164,28 @@ function hoverPart(id: SectionId, partId: string | null) {
   if (partId) activateSection(id);
   hovered.value = partId;
 }
+// The landing button shows ↵, so Enter anywhere on the page acts like clicking it.
+// Focused controls and the cube canvas keep their own Enter behavior.
+function enterExplore(event: KeyboardEvent) {
+  if (
+    event.key !== "Enter" ||
+    event.repeat ||
+    event.defaultPrevented ||
+    event.altKey ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    section.value !== "home"
+  )
+    return;
+  const target = event.target as Element | null;
+  if (
+    target?.closest?.("a, button, input, select, textarea, [contenteditable]")
+  )
+    return;
+  event.preventDefault();
+  void selectSection("about");
+}
 function updateMotion() {
   reducedMotion.value = motion?.matches ?? false;
 }
@@ -175,6 +197,7 @@ onMounted(() => {
   window.addEventListener("hashchange", readHash);
   window.addEventListener("popstate", readHash);
   window.addEventListener("resize", observeSections);
+  window.addEventListener("keydown", enterExplore);
 });
 onBeforeUnmount(() => {
   sectionObserver?.disconnect();
@@ -182,6 +205,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("hashchange", readHash);
   window.removeEventListener("popstate", readHash);
   window.removeEventListener("resize", observeSections);
+  window.removeEventListener("keydown", enterExplore);
 });
 </script>
 
