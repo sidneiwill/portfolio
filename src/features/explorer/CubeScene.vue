@@ -94,6 +94,9 @@ const accents = [0xfabd2f, 0x83a598, 0xb8bb26];
 const lightAccents = [0xb57614, 0x076678, 0x79740e];
 let intro = 0;
 let lastTime = 0;
+// Last values the line buffers were built from, so static frames skip rebuilding them.
+let shapedAt = Number.NaN;
+let tracedAt = Number.NaN;
 let active: Group | undefined;
 let dragging:
   | {
@@ -565,6 +568,7 @@ function updateSection() {
 }
 
 function render(time: number) {
+  frame = 0;
   if (
     dead ||
     !renderer ||
@@ -584,7 +588,14 @@ function render(time: number) {
   if (moving) animationTime += dt * 1000;
   if (moving) deformationTime += dt * 0.6;
   if (props.reducedMotion) deformationTime = 0;
-  if (shell.visible || props.section === "home") updatePolyhedron();
+  if (
+    (shell.visible || props.section === "home") &&
+    deformationTime !== shapedAt
+  ) {
+    updatePolyhedron();
+    shadePolyhedron();
+    shapedAt = deformationTime;
+  }
   intro = moving ? Math.min(intro + dt / 0.9, 1) : 1;
   const t = intro - 1;
   const ease = 1 + 2.70158 * t * t * t + 1.70158 * t * t;
@@ -624,30 +635,33 @@ function render(time: number) {
     const blend = moving ? 1 - Math.exp(-dt * 4) : 1;
     chipLid.position.y += (lidTarget - chipLid.position.y) * blend;
     chipCore.position.y += (coreTarget - chipCore.position.y) * blend;
-    for (const [index, side] of [-1, 1].entries()) {
-      for (let pin = 0; pin < 8; pin++) {
-        const z = (pin - 3.5) * 0.22;
-        const coreZ = (pin - 3.5) * 0.065;
-        tracePositions.set(
-          [
-            side * 0.44,
-            -0.09,
-            z,
-            side * 0.28,
-            -0.09,
-            z,
-            side * 0.28,
-            -0.09,
-            z,
-            side * 0.18,
-            chipCore.position.y,
-            coreZ,
-          ],
-          (index * 8 + pin) * 12,
-        );
+    if (chipCore.position.y !== tracedAt) {
+      tracedAt = chipCore.position.y;
+      for (const [index, side] of [-1, 1].entries()) {
+        for (let pin = 0; pin < 8; pin++) {
+          const z = (pin - 3.5) * 0.22;
+          const coreZ = (pin - 3.5) * 0.065;
+          tracePositions.set(
+            [
+              side * 0.44,
+              -0.09,
+              z,
+              side * 0.28,
+              -0.09,
+              z,
+              side * 0.28,
+              -0.09,
+              z,
+              side * 0.18,
+              chipCore.position.y,
+              coreZ,
+            ],
+            (index * 8 + pin) * 12,
+          );
+        }
       }
+      chipTraces.geometry.setPositions(tracePositions);
     }
-    chipTraces.geometry.setPositions(tracePositions);
     chipCore.scale.setScalar(reconstructing ? 1.08 : 1);
   }
   if (active === interiors.get("programming")) {
@@ -703,9 +717,18 @@ function render(time: number) {
   )
     root.rotation.y += dt * 0.13;
   updateActiveOpacity();
-  if (shell.visible) shadePolyhedron();
   renderer.render(scene, camera);
-  if (!document.hidden) frame = requestAnimationFrame(render);
+  // A static scene (reduced motion or paused) renders once per change; see invalidate().
+  if (!document.hidden && !isStatic()) frame = requestAnimationFrame(render);
+}
+
+function isStatic() {
+  return props.reducedMotion || props.paused;
+}
+// Schedules a single frame when nothing is looping, after a change a static
+// scene must show. While animating, the running loop already picks it up.
+function invalidate() {
+  if (!frame) visibility();
 }
 
 function cancelGesture() {
@@ -765,6 +788,7 @@ function move(event: PointerEvent) {
   }
   dragging.x = event.clientX;
   dragging.y = event.clientY;
+  invalidate();
 }
 function up(event: PointerEvent) {
   if (!dragging || dragging.id !== event.pointerId) return;
@@ -794,6 +818,7 @@ function hitAt(event: PointerEvent) {
 
 function visibility() {
   cancelAnimationFrame(frame);
+  frame = 0;
   if (
     !document.hidden &&
     !dead &&
@@ -809,6 +834,7 @@ function lost(event: Event) {
   event.preventDefault();
   contextLost = true;
   cancelAnimationFrame(frame);
+  frame = 0;
   emit("failed");
 }
 watch(
@@ -817,14 +843,22 @@ watch(
     updateSection();
     faceForward();
     if (section === "projects" || previous === "projects") visibility();
+    else invalidate();
   },
 );
-watch(() => [props.theme, props.selected], updateColors);
+watch(
+  () => [props.theme, props.selected],
+  () => {
+    updateColors();
+    invalidate();
+  },
+);
 watch(
   () => [props.reducedMotion, props.paused],
   () => {
     updateSection();
     if (props.section === "projects") visibility();
+    else invalidate();
   },
 );
 watch(
@@ -832,6 +866,7 @@ watch(
   () => {
     orientation = undefined;
     root.rotation.set(...restingRotation);
+    invalidate();
   },
 );
 function faceForward() {
@@ -875,6 +910,7 @@ onMounted(() => {
       camera.aspect = Math.max(width, 1) / Math.max(height, 1);
       camera.position.z = Math.max(8, 5.7 / camera.aspect);
       camera.updateProjectionMatrix();
+      invalidate();
     };
     resize();
     observer = new ResizeObserver(resize);
@@ -889,7 +925,7 @@ onMounted(() => {
       viewportObserver.observe(host.value);
     }
     document.addEventListener("visibilitychange", visibility);
-    frame = requestAnimationFrame(render);
+    invalidate();
   } catch {
     emit("failed");
   }
