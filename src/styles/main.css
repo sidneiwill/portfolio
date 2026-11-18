@@ -321,6 +321,14 @@ textarea {
   font-size: 14px;
   line-height: 1.7;
 }
+.area-tools {
+  margin-top: 0.75rem;
+  color: var(--text);
+  font-size: 14px;
+}
+.area-tools span {
+  color: var(--accent);
+}
 .part-heading {
   margin: 2rem 0 0.5rem;
   color: var(--muted);

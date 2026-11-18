@@ -102,7 +102,16 @@ describe("CubeScene lifecycle and interaction", () => {
     );
     props = reactive({
       section: "home",
-      stackIds: Array.from({ length: 7 }, (_, index) => `stack-${index}`),
+      stackIds: [
+        "frontend",
+        "backend",
+        "desktop",
+        "data",
+        "mobile",
+        "devops",
+        "practice",
+        "testing",
+      ].map((id) => `stack-${id}`),
       theme: "dark",
       reducedMotion: true,
       paused: false,
@@ -251,7 +260,7 @@ describe("CubeScene lifecycle and interaction", () => {
     const { root, scene, camera } = rendered();
     let logic: Mesh | undefined;
     scene.traverse((object) => {
-      if (object.userData.part === "stack-4") logic = object as Mesh;
+      if (object.userData.part === "stack-devops") logic = object as Mesh;
     });
     const cubes: Mesh[] = [];
     scene.traverse((object) => {
@@ -265,7 +274,7 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(
       new Set(cubes.map((cube) => cube.parent?.position.toArray().join(",")))
         .size,
-    ).toBe(7);
+    ).toBe(8);
     for (const cube of cubes) {
       expect(cube.parent?.position.length()).toBeCloseTo(1.3);
     }
@@ -275,7 +284,7 @@ describe("CubeScene lifecycle and interaction", () => {
     const y = (1 - projected.y) * 300;
     pointer(host, "pointerdown", x, y);
     pointer(host, "pointerup", x, y);
-    expect(selected).toHaveBeenLastCalledWith("stack-4");
+    expect(selected).toHaveBeenLastCalledWith("stack-devops");
 
     selected.mockClear();
     const rotation = root.rotation.y;
@@ -289,6 +298,23 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(root.rotation.y).toBeCloseTo(rotation);
   });
 
+  it("draws each stack model from its group id, not its position", async () => {
+    props.section = "programming";
+    mount();
+    frame();
+    const { root } = rendered();
+    const programming = root.children.find(
+      (group) => group !== root.children[0] && group.visible,
+    ) as Group;
+    const model = (id: string) =>
+      programming.children.find((child) => child.userData.part === id);
+    const layered = (id: string) =>
+      model(id)?.children.some((child) => child.userData.layer !== undefined);
+    expect(programming.children[0].userData.part).toBe("stack-frontend");
+    expect(layered("stack-frontend")).toBe(true);
+    expect(layered("stack-backend")).toBe(false);
+  });
+
   it("gives stack topics distinct geometry and focuses the selected model", async () => {
     props.section = "programming";
     mount();
@@ -297,7 +323,7 @@ describe("CubeScene lifecycle and interaction", () => {
     const programming = root.children.find(
       (group) => group !== root.children[0] && group.visible,
     ) as Group;
-    expect(programming.children).toHaveLength(7);
+    expect(programming.children).toHaveLength(8);
     const signatures = programming.children.map((model) =>
       model.children
         .filter((child) => child.type === "LineSegments2")
@@ -309,8 +335,8 @@ describe("CubeScene lifecycle and interaction", () => {
         )
         .join("/"),
     );
-    expect(new Set(signatures).size).toBe(7);
-    props.selected = "stack-2";
+    expect(new Set(signatures).size).toBe(8);
+    props.selected = "stack-data";
     await nextTick();
     frame(100);
     for (const model of programming.children) {

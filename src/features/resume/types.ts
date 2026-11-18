@@ -1,4 +1,15 @@
+type SkillGroupId =
+  | "frontend"
+  | "backend"
+  | "desktop"
+  | "data"
+  | "mobile"
+  | "devops"
+  | "practice"
+  | "testing";
+
 export type SkillGroup = {
+  id: SkillGroupId;
   title: string;
   items: string[];
 };
@@ -7,7 +18,7 @@ export type TimelineItem = {
   title: string;
   place: string;
   period: string;
-  description: string;
+  description?: string;
 };
 
 export type Project = {

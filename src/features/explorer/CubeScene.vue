@@ -254,14 +254,14 @@ function build() {
       lines.position.set(x, y, z);
       return lines;
     };
-    switch (i) {
-      case 0: // Backend: server racks and indicator lights.
+    switch (id.slice("stack-".length)) {
+      case "backend": // Backend: server racks and indicator lights.
         for (const y of [-0.19, 0, 0.19]) {
           box(0.52, 0.13, 0.32, 0, y);
           segment([-0.17, y, 0.17, -0.09, y, 0.17], i, model);
         }
         break;
-      case 1: // Frontend: layered windows, with a title bar.
+      case "frontend": // Frontend: layered windows, with a title bar.
         for (let layer = 0; layer < 3; layer++) {
           const offset = (layer - 1) * 0.1;
           const window = box(0.46, 0.38, 0.02, offset, offset, offset);
@@ -269,7 +269,13 @@ function build() {
         }
         segment([-0.13, 0.19, 0.12, 0.33, 0.19, 0.12], i, model);
         break;
-      case 2: // Data: cylindrical storage with stacked rings.
+      case "desktop": // Desktop & games: monitor with an inset screen on a stand.
+        box(0.56, 0.36, 0.04, 0, 0.08);
+        box(0.48, 0.28, 0.01, 0, 0.08, 0.025);
+        box(0.06, 0.12, 0.04, 0, -0.16);
+        box(0.3, 0.03, 0.16, 0, -0.235);
+        break;
+      case "data": // Data: cylindrical storage with stacked rings.
         wire(new CylinderGeometry(0.23, 0.23, 0.48, 16), i, model);
         for (const y of [-0.24, 0, 0.24]) {
           const ring = wire(new TorusGeometry(0.23, 0.008, 3, 24), i, model);
@@ -277,12 +283,12 @@ function build() {
           ring.position.y = y;
         }
         break;
-      case 3: // Mobile: device, inset screen and home indicator.
+      case "mobile": // Mobile: device, inset screen and home indicator.
         box(0.3, 0.58, 0.07);
         box(0.24, 0.43, 0.01, 0, 0.02, 0.04);
         segment([-0.05, -0.25, 0.04, 0.05, -0.25, 0.04], i, model);
         break;
-      case 4: {
+      case "devops": {
         // DevOps: connected nodes in a continuous cycle.
         const cycle = wire(new TorusGeometry(0.23, 0.008, 3, 24), i, model);
         cycle.userData.spin = true;
@@ -298,7 +304,7 @@ function build() {
         segment(points, i, model);
         break;
       }
-      case 5: {
+      case "practice": {
         // Practice: an open book with two angled pages and a central spine.
         for (const side of [-1, 1]) {
           const page = new Group();
@@ -314,18 +320,20 @@ function build() {
         break;
       }
       default: {
-        // Testing/security: padlock body, curved shackle and keyhole.
-        box(0.46, 0.32, 0.2, 0, -0.12);
-        const shackle = wire(
-          new TorusGeometry(0.16, 0.025, 4, 16, Math.PI),
-          i,
-          model,
-        );
-        shackle.position.y = 0.08;
-        for (const x of [-0.16, 0.16]) box(0.05, 0.08, 0.05, x, 0.04);
-        const keyhole = wire(new TorusGeometry(0.04, 0.004, 3, 12), i, model);
-        keyhole.position.set(0, -0.08, 0.105);
-        segment([0, -0.12, 0.105, 0, -0.2, 0.105], i, model);
+        // Testing: clipboard with checked rows.
+        box(0.42, 0.54, 0.03);
+        box(0.16, 0.06, 0.04, 0, 0.27, 0.01);
+        for (const y of [0.12, -0.02, -0.16]) {
+          segment(
+            [
+              ...[-0.15, y, 0.02, -0.12, y - 0.03, 0.02],
+              ...[-0.12, y - 0.03, 0.02, -0.07, y + 0.03, 0.02],
+              ...[-0.02, y, 0.02, 0.14, y, 0.02],
+            ],
+            i,
+            model,
+          );
+        }
         break;
       }
     }

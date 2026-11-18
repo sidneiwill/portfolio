@@ -20,7 +20,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     hero: {
       eyebrow: "Practical solutions for operational challenges",
       headline:
-        "I build systems that keep field work, fleets, and internal teams moving.",
+        "I build management systems that keep field work and internal teams moving.",
       summary:
         "Computer Engineer focused on web, mobile, and desktop application development using Vue.js, Node.js, and Go, with experience in embedded systems, IoT, and hardware-software integration. Public-sector background developing practical and efficient solutions for process automation and management.",
       primaryCta: "Contact",
@@ -38,21 +38,47 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     },
     skillGroups: [
       {
+        id: "frontend",
+        title: "Frontend",
+        items: ["Vue 3", "TypeScript", "React", "Quasar", "Vite", "Three.js"],
+      },
+      {
+        id: "backend",
         title: "Backend",
+        items: ["Node.js", "Go", "JavaScript", "REST APIs", "Lua"],
+      },
+      {
+        id: "desktop",
+        title: "Desktop & Games",
+        items: ["Wails", "Electron", "Ebiten"],
+      },
+      {
+        id: "data",
+        title: "Data",
         items: [
-          "TypeScript",
-          "Node.js",
-          "Go",
-          "JavaScript",
-          "REST APIs",
-          "Lua",
+          "PostgreSQL",
+          "MySQL",
+          "MongoDB",
+          "Firebase",
+          "Google Sheets API",
         ],
       },
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
-      { title: "Data", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
-      { title: "Mobile", items: ["React Native", "Expo Go"] },
-      { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
+      { id: "mobile", title: "Mobile", items: ["React Native", "Expo Go"] },
       {
+        id: "devops",
+        title: "DevOps",
+        items: [
+          "Docker",
+          "Git",
+          "GitHub Actions",
+          "Linux",
+          "Cloudflare Workers",
+          "Vercel",
+          "pnpm",
+        ],
+      },
+      {
+        id: "practice",
         title: "Practice",
         items: [
           "Clean Code",
@@ -64,8 +90,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         ],
       },
       {
-        title: "Testing and Security",
-        items: ["Vitest", "Jest"],
+        id: "testing",
+        title: "Testing",
+        items: ["Vitest", "Jest", "Playwright"],
       },
     ],
     experience: [
@@ -96,18 +123,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         title: "Technologist in Chemistry",
         place: "Escola Técnica Estadual",
         period: "Jan 2017 - May 2020",
-        description:
-          "Training in chemical analysis, quality control, process management, product development, materials treatment, and technical standards.",
       },
     ],
     projects: [
-      {
-        name: "quiCheck",
-        title: "Asset verification scanner",
-        stack: "Expo Go + React Native + Google Sheets API",
-        description:
-          "Mobile app for public and private companies to consult assets in real time through labels, accelerating inventory and asset control.",
-      },
       {
         name: "Aylon",
         title: "Fleet maintenance management",
@@ -116,12 +134,12 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Native desktop system for public and private fleets, covering vehicles, maintenance, invoices, balances, and service payment tracking.",
       },
       {
-        name: "Portfolio",
-        title: "Personal developer portfolio",
-        stack: "Vue 3 + TypeScript + Vite",
+        name: "quiCheck",
+        title: "Asset verification scanner",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Multilingual portfolio presenting my experience, technical stack, and projects in a responsive interface.",
-        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+          "Mobile app for public and private companies to consult assets in real time through labels, accelerating inventory and asset control.",
+        isDownloadComingSoon: true,
       },
       {
         name: "SimpleRPG",
@@ -131,6 +149,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Top-down RPG prototype with animated movement, camera tracking, an inventory overlay, and looping background music.",
         repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
         isDownloadComingSoon: true,
+      },
+      {
+        name: "Portfolio",
+        title: "Personal developer portfolio",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Multilingual portfolio presenting my experience, technical stack, and projects in a responsive interface.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
       },
     ],
     languages: [
@@ -153,7 +179,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     hero: {
       eyebrow: "Soluções práticas para desafios operacionais",
       headline:
-        "Construo sistemas para que equipes internas, frotas e trabalho de campo continuem fluindo.",
+        "Construo sistemas de gestão para que equipes internas e trabalho de campo continuem fluindo.",
       summary:
         "Engenheiro de Computação com foco em desenvolvimento de aplicações web, mobile e desktop utilizando Vue.js, Node.js e Go, além de experiência em sistemas embarcados, IoT e integração hardware-software. Vivência no setor público, desenvolvendo soluções práticas e eficientes para automação e gestão de processos.",
       primaryCta: "Contato",
@@ -171,21 +197,47 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     },
     skillGroups: [
       {
+        id: "frontend",
+        title: "Frontend",
+        items: ["Vue 3", "TypeScript", "React", "Quasar", "Vite", "Three.js"],
+      },
+      {
+        id: "backend",
         title: "Backend",
+        items: ["Node.js", "Go", "JavaScript", "REST APIs", "Lua"],
+      },
+      {
+        id: "desktop",
+        title: "Desktop e jogos",
+        items: ["Wails", "Electron", "Ebiten"],
+      },
+      {
+        id: "data",
+        title: "Dados",
         items: [
-          "TypeScript",
-          "Node.js",
-          "Go",
-          "JavaScript",
-          "REST APIs",
-          "Lua",
+          "PostgreSQL",
+          "MySQL",
+          "MongoDB",
+          "Firebase",
+          "Google Sheets API",
         ],
       },
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
-      { title: "Dados", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
-      { title: "Mobile", items: ["React Native", "Expo Go"] },
-      { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
+      { id: "mobile", title: "Mobile", items: ["React Native", "Expo Go"] },
       {
+        id: "devops",
+        title: "DevOps",
+        items: [
+          "Docker",
+          "Git",
+          "GitHub Actions",
+          "Linux",
+          "Cloudflare Workers",
+          "Vercel",
+          "pnpm",
+        ],
+      },
+      {
+        id: "practice",
         title: "Prática",
         items: [
           "Clean Code",
@@ -197,8 +249,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         ],
       },
       {
-        title: "Testes e Segurança",
-        items: ["Vitest", "Jest"],
+        id: "testing",
+        title: "Testes",
+        items: ["Vitest", "Jest", "Playwright"],
       },
     ],
     experience: [
@@ -229,18 +282,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         title: "Tecnólogo em Química",
         place: "Escola Técnica Estadual",
         period: "Jan 2017 - Mai 2020",
-        description:
-          "Formação em análises químicas, controle de qualidade, gestão de processos, desenvolvimento de produtos, tratamento de materiais e normas técnicas.",
       },
     ],
     projects: [
-      {
-        name: "quiCheck",
-        title: "Scanner para conferência patrimonial",
-        stack: "Expo Go + React Native + Google Sheets API",
-        description:
-          "App mobile para empresas públicas e privadas consultarem bens em tempo real por etiquetas, acelerando inventário e controle patrimonial.",
-      },
       {
         name: "Aylon",
         title: "Gestão de manutenção de frotas",
@@ -249,12 +293,12 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Sistema desktop nativo para frotas públicas e privadas, com veículos, manutenções, notas fiscais, saldos e pagamentos de serviços.",
       },
       {
-        name: "Portfólio",
-        title: "Portfólio pessoal de desenvolvimento",
-        stack: "Vue 3 + TypeScript + Vite",
+        name: "quiCheck",
+        title: "Scanner para conferência patrimonial",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Portfólio multilíngue que apresenta minha experiência, stack técnica e projetos em uma interface responsiva.",
-        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+          "App mobile para empresas públicas e privadas consultarem bens em tempo real por etiquetas, acelerando inventário e controle patrimonial.",
+        isDownloadComingSoon: true,
       },
       {
         name: "SimpleRPG",
@@ -264,6 +308,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Protótipo de RPG visto de cima com movimento animado, câmera de acompanhamento, menu de inventário e música ambiente contínua.",
         repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
         isDownloadComingSoon: true,
+      },
+      {
+        name: "Portfólio",
+        title: "Portfólio pessoal de desenvolvimento",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Portfólio multilíngue que apresenta minha experiência, stack técnica e projetos em uma interface responsiva.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
       },
     ],
     languages: [
@@ -286,7 +338,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     hero: {
       eyebrow: "Soluciones prácticas para desafíos operativos",
       headline:
-        "Creo sistemas para que equipos internos, flotas y trabajo de campo sigan en marcha.",
+        "Creo sistemas de gestión para que equipos internos y trabajo de campo sigan en marcha.",
       summary:
         "Ingeniero en Computación enfocado en el desarrollo de aplicaciones web, móviles y desktop con Vue.js, Node.js y Go, además de experiencia en sistemas embebidos, IoT e integración hardware-software. Experiencia en el sector público, desarrollando soluciones prácticas y eficientes para automatización y gestión de procesos.",
       primaryCta: "Contacto",
@@ -304,21 +356,47 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     },
     skillGroups: [
       {
+        id: "frontend",
+        title: "Frontend",
+        items: ["Vue 3", "TypeScript", "React", "Quasar", "Vite", "Three.js"],
+      },
+      {
+        id: "backend",
         title: "Backend",
+        items: ["Node.js", "Go", "JavaScript", "REST APIs", "Lua"],
+      },
+      {
+        id: "desktop",
+        title: "Escritorio y juegos",
+        items: ["Wails", "Electron", "Ebiten"],
+      },
+      {
+        id: "data",
+        title: "Datos",
         items: [
-          "TypeScript",
-          "Node.js",
-          "Go",
-          "JavaScript",
-          "REST APIs",
-          "Lua",
+          "PostgreSQL",
+          "MySQL",
+          "MongoDB",
+          "Firebase",
+          "Google Sheets API",
         ],
       },
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
-      { title: "Datos", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
-      { title: "Mobile", items: ["React Native", "Expo Go"] },
-      { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
+      { id: "mobile", title: "Mobile", items: ["React Native", "Expo Go"] },
       {
+        id: "devops",
+        title: "DevOps",
+        items: [
+          "Docker",
+          "Git",
+          "GitHub Actions",
+          "Linux",
+          "Cloudflare Workers",
+          "Vercel",
+          "pnpm",
+        ],
+      },
+      {
+        id: "practice",
         title: "Práctica",
         items: [
           "Clean Code",
@@ -330,8 +408,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         ],
       },
       {
-        title: "Pruebas y Seguridad",
-        items: ["Vitest", "Jest"],
+        id: "testing",
+        title: "Pruebas",
+        items: ["Vitest", "Jest", "Playwright"],
       },
     ],
     experience: [
@@ -362,18 +441,9 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         title: "Tecnólogo en Química",
         place: "Escola Técnica Estadual",
         period: "Ene 2017 - May 2020",
-        description:
-          "Formación en análisis químicos, control de calidad, gestión de procesos, desarrollo de productos, tratamiento de materiales y normas técnicas.",
       },
     ],
     projects: [
-      {
-        name: "quiCheck",
-        title: "Scanner para control patrimonial",
-        stack: "Expo Go + React Native + Google Sheets API",
-        description:
-          "App móvil para que empresas públicas y privadas consulten bienes en tiempo real mediante etiquetas, acelerando inventario y control patrimonial.",
-      },
       {
         name: "Aylon",
         title: "Gestión de mantenimiento de flotas",
@@ -382,12 +452,12 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Sistema desktop nativo para flotas públicas y privadas con vehículos, mantenimientos, facturas, saldos y pagos de servicios.",
       },
       {
-        name: "Portafolio",
-        title: "Portafolio personal de desarrollo",
-        stack: "Vue 3 + TypeScript + Vite",
+        name: "quiCheck",
+        title: "Scanner para control patrimonial",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Portafolio multilingüe que presenta mi experiencia, stack técnica y proyectos en una interfaz responsiva.",
-        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+          "App móvil para que empresas públicas y privadas consulten bienes en tiempo real mediante etiquetas, acelerando inventario y control patrimonial.",
+        isDownloadComingSoon: true,
       },
       {
         name: "SimpleRPG",
@@ -397,6 +467,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Prototipo de RPG de vista superior con movimiento animado, cámara de seguimiento, menú de inventario y música ambiental continua.",
         repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
         isDownloadComingSoon: true,
+      },
+      {
+        name: "Portafolio",
+        title: "Portafolio personal de desarrollo",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Portafolio multilingüe que presenta mi experiencia, stack técnica y proyectos en una interfaz responsiva.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
       },
     ],
     languages: ["Portugués: fluido", "Inglés: intermedio", "Español: básico"],

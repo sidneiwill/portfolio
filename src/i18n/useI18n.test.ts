@@ -10,13 +10,13 @@ describe("resumeContent", () => {
       "pt-BR",
     ]);
     expect(resumeContent["en-US"].projects).toHaveLength(4);
-    expect(resumeContent["pt-BR"].skillGroups).toHaveLength(7);
+    expect(resumeContent["pt-BR"].skillGroups).toHaveLength(8);
     expect(resumeContent["es-AR"].experience).toHaveLength(2);
 
     const skillGroupCounts = Object.values(resumeContent).map(
       (content) => content.skillGroups.length,
     );
-    expect(new Set(skillGroupCounts)).toEqual(new Set([7]));
+    expect(new Set(skillGroupCounts)).toEqual(new Set([8]));
   });
 
   it("keeps core identity consistent across locales", () => {

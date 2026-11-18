@@ -15,14 +15,14 @@ import ResumeSection from "@/features/resume/components/ResumeSection.vue";
 import SkillsSection from "@/features/resume/components/SkillsSection.vue";
 import { useI18n } from "@/i18n/useI18n";
 import type { Theme } from "@/shared/theme/useTheme";
-import { areaIds, explorerContent, type SectionId } from "./content";
+import { areaIds, areaTools, explorerContent, type SectionId } from "./content";
 
 const emit = defineEmits<{ open: []; close: [] }>();
 const props = defineProps<{ theme: Theme }>();
 const { locale, resume } = useI18n();
 const text = computed(() => explorerContent[locale.value]);
 const stackIds = computed(() =>
-  resume.value.skillGroups.map((_, index) => `stack-${index}`),
+  resume.value.skillGroups.map((group) => `stack-${group.id}`),
 );
 const section = ref<SectionId>("home");
 const selected = ref<string | null>(null);
@@ -54,7 +54,7 @@ const CubeScene = defineAsyncComponent({
     fail();
   },
 });
-const sections: SectionId[] = ["about", ...areaIds, "projects", "contact"];
+const sections: SectionId[] = ["about", "projects", ...areaIds, "contact"];
 const area = computed(() => areaIds.find((id) => id === section.value));
 const details = computed(() =>
   area.value ? text.value.areas[area.value] : null,
@@ -235,10 +235,14 @@ onBeforeUnmount(() => {
       <div id="about" data-section="about" class="scroll-section" role="region" :aria-label="text.navigation.about">
         <HeroSection :content="resume" /><ResumeSection :content="resume" />
       </div>
+      <div data-section="projects" class="scroll-section projects-scroll-section" role="region" :aria-label="text.navigation.projects">
+        <ProjectsSection :content="resume" />
+      </div>
       <div v-for="id in areaIds" :id="id" :key="id" :data-section="id" class="scroll-section" role="region" :aria-label="text.navigation[id]">
         <p class="eyebrow">{{ resume.meta.name }}</p>
         <h2>{{ text.navigation[id] }}</h2>
         <p class="area-summary">{{ text.areas[id].summary }}</p>
+        <p v-if="areaTools[id]" class="area-tools"><span>{{ text.tools }}:</span> {{ areaTools[id]?.join(" · ") }}</p>
         <SkillsSection v-if="id === 'programming'" :content="resume" :selected="section === id ? selected : null"
           @select="selectPart(id, $event)" @hover="hoverPart(id, $event)" />
         <template v-else>
@@ -252,9 +256,6 @@ onBeforeUnmount(() => {
             <template v-if="section === id && part"><h3>{{ part.label }}</h3><p>{{ part.description }}</p></template>
           </div>
         </template>
-      </div>
-      <div data-section="projects" class="scroll-section projects-scroll-section" role="region" :aria-label="text.navigation.projects">
-        <ProjectsSection :content="resume" />
       </div>
       <div data-section="contact" class="scroll-section" role="region" :aria-label="text.navigation.contact">
         <ContactSection :content="resume" :selected="section === 'contact' ? selected : null"

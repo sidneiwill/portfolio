@@ -4,7 +4,7 @@ import PortfolioApp from "@/App.vue";
 import type { Locale } from "@/i18n/config";
 import { resumeContent } from "@/i18n/resumeContent";
 import { useI18n } from "@/i18n/useI18n";
-import { areaIds, explorerContent, type SectionId } from "./content";
+import { areaIds, areaTools, explorerContent, type SectionId } from "./content";
 import PortfolioExplorer from "./PortfolioExplorer.vue";
 
 vi.mock("./CubeScene.vue", async () => {
@@ -36,7 +36,10 @@ vi.mock("./CubeScene.vue", async () => {
             [
               h(
                 "button",
-                { "data-select": "", onClick: () => emit("select", "stack-0") },
+                {
+                  "data-select": "",
+                  onClick: () => emit("select", "stack-frontend"),
+                },
                 "Select scene part",
               ),
               h(
@@ -178,11 +181,11 @@ describe("PortfolioExplorer", () => {
       ).map((node) => (node as HTMLElement).dataset.section),
     ).toEqual([
       "about",
+      "projects",
       "programming",
       "reverse",
       "modeling",
       "electronics",
-      "projects",
       "contact",
     ]);
     const ids = Array.from(container.querySelectorAll("[id]")).map(
@@ -354,11 +357,11 @@ describe("PortfolioExplorer", () => {
       ),
     ).toEqual([
       "about",
+      "projects",
       "programming",
       "reverse",
       "modeling",
       "electronics",
-      "projects",
       "contact",
     ]);
     expect(content.querySelector("#projects-title")).not.toBeNull();
@@ -421,12 +424,12 @@ describe("PortfolioExplorer", () => {
       if (area === "programming") {
         const buttons =
           container.querySelectorAll<HTMLButtonElement>(".stack-topic");
-        expect(buttons).toHaveLength(7);
+        expect(buttons).toHaveLength(8);
         for (const [index, button] of buttons.entries()) {
           button.click();
           await nextTick();
           expect(element("[data-scene]").dataset.selected).toBe(
-            `stack-${index}`,
+            `stack-${resumeContent["en-US"].skillGroups[index]?.id}`,
           );
           expect(button.getAttribute("aria-expanded")).toBe("true");
         }
@@ -459,18 +462,18 @@ describe("PortfolioExplorer", () => {
     const visible = () =>
       lists().filter((list) => list.getAttribute("aria-hidden") === "false");
     expect(visible()).toHaveLength(0);
-    expect(container.querySelectorAll(".stack-topic")).toHaveLength(7);
+    expect(container.querySelectorAll(".stack-topic")).toHaveLength(8);
     await click("[data-select]");
     expect(visible()).toHaveLength(1);
-    expect(visible()[0].id).toBe("stack-details-0");
-    expect(visible()[0].textContent).toContain("TypeScript");
+    expect(visible()[0].id).toBe("stack-details-frontend");
+    expect(visible()[0].textContent).toContain("Vue 3");
     expect(visible()[0].hasAttribute("inert")).toBe(false);
-    await click('.stack-topic[aria-controls="stack-details-1"]');
+    await click('.stack-topic[aria-controls="stack-details-backend"]');
     expect(visible()).toHaveLength(1);
-    expect(visible()[0].id).toBe("stack-details-1");
-    expect(element("#stack-details-0").hasAttribute("inert")).toBe(true);
-    expect(element("[data-scene]").dataset.selected).toBe("stack-1");
-    await click('.stack-topic[aria-controls="stack-details-1"]');
+    expect(visible()[0].id).toBe("stack-details-backend");
+    expect(element("#stack-details-frontend").hasAttribute("inert")).toBe(true);
+    expect(element("[data-scene]").dataset.selected).toBe("stack-backend");
+    await click('.stack-topic[aria-controls="stack-details-backend"]');
     expect(visible()).toHaveLength(0);
     expect(element("[data-scene]").dataset.selected).toBe("");
     await click("[data-select]");
@@ -541,6 +544,19 @@ describe("PortfolioExplorer", () => {
       ),
     ).toBe("Contact");
     expect(element('#contact a[href^="mailto:"]')).toBeTruthy();
+  });
+
+  it("lists the engineering tools behind each hardware area", async () => {
+    await click("[data-open]");
+    expect(
+      container.querySelector('[data-section="programming"] .area-tools'),
+    ).toBeNull();
+    for (const area of ["reverse", "modeling", "electronics"] as const) {
+      const tools = element(`[data-section="${area}"] .area-tools`);
+      expect(tools.textContent).toBe(
+        `${explorerContent["en-US"].tools}: ${areaTools[area]?.join(" · ")}`,
+      );
+    }
   });
 
   it("identifies programming models on keyboard focus and selection", async () => {
