@@ -20,7 +20,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     hero: {
       eyebrow: "Practical solutions for operational challenges",
       headline:
-        "I build systems that keep field work, fleets, and internal teams moving.",
+        "I build management systems that keep field work and internal teams moving.",
       summary:
         "Computer Engineer focused on web, mobile, and desktop application development using Vue.js, Node.js, and Go, with experience in embedded systems, IoT, and hardware-software integration. Public-sector background developing practical and efficient solutions for process automation and management.",
       primaryCta: "Contact",
@@ -153,7 +153,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     hero: {
       eyebrow: "Soluções práticas para desafios operacionais",
       headline:
-        "Construo sistemas para que equipes internas, frotas e trabalho de campo continuem fluindo.",
+        "Construo sistemas de gestão para que equipes internas e trabalho de campo continuem fluindo.",
       summary:
         "Engenheiro de Computação com foco em desenvolvimento de aplicações web, mobile e desktop utilizando Vue.js, Node.js e Go, além de experiência em sistemas embarcados, IoT e integração hardware-software. Vivência no setor público, desenvolvendo soluções práticas e eficientes para automação e gestão de processos.",
       primaryCta: "Contato",
@@ -286,7 +286,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     hero: {
       eyebrow: "Soluciones prácticas para desafíos operativos",
       headline:
-        "Creo sistemas para que equipos internos, flotas y trabajo de campo sigan en marcha.",
+        "Creo sistemas de gestión para que equipos internos y trabajo de campo sigan en marcha.",
       summary:
         "Ingeniero en Computación enfocado en el desarrollo de aplicaciones web, móviles y desktop con Vue.js, Node.js y Go, además de experiencia en sistemas embebidos, IoT e integración hardware-software. Experiencia en el sector público, desarrollando soluciones prácticas y eficientes para automatización y gestión de procesos.",
       primaryCta: "Contacto",
