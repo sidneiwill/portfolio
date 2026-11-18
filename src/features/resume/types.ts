@@ -7,7 +7,7 @@ export type TimelineItem = {
   title: string;
   place: string;
   period: string;
-  description: string;
+  description?: string;
 };
 
 export type Project = {

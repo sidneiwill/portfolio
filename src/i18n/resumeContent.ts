@@ -96,8 +96,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         title: "Technologist in Chemistry",
         place: "Escola Técnica Estadual",
         period: "Jan 2017 - May 2020",
-        description:
-          "Training in chemical analysis, quality control, process management, product development, materials treatment, and technical standards.",
       },
     ],
     projects: [
@@ -229,8 +227,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         title: "Tecnólogo em Química",
         place: "Escola Técnica Estadual",
         period: "Jan 2017 - Mai 2020",
-        description:
-          "Formação em análises químicas, controle de qualidade, gestão de processos, desenvolvimento de produtos, tratamento de materiais e normas técnicas.",
       },
     ],
     projects: [
@@ -362,8 +358,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         title: "Tecnólogo en Química",
         place: "Escola Técnica Estadual",
         period: "Ene 2017 - May 2020",
-        description:
-          "Formación en análisis químicos, control de calidad, gestión de procesos, desarrollo de productos, tratamiento de materiales y normas técnicas.",
       },
     ],
     projects: [

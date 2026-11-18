@@ -17,7 +17,7 @@ const itemId = (item: TimelineItem) => `${item.place}-${item.period}`;
         <p class="period">{{ item.period }}</p>
         <h3>{{ item.title }}</h3>
         <p class="place">{{ item.place }}</p>
-        <p>{{ item.description }}</p>
+        <p v-if="item.description">{{ item.description }}</p>
       </article>
     </div>
   </section>
@@ -31,7 +31,7 @@ const itemId = (item: TimelineItem) => `${item.place}-${item.period}`;
         <p class="period">{{ item.period }}</p>
         <h3>{{ item.title }}</h3>
         <p class="place">{{ item.place }}</p>
-        <p>{{ item.description }}</p>
+        <p v-if="item.description">{{ item.description }}</p>
       </article>
     </div>
   </section>
