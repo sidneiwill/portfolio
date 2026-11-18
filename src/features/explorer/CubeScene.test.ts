@@ -247,6 +247,58 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(root.children.slice(1).every((group) => !group.visible)).toBe(true);
   });
 
+  it("eases the scene back to a front view when the section changes", async () => {
+    props.section = "reverse";
+    props.reducedMotion = false;
+    const host = mount();
+    host.setPointerCapture = vi.fn();
+    host.hasPointerCapture = vi.fn(() => false);
+    let time = performance.now();
+    const run = (count: number) => {
+      for (let index = 0; index < count; index++) {
+        time += 50;
+        frame(time);
+      }
+    };
+    run(1);
+    const { root } = rendered();
+    const turn = Math.PI * 2;
+    // Idle spin plus a drag left the model edge-on, two turns in.
+    root.rotation.set(0.9, 0.55 + 2 * turn + Math.PI / 2, 0.04);
+    props.section = "programming";
+    await nextTick();
+    run(2);
+    expect(root.rotation.y).toBeGreaterThan(0.55 + 2 * turn);
+    expect(root.rotation.y).toBeLessThan(0.55 + 2 * turn + Math.PI / 2);
+    run(60);
+    expect(root.rotation.x).toBeCloseTo(0.28);
+    expect(root.rotation.y).toBeCloseTo(0.55 + 2 * turn);
+
+    props.section = "modeling";
+    root.rotation.y += 1;
+    await nextTick();
+    run(1);
+    pointer(host, "pointerdown", 300, 300);
+    pointer(host, "pointermove", 340, 300);
+    pointer(host, "pointerup", 340, 300);
+    const dragged = root.rotation.y;
+    props.reducedMotion = true;
+    await nextTick();
+    run(30);
+    expect(root.rotation.y).toBeCloseTo(dragged);
+  });
+
+  it("faces forward immediately with reduced motion", async () => {
+    props.section = "reverse";
+    mount();
+    frame();
+    const { root } = rendered();
+    root.rotation.set(0.9, 0.55 + Math.PI / 2, 0.04);
+    props.section = "electronics";
+    await nextTick();
+    expect(root.rotation.toArray().slice(0, 3)).toEqual([0.28, 0.55, 0.04]);
+  });
+
   it("selects actual interior geometry by raycast and treats dragging as rotation", async () => {
     props.section = "programming";
     const host = mount();

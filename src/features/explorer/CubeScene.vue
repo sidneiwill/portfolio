@@ -62,7 +62,11 @@ const root = new Group();
 const shell = new Group();
 root.add(shell);
 scene.add(root);
-root.rotation.set(0.28, 0.55, 0.04);
+const restingRotation = [0.28, 0.55, 0.04] as const;
+root.rotation.set(...restingRotation);
+// Orientation the scene eases back to after a section change, so a model never
+// inherits a sideways angle from the idle spin or a previous drag.
+let orientation: [number, number, number] | undefined;
 let shellTarget = 0;
 let shellProgress = 0;
 let deformationTime = 0;
@@ -680,7 +684,23 @@ function render(time: number) {
         }
       }
     }
-  } else if (moving && !dragging && props.section !== "home")
+  }
+  if (orientation && !dragging) {
+    const ease = 1 - Math.exp(-dt * 6);
+    const [x, y, z] = orientation;
+    root.rotation.x += (x - root.rotation.x) * ease;
+    root.rotation.y += (y - root.rotation.y) * ease;
+    root.rotation.z += (z - root.rotation.z) * ease;
+    if (Math.abs(y - root.rotation.y) + Math.abs(x - root.rotation.x) < 0.002) {
+      root.rotation.set(x, y, z);
+      orientation = undefined;
+    }
+  } else if (
+    moving &&
+    !dragging &&
+    props.section !== "home" &&
+    active !== interiors.get("programming")
+  )
     root.rotation.y += dt * 0.13;
   updateActiveOpacity();
   if (shell.visible) shadePolyhedron();
@@ -702,6 +722,8 @@ function down(event: PointerEvent) {
     cancelGesture();
     return;
   }
+  // A drag means the visitor chose an angle; stop easing back.
+  orientation = undefined;
   dragging = {
     id: event.pointerId,
     x: event.clientX,
@@ -793,6 +815,7 @@ watch(
   () => props.section,
   (section, previous) => {
     updateSection();
+    faceForward();
     if (section === "projects" || previous === "projects") visibility();
   },
 );
@@ -806,8 +829,25 @@ watch(
 );
 watch(
   () => props.reset,
-  () => root.rotation.set(0.28, 0.55, 0.04),
+  () => {
+    orientation = undefined;
+    root.rotation.set(...restingRotation);
+  },
 );
+function faceForward() {
+  const [x, y, z] = restingRotation;
+  // Unwind the idle spin to the nearest full turn so the easing takes the short way.
+  const turn = Math.PI * 2;
+  const target: [number, number, number] = [
+    x,
+    y + Math.round((root.rotation.y - y) / turn) * turn,
+    z,
+  ];
+  if (props.reducedMotion || props.paused) {
+    orientation = undefined;
+    root.rotation.set(...target);
+  } else orientation = target;
+}
 function keydown(event: KeyboardEvent) {
   if (!canOpen.value || (event.key !== "Enter" && event.key !== " ")) return;
   event.preventDefault();
