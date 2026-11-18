@@ -269,6 +269,12 @@ function build() {
         }
         segment([-0.13, 0.19, 0.12, 0.33, 0.19, 0.12], i, model);
         break;
+      case "desktop": // Desktop & games: monitor with an inset screen on a stand.
+        box(0.56, 0.36, 0.04, 0, 0.08);
+        box(0.48, 0.28, 0.01, 0, 0.08, 0.025);
+        box(0.06, 0.12, 0.04, 0, -0.16);
+        box(0.3, 0.03, 0.16, 0, -0.235);
+        break;
       case "data": // Data: cylindrical storage with stacked rings.
         wire(new CylinderGeometry(0.23, 0.23, 0.48, 16), i, model);
         for (const y of [-0.24, 0, 0.24]) {

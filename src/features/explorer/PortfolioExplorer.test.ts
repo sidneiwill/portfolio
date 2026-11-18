@@ -424,7 +424,7 @@ describe("PortfolioExplorer", () => {
       if (area === "programming") {
         const buttons =
           container.querySelectorAll<HTMLButtonElement>(".stack-topic");
-        expect(buttons).toHaveLength(7);
+        expect(buttons).toHaveLength(8);
         for (const [index, button] of buttons.entries()) {
           button.click();
           await nextTick();
@@ -462,7 +462,7 @@ describe("PortfolioExplorer", () => {
     const visible = () =>
       lists().filter((list) => list.getAttribute("aria-hidden") === "false");
     expect(visible()).toHaveLength(0);
-    expect(container.querySelectorAll(".stack-topic")).toHaveLength(7);
+    expect(container.querySelectorAll(".stack-topic")).toHaveLength(8);
     await click("[data-select]");
     expect(visible()).toHaveLength(1);
     expect(visible()[0].id).toBe("stack-details-frontend");

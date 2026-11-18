@@ -105,6 +105,7 @@ describe("CubeScene lifecycle and interaction", () => {
       stackIds: [
         "frontend",
         "backend",
+        "desktop",
         "data",
         "mobile",
         "devops",
@@ -273,7 +274,7 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(
       new Set(cubes.map((cube) => cube.parent?.position.toArray().join(",")))
         .size,
-    ).toBe(7);
+    ).toBe(8);
     for (const cube of cubes) {
       expect(cube.parent?.position.length()).toBeCloseTo(1.3);
     }
@@ -322,7 +323,7 @@ describe("CubeScene lifecycle and interaction", () => {
     const programming = root.children.find(
       (group) => group !== root.children[0] && group.visible,
     ) as Group;
-    expect(programming.children).toHaveLength(7);
+    expect(programming.children).toHaveLength(8);
     const signatures = programming.children.map((model) =>
       model.children
         .filter((child) => child.type === "LineSegments2")
@@ -334,7 +335,7 @@ describe("CubeScene lifecycle and interaction", () => {
         )
         .join("/"),
     );
-    expect(new Set(signatures).size).toBe(7);
+    expect(new Set(signatures).size).toBe(8);
     props.selected = "stack-data";
     await nextTick();
     frame(100);
