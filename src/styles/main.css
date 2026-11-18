@@ -511,6 +511,15 @@ h3 {
   background: transparent;
   color: var(--accent);
 }
+.base-action--primary {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--accent);
+  text-decoration: none;
+}
+.base-action--primary:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
 .photo-frame {
   overflow: hidden;
   border: 1px solid var(--line);
