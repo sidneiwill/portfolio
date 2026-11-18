@@ -3,6 +3,8 @@ import { useTheme } from "@/shared/theme/useTheme";
 
 describe("useTheme", () => {
   beforeEach(() => {
+    document.head.innerHTML =
+      '<link id="favicon" rel="icon" href="/favicon-dark.svg" />';
     localStorage.clear();
     document.documentElement.removeAttribute("data-theme");
     vi.stubGlobal(
@@ -21,5 +23,8 @@ describe("useTheme", () => {
     expect(theme.theme.value).toBe("light");
     expect(document.documentElement.dataset.theme).toBe("light");
     expect(localStorage.getItem("sidnei.theme")).toBe("light");
+    expect(document.getElementById("favicon")?.getAttribute("href")).toBe(
+      "/favicon-light.svg",
+    );
   });
 });
