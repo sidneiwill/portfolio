@@ -9,7 +9,7 @@ const itemId = (item: TimelineItem) => `${item.place}-${item.period}`;
 
 <template>
   <section class="section-block timeline-layout" aria-labelledby="experience-title">
-    <BaseSectionHeading number="02" heading-id="experience-title">
+    <BaseSectionHeading heading-id="experience-title">
       {{ content.sections.experience }}
     </BaseSectionHeading>
     <div class="timeline">
@@ -23,7 +23,7 @@ const itemId = (item: TimelineItem) => `${item.place}-${item.period}`;
   </section>
 
   <section class="section-block timeline-layout compact" aria-labelledby="education-title">
-    <BaseSectionHeading number="03" heading-id="education-title">
+    <BaseSectionHeading heading-id="education-title">
       {{ content.sections.education }}
     </BaseSectionHeading>
     <div class="timeline">

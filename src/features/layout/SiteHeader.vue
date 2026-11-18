@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { type Locale, localeLabels } from "@/i18n/config";
 import type { Theme } from "@/shared/theme/useTheme";
 
-const props = defineProps<{
+defineProps<{
   locale: Locale;
   locales: Locale[];
   theme: Theme;
@@ -20,19 +19,15 @@ defineEmits<{
   setLocale: [locale: Locale];
   toggleTheme: [];
 }>();
-
-const languageSliderStyle = computed(() => ({
-  "--active-index": props.locales.indexOf(props.locale),
-  "--locale-count": props.locales.length,
-}));
 </script>
 
 <template>
   <header class="site-header" :aria-label="labels.site">
     <div class="site-header-inner">
       <a class="brand" href="#main" aria-label="Sidnei William de Oliveira">
-        <span class="brand-mark">SW</span>
-        <span class="brand-text">Sidnei</span>
+        <span class="brand-text">sidnei<span class="terminal-at">@</span>portfolio</span>
+        <span class="brand-mark" aria-hidden="true">:~ $</span>
+        <span class="terminal-cursor" aria-hidden="true">▌</span>
       </a>
 
       <nav class="header-actions" :aria-label="labels.language">
@@ -40,7 +35,6 @@ const languageSliderStyle = computed(() => ({
           class="segmented language-selector"
           role="group"
           :aria-label="labels.language"
-          :style="languageSliderStyle"
         >
           <button
             v-for="item in locales"
@@ -55,7 +49,7 @@ const languageSliderStyle = computed(() => ({
           </button>
         </div>
         <button type="button" class="icon-button" :aria-label="labels.theme" @click="$emit('toggleTheme')">
-          <span aria-hidden="true">{{ theme === "dark" ? "☾" : "☼" }}</span>
+          <span class="terminal-setting" aria-hidden="true">theme=</span>
           <span class="theme-label">{{ theme === "dark" ? labels.dark : labels.light }}</span>
         </button>
       </nav>

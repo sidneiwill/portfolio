@@ -65,7 +65,7 @@ const onDialogKeydown = (event: KeyboardEvent) => {
 
 <template>
   <section id="projects" class="section-block" aria-labelledby="projects-title">
-    <BaseSectionHeading number="04" heading-id="projects-title">
+    <BaseSectionHeading heading-id="projects-title">
       {{ content.sections.projects }}
     </BaseSectionHeading>
     <div class="projects-grid">
