@@ -3,17 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@12.14.0",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "npm run build && wrangler dev",
+    "preview": "pnpm build && wrangler dev",
     "test": "vitest run",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "deps": "knip",
     "quality": "fallow",
-    "verify": "npm run lint && npm run deps && npm run test && npm run build",
-    "deploy": "npm run build && wrangler deploy"
+    "verify": "pnpm lint && pnpm deps && pnpm test && pnpm build",
+    "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
     "@lucide/vue": "^1.41.0",

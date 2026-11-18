@@ -41,3 +41,6 @@ tasks/
 .wrangler
 .dev.vars*
 !.dev.vars.example
+
+# Local notes
+output.md
