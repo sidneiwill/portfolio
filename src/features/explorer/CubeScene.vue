@@ -320,18 +320,20 @@ function build() {
         break;
       }
       default: {
-        // Testing/security: padlock body, curved shackle and keyhole.
-        box(0.46, 0.32, 0.2, 0, -0.12);
-        const shackle = wire(
-          new TorusGeometry(0.16, 0.025, 4, 16, Math.PI),
-          i,
-          model,
-        );
-        shackle.position.y = 0.08;
-        for (const x of [-0.16, 0.16]) box(0.05, 0.08, 0.05, x, 0.04);
-        const keyhole = wire(new TorusGeometry(0.04, 0.004, 3, 12), i, model);
-        keyhole.position.set(0, -0.08, 0.105);
-        segment([0, -0.12, 0.105, 0, -0.2, 0.105], i, model);
+        // Testing: clipboard with checked rows.
+        box(0.42, 0.54, 0.03);
+        box(0.16, 0.06, 0.04, 0, 0.27, 0.01);
+        for (const y of [0.12, -0.02, -0.16]) {
+          segment(
+            [
+              ...[-0.15, y, 0.02, -0.12, y - 0.03, 0.02],
+              ...[-0.12, y - 0.03, 0.02, -0.07, y + 0.03, 0.02],
+              ...[-0.02, y, 0.02, 0.14, y, 0.02],
+            ],
+            i,
+            model,
+          );
+        }
         break;
       }
     }

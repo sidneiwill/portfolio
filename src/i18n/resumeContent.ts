@@ -91,8 +91,8 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       },
       {
         id: "testing",
-        title: "Testing and Security",
-        items: ["Vitest", "Jest"],
+        title: "Testing",
+        items: ["Vitest", "Jest", "Playwright"],
       },
     ],
     experience: [
@@ -247,7 +247,11 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Claude",
         ],
       },
-      { id: "testing", title: "Testes e Segurança", items: ["Vitest", "Jest"] },
+      {
+        id: "testing",
+        title: "Testes",
+        items: ["Vitest", "Jest", "Playwright"],
+      },
     ],
     experience: [
       {
@@ -403,8 +407,8 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       },
       {
         id: "testing",
-        title: "Pruebas y Seguridad",
-        items: ["Vitest", "Jest"],
+        title: "Pruebas",
+        items: ["Vitest", "Jest", "Playwright"],
       },
     ],
     experience: [
