@@ -54,7 +54,7 @@ const CubeScene = defineAsyncComponent({
     fail();
   },
 });
-const sections: SectionId[] = ["about", ...areaIds, "projects", "contact"];
+const sections: SectionId[] = ["about", "projects", ...areaIds, "contact"];
 const area = computed(() => areaIds.find((id) => id === section.value));
 const details = computed(() =>
   area.value ? text.value.areas[area.value] : null,
@@ -235,6 +235,9 @@ onBeforeUnmount(() => {
       <div id="about" data-section="about" class="scroll-section" role="region" :aria-label="text.navigation.about">
         <HeroSection :content="resume" /><ResumeSection :content="resume" />
       </div>
+      <div data-section="projects" class="scroll-section projects-scroll-section" role="region" :aria-label="text.navigation.projects">
+        <ProjectsSection :content="resume" />
+      </div>
       <div v-for="id in areaIds" :id="id" :key="id" :data-section="id" class="scroll-section" role="region" :aria-label="text.navigation[id]">
         <p class="eyebrow">{{ resume.meta.name }}</p>
         <h2>{{ text.navigation[id] }}</h2>
@@ -252,9 +255,6 @@ onBeforeUnmount(() => {
             <template v-if="section === id && part"><h3>{{ part.label }}</h3><p>{{ part.description }}</p></template>
           </div>
         </template>
-      </div>
-      <div data-section="projects" class="scroll-section projects-scroll-section" role="region" :aria-label="text.navigation.projects">
-        <ProjectsSection :content="resume" />
       </div>
       <div data-section="contact" class="scroll-section" role="region" :aria-label="text.navigation.contact">
         <ContactSection :content="resume" :selected="section === 'contact' ? selected : null"

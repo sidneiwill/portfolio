@@ -178,11 +178,11 @@ describe("PortfolioExplorer", () => {
       ).map((node) => (node as HTMLElement).dataset.section),
     ).toEqual([
       "about",
+      "projects",
       "programming",
       "reverse",
       "modeling",
       "electronics",
-      "projects",
       "contact",
     ]);
     const ids = Array.from(container.querySelectorAll("[id]")).map(
@@ -354,11 +354,11 @@ describe("PortfolioExplorer", () => {
       ),
     ).toEqual([
       "about",
+      "projects",
       "programming",
       "reverse",
       "modeling",
       "electronics",
-      "projects",
       "contact",
     ]);
     expect(content.querySelector("#projects-title")).not.toBeNull();
