@@ -417,6 +417,47 @@ describe("CubeScene lifecycle and interaction", () => {
     );
   });
 
+  it("renders a static scene once per change instead of looping", async () => {
+    const host = mount();
+    host.setPointerCapture = vi.fn();
+    host.hasPointerCapture = vi.fn(() => false);
+    frame();
+    const { renderer } = rendered();
+    expect(frames.size).toBe(0);
+    let renders = renderer.render.mock.calls.length;
+    const expectOneFrame = () => {
+      expect(frames.size).toBe(1);
+      frame();
+      expect(renderer.render).toHaveBeenCalledTimes(++renders);
+      expect(frames.size).toBe(0);
+    };
+
+    props.theme = "light";
+    await nextTick();
+    expectOneFrame();
+    props.section = "programming";
+    await nextTick();
+    expectOneFrame();
+    props.selected = "stack-data";
+    await nextTick();
+    expectOneFrame();
+    props.reset++;
+    await nextTick();
+    expectOneFrame();
+    pointer(host, "pointerdown", 300, 300);
+    pointer(host, "pointermove", 320, 300);
+    pointer(host, "pointermove", 340, 300);
+    expectOneFrame();
+    pointer(host, "pointerup", 340, 300);
+    expect(frames.size).toBe(0);
+
+    props.reducedMotion = false;
+    await nextTick();
+    frame(100);
+    frame(150);
+    expect(frames.size).toBe(1);
+  });
+
   it("rebuilds line buffers only when their shape changes", async () => {
     const rebuild = vi.spyOn(LineSegmentsGeometry.prototype, "setPositions");
     mount();
@@ -892,6 +933,8 @@ describe("CubeScene lifecycle and interaction", () => {
     vi.stubGlobal("matchMedia", () => ({ matches: true }));
     vi.stubGlobal("devicePixelRatio", 3);
     vi.spyOn(performance, "now").mockReturnValue(0);
+    // The 30fps cap only matters while animating; static scenes render on demand.
+    props.reducedMotion = false;
     mount();
     frame(50);
     const { renderer, root } = rendered();

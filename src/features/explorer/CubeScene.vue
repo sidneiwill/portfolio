@@ -568,6 +568,7 @@ function updateSection() {
 }
 
 function render(time: number) {
+  frame = 0;
   if (
     dead ||
     !renderer ||
@@ -717,7 +718,17 @@ function render(time: number) {
     root.rotation.y += dt * 0.13;
   updateActiveOpacity();
   renderer.render(scene, camera);
-  if (!document.hidden) frame = requestAnimationFrame(render);
+  // A static scene (reduced motion or paused) renders once per change; see invalidate().
+  if (!document.hidden && !isStatic()) frame = requestAnimationFrame(render);
+}
+
+function isStatic() {
+  return props.reducedMotion || props.paused;
+}
+// Schedules a single frame when nothing is looping, after a change a static
+// scene must show. While animating, the running loop already picks it up.
+function invalidate() {
+  if (!frame) visibility();
 }
 
 function cancelGesture() {
@@ -777,6 +788,7 @@ function move(event: PointerEvent) {
   }
   dragging.x = event.clientX;
   dragging.y = event.clientY;
+  invalidate();
 }
 function up(event: PointerEvent) {
   if (!dragging || dragging.id !== event.pointerId) return;
@@ -806,6 +818,7 @@ function hitAt(event: PointerEvent) {
 
 function visibility() {
   cancelAnimationFrame(frame);
+  frame = 0;
   if (
     !document.hidden &&
     !dead &&
@@ -821,6 +834,7 @@ function lost(event: Event) {
   event.preventDefault();
   contextLost = true;
   cancelAnimationFrame(frame);
+  frame = 0;
   emit("failed");
 }
 watch(
@@ -829,14 +843,22 @@ watch(
     updateSection();
     faceForward();
     if (section === "projects" || previous === "projects") visibility();
+    else invalidate();
   },
 );
-watch(() => [props.theme, props.selected], updateColors);
+watch(
+  () => [props.theme, props.selected],
+  () => {
+    updateColors();
+    invalidate();
+  },
+);
 watch(
   () => [props.reducedMotion, props.paused],
   () => {
     updateSection();
     if (props.section === "projects") visibility();
+    else invalidate();
   },
 );
 watch(
@@ -844,6 +866,7 @@ watch(
   () => {
     orientation = undefined;
     root.rotation.set(...restingRotation);
+    invalidate();
   },
 );
 function faceForward() {
@@ -887,6 +910,7 @@ onMounted(() => {
       camera.aspect = Math.max(width, 1) / Math.max(height, 1);
       camera.position.z = Math.max(8, 5.7 / camera.aspect);
       camera.updateProjectionMatrix();
+      invalidate();
     };
     resize();
     observer = new ResizeObserver(resize);
@@ -901,7 +925,7 @@ onMounted(() => {
       viewportObserver.observe(host.value);
     }
     document.addEventListener("visibilitychange", visibility);
-    frame = requestAnimationFrame(render);
+    invalidate();
   } catch {
     emit("failed");
   }
