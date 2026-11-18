@@ -12,9 +12,9 @@ defineEmits<{ select: [id: string | null]; hover: [id: string | null] }>();
       {{ content.sections.skills }}
     </BaseSectionHeading>
     <div class="skills-grid">
-      <article v-for="(group, index) in content.skillGroups" :key="group.title" class="skill-card">
-        <h3><button type="button" class="stack-topic" :class="{ active: selected === `stack-${index}` }" :aria-expanded="selected === `stack-${index}`" :aria-controls="`stack-details-${index}`" @click="$emit('select', selected === `stack-${index}` ? null : `stack-${index}`)" @focus="$emit('hover', `stack-${index}`)" @blur="$emit('hover', null)">{{ group.title }}<span aria-hidden="true">{{ selected === `stack-${index}` ? '−' : '+' }}</span></button></h3>
-        <div :id="`stack-details-${index}`" class="stack-details" :aria-hidden="selected !== `stack-${index}`" :inert="selected !== `stack-${index}` ? true : undefined">
+      <article v-for="group in content.skillGroups" :key="group.id" class="skill-card">
+        <h3><button type="button" class="stack-topic" :class="{ active: selected === `stack-${group.id}` }" :aria-expanded="selected === `stack-${group.id}`" :aria-controls="`stack-details-${group.id}`" @click="$emit('select', selected === `stack-${group.id}` ? null : `stack-${group.id}`)" @focus="$emit('hover', `stack-${group.id}`)" @blur="$emit('hover', null)">{{ group.title }}<span aria-hidden="true">{{ selected === `stack-${group.id}` ? '−' : '+' }}</span></button></h3>
+        <div :id="`stack-details-${group.id}`" class="stack-details" :aria-hidden="selected !== `stack-${group.id}`" :inert="selected !== `stack-${group.id}` ? true : undefined">
         <ul>
           <li v-for="item in group.items" :key="item">{{ item }}</li>
         </ul>

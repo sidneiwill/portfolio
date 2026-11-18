@@ -36,7 +36,10 @@ vi.mock("./CubeScene.vue", async () => {
             [
               h(
                 "button",
-                { "data-select": "", onClick: () => emit("select", "stack-0") },
+                {
+                  "data-select": "",
+                  onClick: () => emit("select", "stack-frontend"),
+                },
                 "Select scene part",
               ),
               h(
@@ -426,7 +429,7 @@ describe("PortfolioExplorer", () => {
           button.click();
           await nextTick();
           expect(element("[data-scene]").dataset.selected).toBe(
-            `stack-${index}`,
+            `stack-${resumeContent["en-US"].skillGroups[index]?.id}`,
           );
           expect(button.getAttribute("aria-expanded")).toBe("true");
         }
@@ -462,15 +465,15 @@ describe("PortfolioExplorer", () => {
     expect(container.querySelectorAll(".stack-topic")).toHaveLength(7);
     await click("[data-select]");
     expect(visible()).toHaveLength(1);
-    expect(visible()[0].id).toBe("stack-details-0");
+    expect(visible()[0].id).toBe("stack-details-frontend");
     expect(visible()[0].textContent).toContain("Vue 3");
     expect(visible()[0].hasAttribute("inert")).toBe(false);
-    await click('.stack-topic[aria-controls="stack-details-1"]');
+    await click('.stack-topic[aria-controls="stack-details-backend"]');
     expect(visible()).toHaveLength(1);
-    expect(visible()[0].id).toBe("stack-details-1");
-    expect(element("#stack-details-0").hasAttribute("inert")).toBe(true);
-    expect(element("[data-scene]").dataset.selected).toBe("stack-1");
-    await click('.stack-topic[aria-controls="stack-details-1"]');
+    expect(visible()[0].id).toBe("stack-details-backend");
+    expect(element("#stack-details-frontend").hasAttribute("inert")).toBe(true);
+    expect(element("[data-scene]").dataset.selected).toBe("stack-backend");
+    await click('.stack-topic[aria-controls="stack-details-backend"]');
     expect(visible()).toHaveLength(0);
     expect(element("[data-scene]").dataset.selected).toBe("");
     await click("[data-select]");

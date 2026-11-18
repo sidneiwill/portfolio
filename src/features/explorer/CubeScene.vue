@@ -254,14 +254,14 @@ function build() {
       lines.position.set(x, y, z);
       return lines;
     };
-    switch (i) {
-      case 0: // Backend: server racks and indicator lights.
+    switch (id.slice("stack-".length)) {
+      case "backend": // Backend: server racks and indicator lights.
         for (const y of [-0.19, 0, 0.19]) {
           box(0.52, 0.13, 0.32, 0, y);
           segment([-0.17, y, 0.17, -0.09, y, 0.17], i, model);
         }
         break;
-      case 1: // Frontend: layered windows, with a title bar.
+      case "frontend": // Frontend: layered windows, with a title bar.
         for (let layer = 0; layer < 3; layer++) {
           const offset = (layer - 1) * 0.1;
           const window = box(0.46, 0.38, 0.02, offset, offset, offset);
@@ -269,7 +269,7 @@ function build() {
         }
         segment([-0.13, 0.19, 0.12, 0.33, 0.19, 0.12], i, model);
         break;
-      case 2: // Data: cylindrical storage with stacked rings.
+      case "data": // Data: cylindrical storage with stacked rings.
         wire(new CylinderGeometry(0.23, 0.23, 0.48, 16), i, model);
         for (const y of [-0.24, 0, 0.24]) {
           const ring = wire(new TorusGeometry(0.23, 0.008, 3, 24), i, model);
@@ -277,12 +277,12 @@ function build() {
           ring.position.y = y;
         }
         break;
-      case 3: // Mobile: device, inset screen and home indicator.
+      case "mobile": // Mobile: device, inset screen and home indicator.
         box(0.3, 0.58, 0.07);
         box(0.24, 0.43, 0.01, 0, 0.02, 0.04);
         segment([-0.05, -0.25, 0.04, 0.05, -0.25, 0.04], i, model);
         break;
-      case 4: {
+      case "devops": {
         // DevOps: connected nodes in a continuous cycle.
         const cycle = wire(new TorusGeometry(0.23, 0.008, 3, 24), i, model);
         cycle.userData.spin = true;
@@ -298,7 +298,7 @@ function build() {
         segment(points, i, model);
         break;
       }
-      case 5: {
+      case "practice": {
         // Practice: an open book with two angled pages and a central spine.
         for (const side of [-1, 1]) {
           const page = new Group();

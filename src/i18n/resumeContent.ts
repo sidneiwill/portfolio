@@ -37,8 +37,13 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       contact: "Contact",
     },
     skillGroups: [
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       {
+        id: "frontend",
+        title: "Frontend",
+        items: ["Vue 3", "React", "Quasar", "Electron"],
+      },
+      {
+        id: "backend",
         title: "Backend",
         items: [
           "TypeScript",
@@ -49,10 +54,19 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Lua",
         ],
       },
-      { title: "Data", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
-      { title: "Mobile", items: ["React Native", "Expo Go"] },
-      { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
       {
+        id: "data",
+        title: "Data",
+        items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"],
+      },
+      { id: "mobile", title: "Mobile", items: ["React Native", "Expo Go"] },
+      {
+        id: "devops",
+        title: "DevOps",
+        items: ["Docker", "Git", "GitHub Actions", "Linux"],
+      },
+      {
+        id: "practice",
         title: "Practice",
         items: [
           "Clean Code",
@@ -64,6 +78,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         ],
       },
       {
+        id: "testing",
         title: "Testing and Security",
         items: ["Vitest", "Jest"],
       },
@@ -168,8 +183,13 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       contact: "Contato",
     },
     skillGroups: [
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       {
+        id: "frontend",
+        title: "Frontend",
+        items: ["Vue 3", "React", "Quasar", "Electron"],
+      },
+      {
+        id: "backend",
         title: "Backend",
         items: [
           "TypeScript",
@@ -180,10 +200,19 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Lua",
         ],
       },
-      { title: "Dados", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
-      { title: "Mobile", items: ["React Native", "Expo Go"] },
-      { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
       {
+        id: "data",
+        title: "Dados",
+        items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"],
+      },
+      { id: "mobile", title: "Mobile", items: ["React Native", "Expo Go"] },
+      {
+        id: "devops",
+        title: "DevOps",
+        items: ["Docker", "Git", "GitHub Actions", "Linux"],
+      },
+      {
+        id: "practice",
         title: "Prática",
         items: [
           "Clean Code",
@@ -195,6 +224,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         ],
       },
       {
+        id: "testing",
         title: "Testes e Segurança",
         items: ["Vitest", "Jest"],
       },
@@ -299,8 +329,13 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       contact: "Contacto",
     },
     skillGroups: [
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       {
+        id: "frontend",
+        title: "Frontend",
+        items: ["Vue 3", "React", "Quasar", "Electron"],
+      },
+      {
+        id: "backend",
         title: "Backend",
         items: [
           "TypeScript",
@@ -311,10 +346,19 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Lua",
         ],
       },
-      { title: "Datos", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
-      { title: "Mobile", items: ["React Native", "Expo Go"] },
-      { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
       {
+        id: "data",
+        title: "Datos",
+        items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"],
+      },
+      { id: "mobile", title: "Mobile", items: ["React Native", "Expo Go"] },
+      {
+        id: "devops",
+        title: "DevOps",
+        items: ["Docker", "Git", "GitHub Actions", "Linux"],
+      },
+      {
+        id: "practice",
         title: "Práctica",
         items: [
           "Clean Code",
@@ -326,6 +370,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
         ],
       },
       {
+        id: "testing",
         title: "Pruebas y Seguridad",
         items: ["Vitest", "Jest"],
       },

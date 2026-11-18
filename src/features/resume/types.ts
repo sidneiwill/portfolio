@@ -1,4 +1,15 @@
+type SkillGroupId =
+  | "frontend"
+  | "backend"
+  | "desktop"
+  | "data"
+  | "mobile"
+  | "devops"
+  | "practice"
+  | "testing";
+
 export type SkillGroup = {
+  id: SkillGroupId;
   title: string;
   items: string[];
 };

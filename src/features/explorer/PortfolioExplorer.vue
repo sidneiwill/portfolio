@@ -22,7 +22,7 @@ const props = defineProps<{ theme: Theme }>();
 const { locale, resume } = useI18n();
 const text = computed(() => explorerContent[locale.value]);
 const stackIds = computed(() =>
-  resume.value.skillGroups.map((_, index) => `stack-${index}`),
+  resume.value.skillGroups.map((group) => `stack-${group.id}`),
 );
 const section = ref<SectionId>("home");
 const selected = ref<string | null>(null);
