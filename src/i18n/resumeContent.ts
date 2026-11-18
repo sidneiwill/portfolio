@@ -37,6 +37,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       contact: "Contact",
     },
     skillGroups: [
+      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       {
         title: "Backend",
         items: [
@@ -48,7 +49,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Lua",
         ],
       },
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       { title: "Data", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
       { title: "Mobile", items: ["React Native", "Expo Go"] },
       { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
@@ -170,6 +170,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       contact: "Contato",
     },
     skillGroups: [
+      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       {
         title: "Backend",
         items: [
@@ -181,7 +182,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Lua",
         ],
       },
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       { title: "Dados", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
       { title: "Mobile", items: ["React Native", "Expo Go"] },
       { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },
@@ -303,6 +303,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       contact: "Contacto",
     },
     skillGroups: [
+      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       {
         title: "Backend",
         items: [
@@ -314,7 +315,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Lua",
         ],
       },
-      { title: "Frontend", items: ["Vue 3", "React", "Quasar", "Electron"] },
       { title: "Datos", items: ["PostgreSQL", "MySQL", "MongoDB", "Firebase"] },
       { title: "Mobile", items: ["React Native", "Expo Go"] },
       { title: "DevOps", items: ["Docker", "Git", "GitHub Actions", "Linux"] },

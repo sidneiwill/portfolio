@@ -463,7 +463,7 @@ describe("PortfolioExplorer", () => {
     await click("[data-select]");
     expect(visible()).toHaveLength(1);
     expect(visible()[0].id).toBe("stack-details-0");
-    expect(visible()[0].textContent).toContain("TypeScript");
+    expect(visible()[0].textContent).toContain("Vue 3");
     expect(visible()[0].hasAttribute("inert")).toBe(false);
     await click('.stack-topic[aria-controls="stack-details-1"]');
     expect(visible()).toHaveLength(1);
