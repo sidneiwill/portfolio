@@ -13,6 +13,7 @@ type ExplorerContent = {
   navigation: Record<SectionId, string>;
   intro: string;
   openCube: string;
+  explore: string;
   chooseSection: string;
   collapseMenu: string;
   expandModel: string;
@@ -42,6 +43,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     },
     intro: "Explore o que há por dentro.",
     openCube: "Clique para explorar o portfólio.",
+    explore: "explorar",
     chooseSection: "Escolher seção",
     collapseMenu: "Fechar menu e voltar ao início",
     expandModel: "Ampliar modelo",
@@ -161,6 +163,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     },
     intro: "Explore what is inside.",
     openCube: "Click to explore the portfolio.",
+    explore: "explore",
     chooseSection: "Choose section",
     collapseMenu: "Close menu and return home",
     expandModel: "Expand model",
@@ -279,6 +282,7 @@ export const explorerContent: Record<Locale, ExplorerContent> = {
     },
     intro: "Explorá lo que hay adentro.",
     openCube: "Hacé clic para explorar el portfolio.",
+    explore: "explorar",
     chooseSection: "Elegir sección",
     collapseMenu: "Cerrar menú y volver al inicio",
     expandModel: "Ampliar modelo",

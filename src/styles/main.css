@@ -276,6 +276,23 @@ textarea {
   color: var(--muted);
   font-size: 12px;
 }
+.explore-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 40px;
+  margin-top: 1rem;
+  padding: 0.3rem 0.9rem;
+  border: 1px solid var(--accent);
+  background: var(--bg);
+  color: var(--accent);
+  cursor: pointer;
+  pointer-events: auto;
+}
+.explore-button:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
 .has-panel .cube-canvas {
   top: 8%;
   height: 75%;
@@ -1176,6 +1193,21 @@ address a:hover {
   top: 0;
   z-index: 10;
   background: var(--bg);
+}
+/* Keep the header on one line so the sticky mobile navigation (top: 64px) never overlaps it. */
+@media (max-width: 360px) {
+  .site-header .terminal-setting {
+    display: none;
+  }
+}
+/* On the landing screen the header floats over the scene so it adds no scroll. */
+.app-shell:not(.is-open) .header-reveal {
+  position: absolute;
+  inset: 0 0 auto;
+  background: transparent;
+}
+.app-shell:not(.is-open) .site-header {
+  border-bottom-color: transparent;
 }
 .portfolio-explorer.menu-open,
 .portfolio-explorer.menu-open.has-panel {

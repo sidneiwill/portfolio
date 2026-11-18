@@ -226,6 +226,9 @@ onBeforeUnmount(() => {
       <div v-if="section === 'home'" class="explorer-intro">
         <p class="eyebrow">{{ resume.meta.name }}</p>
         <p class="explorer-role">{{ resume.meta.role }}</p>
+        <button type="button" class="explore-button" @click="selectSection('about')">
+          <span aria-hidden="true">$</span>{{ text.explore }}<span aria-hidden="true">↵</span>
+        </button>
       </div>
     </div>
     <div v-if="menuOpen" ref="content" class="explorer-content">
