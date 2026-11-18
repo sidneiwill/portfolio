@@ -9,6 +9,7 @@ import {
 } from "three";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import type { LineSegments2 } from "three/addons/lines/LineSegments2.js";
+import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   type App,
@@ -414,6 +415,42 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(programming.children.every((model) => model.scale.x === 1)).toBe(
       true,
     );
+  });
+
+  it("rebuilds line buffers only when their shape changes", async () => {
+    const rebuild = vi.spyOn(LineSegmentsGeometry.prototype, "setPositions");
+    mount();
+    frame();
+    const settled = rebuild.mock.calls.length;
+    props.theme = "light";
+    await nextTick();
+    frame();
+    props.reset++;
+    await nextTick();
+    frame();
+    expect(rebuild).toHaveBeenCalledTimes(settled);
+
+    props.section = "reverse";
+    await nextTick();
+    frame();
+    const traced = rebuild.mock.calls.length;
+    expect(traced).toBe(settled + 1);
+    props.selected = "reconstruction";
+    await nextTick();
+    frame();
+    expect(rebuild).toHaveBeenCalledTimes(traced + 1);
+    props.theme = "dark";
+    await nextTick();
+    frame();
+    expect(rebuild).toHaveBeenCalledTimes(traced + 1);
+
+    props.section = "home";
+    props.reducedMotion = false;
+    await nextTick();
+    frame(100);
+    const animating = rebuild.mock.calls.length;
+    frame(150);
+    expect(rebuild.mock.calls.length).toBeGreaterThan(animating);
   });
 
   it("orbits stack topics in a circle and respects pause and reduced motion", async () => {

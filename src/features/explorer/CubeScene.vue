@@ -94,6 +94,9 @@ const accents = [0xfabd2f, 0x83a598, 0xb8bb26];
 const lightAccents = [0xb57614, 0x076678, 0x79740e];
 let intro = 0;
 let lastTime = 0;
+// Last values the line buffers were built from, so static frames skip rebuilding them.
+let shapedAt = Number.NaN;
+let tracedAt = Number.NaN;
 let active: Group | undefined;
 let dragging:
   | {
@@ -584,7 +587,14 @@ function render(time: number) {
   if (moving) animationTime += dt * 1000;
   if (moving) deformationTime += dt * 0.6;
   if (props.reducedMotion) deformationTime = 0;
-  if (shell.visible || props.section === "home") updatePolyhedron();
+  if (
+    (shell.visible || props.section === "home") &&
+    deformationTime !== shapedAt
+  ) {
+    updatePolyhedron();
+    shadePolyhedron();
+    shapedAt = deformationTime;
+  }
   intro = moving ? Math.min(intro + dt / 0.9, 1) : 1;
   const t = intro - 1;
   const ease = 1 + 2.70158 * t * t * t + 1.70158 * t * t;
@@ -624,30 +634,33 @@ function render(time: number) {
     const blend = moving ? 1 - Math.exp(-dt * 4) : 1;
     chipLid.position.y += (lidTarget - chipLid.position.y) * blend;
     chipCore.position.y += (coreTarget - chipCore.position.y) * blend;
-    for (const [index, side] of [-1, 1].entries()) {
-      for (let pin = 0; pin < 8; pin++) {
-        const z = (pin - 3.5) * 0.22;
-        const coreZ = (pin - 3.5) * 0.065;
-        tracePositions.set(
-          [
-            side * 0.44,
-            -0.09,
-            z,
-            side * 0.28,
-            -0.09,
-            z,
-            side * 0.28,
-            -0.09,
-            z,
-            side * 0.18,
-            chipCore.position.y,
-            coreZ,
-          ],
-          (index * 8 + pin) * 12,
-        );
+    if (chipCore.position.y !== tracedAt) {
+      tracedAt = chipCore.position.y;
+      for (const [index, side] of [-1, 1].entries()) {
+        for (let pin = 0; pin < 8; pin++) {
+          const z = (pin - 3.5) * 0.22;
+          const coreZ = (pin - 3.5) * 0.065;
+          tracePositions.set(
+            [
+              side * 0.44,
+              -0.09,
+              z,
+              side * 0.28,
+              -0.09,
+              z,
+              side * 0.28,
+              -0.09,
+              z,
+              side * 0.18,
+              chipCore.position.y,
+              coreZ,
+            ],
+            (index * 8 + pin) * 12,
+          );
+        }
       }
+      chipTraces.geometry.setPositions(tracePositions);
     }
-    chipTraces.geometry.setPositions(tracePositions);
     chipCore.scale.setScalar(reconstructing ? 1.08 : 1);
   }
   if (active === interiors.get("programming")) {
@@ -703,7 +716,6 @@ function render(time: number) {
   )
     root.rotation.y += dt * 0.13;
   updateActiveOpacity();
-  if (shell.visible) shadePolyhedron();
   renderer.render(scene, camera);
   if (!document.hidden) frame = requestAnimationFrame(render);
 }
