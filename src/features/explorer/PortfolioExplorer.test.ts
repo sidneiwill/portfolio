@@ -170,7 +170,7 @@ describe("PortfolioExplorer", () => {
   };
 
   it("keeps all sections in continuous document order with unique IDs after opening", async () => {
-    expect(container.querySelector(".explorer-content")).toBeNull();
+    expect(element(".explorer-content").style.display).toBe("none");
     await click("[data-open]");
     expect(
       Array.from(
@@ -326,6 +326,26 @@ describe("PortfolioExplorer", () => {
     expect(container.querySelector(".explore-button")).toBeNull();
   });
 
+  it("renders every section in the DOM before the explorer opens", async () => {
+    const content = element(".explorer-content");
+    expect(content.style.display).toBe("none");
+    expect(
+      Array.from(
+        content.querySelectorAll<HTMLElement>("[data-section]"),
+        (item) => item.dataset.section,
+      ),
+    ).toEqual([
+      "about",
+      "programming",
+      "reverse",
+      "modeling",
+      "electronics",
+      "projects",
+      "contact",
+    ]);
+    expect(content.querySelector("#projects-title")).not.toBeNull();
+  });
+
   it("keeps the side menu hidden until the cube is clicked", async () => {
     expect(container.querySelector(".explorer-nav")).toBeNull();
     await click("[data-open]");
@@ -354,7 +374,7 @@ describe("PortfolioExplorer", () => {
     await navigate("programming");
     await click(".menu-toggle");
     expect(container.querySelector(".explorer-nav")).toBeNull();
-    expect(container.querySelector(".explorer-content")).toBeNull();
+    expect(element(".explorer-content").style.display).toBe("none");
     expect(element(".app-shell").classList).not.toContain("is-open");
     expect(container.querySelector(".site-footer")).toBeNull();
     expect(element("[data-scene]").dataset.section).toBe("home");
@@ -456,7 +476,7 @@ describe("PortfolioExplorer", () => {
     expect(element("[data-scene]").dataset.section).toBe("modeling");
     expect(element(".part-detail").textContent).toBe("");
     await navigate("home");
-    expect(container.querySelector(".explorer-content")).toBeNull();
+    expect(element(".explorer-content").style.display).toBe("none");
     expect(element("[data-scene]").dataset.section).toBe("home");
     expect(element("[data-scene]").dataset.selected).toBe("");
     expect(container.querySelector(".explorer-nav")).toBeNull();
