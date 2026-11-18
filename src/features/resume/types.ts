@@ -44,13 +44,12 @@ export type ResumeContent = {
     linkedinUrl: string;
   };
   hero: {
-    eyebrow: string;
+    region: string;
     headline: string;
     summary: string;
     primaryCta: string;
     secondaryCta: string;
     availability: string;
-    profileLabel: string;
   };
   sections: {
     skills: string;
