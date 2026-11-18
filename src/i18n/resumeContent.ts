@@ -102,13 +102,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     ],
     projects: [
       {
-        name: "quiCheck",
-        title: "Asset verification scanner",
-        stack: "Expo Go + React Native + Google Sheets API",
-        description:
-          "Mobile app for public and private companies to consult assets in real time through labels, accelerating inventory and asset control.",
-      },
-      {
         name: "Aylon",
         title: "Fleet maintenance management",
         stack: "Vue 3 + Go + Wails",
@@ -116,12 +109,11 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Native desktop system for public and private fleets, covering vehicles, maintenance, invoices, balances, and service payment tracking.",
       },
       {
-        name: "Portfolio",
-        title: "Personal developer portfolio",
-        stack: "Vue 3 + TypeScript + Vite",
+        name: "quiCheck",
+        title: "Asset verification scanner",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Multilingual portfolio presenting my experience, technical stack, and projects in a responsive interface.",
-        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+          "Mobile app for public and private companies to consult assets in real time through labels, accelerating inventory and asset control.",
       },
       {
         name: "SimpleRPG",
@@ -131,6 +123,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Top-down RPG prototype with animated movement, camera tracking, an inventory overlay, and looping background music.",
         repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
         isDownloadComingSoon: true,
+      },
+      {
+        name: "Portfolio",
+        title: "Personal developer portfolio",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Multilingual portfolio presenting my experience, technical stack, and projects in a responsive interface.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
       },
     ],
     languages: [
@@ -235,13 +235,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     ],
     projects: [
       {
-        name: "quiCheck",
-        title: "Scanner para conferência patrimonial",
-        stack: "Expo Go + React Native + Google Sheets API",
-        description:
-          "App mobile para empresas públicas e privadas consultarem bens em tempo real por etiquetas, acelerando inventário e controle patrimonial.",
-      },
-      {
         name: "Aylon",
         title: "Gestão de manutenção de frotas",
         stack: "Vue 3 + Go + Wails",
@@ -249,12 +242,11 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Sistema desktop nativo para frotas públicas e privadas, com veículos, manutenções, notas fiscais, saldos e pagamentos de serviços.",
       },
       {
-        name: "Portfólio",
-        title: "Portfólio pessoal de desenvolvimento",
-        stack: "Vue 3 + TypeScript + Vite",
+        name: "quiCheck",
+        title: "Scanner para conferência patrimonial",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Portfólio multilíngue que apresenta minha experiência, stack técnica e projetos em uma interface responsiva.",
-        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+          "App mobile para empresas públicas e privadas consultarem bens em tempo real por etiquetas, acelerando inventário e controle patrimonial.",
       },
       {
         name: "SimpleRPG",
@@ -264,6 +256,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Protótipo de RPG visto de cima com movimento animado, câmera de acompanhamento, menu de inventário e música ambiente contínua.",
         repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
         isDownloadComingSoon: true,
+      },
+      {
+        name: "Portfólio",
+        title: "Portfólio pessoal de desenvolvimento",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Portfólio multilíngue que apresenta minha experiência, stack técnica e projetos em uma interface responsiva.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
       },
     ],
     languages: [
@@ -368,13 +368,6 @@ export const resumeContent: Record<Locale, ResumeContent> = {
     ],
     projects: [
       {
-        name: "quiCheck",
-        title: "Scanner para control patrimonial",
-        stack: "Expo Go + React Native + Google Sheets API",
-        description:
-          "App móvil para que empresas públicas y privadas consulten bienes en tiempo real mediante etiquetas, acelerando inventario y control patrimonial.",
-      },
-      {
         name: "Aylon",
         title: "Gestión de mantenimiento de flotas",
         stack: "Vue 3 + Go + Wails",
@@ -382,12 +375,11 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Sistema desktop nativo para flotas públicas y privadas con vehículos, mantenimientos, facturas, saldos y pagos de servicios.",
       },
       {
-        name: "Portafolio",
-        title: "Portafolio personal de desarrollo",
-        stack: "Vue 3 + TypeScript + Vite",
+        name: "quiCheck",
+        title: "Scanner para control patrimonial",
+        stack: "Expo Go + React Native + Google Sheets API",
         description:
-          "Portafolio multilingüe que presenta mi experiencia, stack técnica y proyectos en una interfaz responsiva.",
-        repositoryUrl: "https://github.com/sidneiwill/portfolio",
+          "App móvil para que empresas públicas y privadas consulten bienes en tiempo real mediante etiquetas, acelerando inventario y control patrimonial.",
       },
       {
         name: "SimpleRPG",
@@ -397,6 +389,14 @@ export const resumeContent: Record<Locale, ResumeContent> = {
           "Prototipo de RPG de vista superior con movimiento animado, cámara de seguimiento, menú de inventario y música ambiental continua.",
         repositoryUrl: "https://github.com/sidneiwill/SimpleRPG",
         isDownloadComingSoon: true,
+      },
+      {
+        name: "Portafolio",
+        title: "Portafolio personal de desarrollo",
+        stack: "Vue 3 + TypeScript + Vite",
+        description:
+          "Portafolio multilingüe que presenta mi experiencia, stack técnica y proyectos en una interfaz responsiva.",
+        repositoryUrl: "https://github.com/sidneiwill/portfolio",
       },
     ],
     languages: ["Portugués: fluido", "Inglés: intermedio", "Español: básico"],
