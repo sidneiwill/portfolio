@@ -578,10 +578,6 @@ function render(time: number) {
     (props.section === "projects" && props.paused)
   )
     return;
-  if (mobileRendering && time - lastTime < 1000 / 30 - 1) {
-    frame = requestAnimationFrame(render);
-    return;
-  }
   const dt = Math.min((time - lastTime) / 1000 || 0, 0.05);
   lastTime = time;
   const moving = !props.paused && !props.reducedMotion;

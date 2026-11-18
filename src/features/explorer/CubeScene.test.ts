@@ -917,7 +917,7 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(opened).toHaveBeenCalledOnce();
   });
 
-  it("limits mobile resolution and frames and suspends rendering outside the viewport", () => {
+  it("limits mobile resolution, keeps every frame, and suspends rendering outside the viewport", () => {
     let intersect: IntersectionObserverCallback = () => {};
     const intersectionDisconnect = vi.fn();
     vi.stubGlobal(
@@ -933,17 +933,18 @@ describe("CubeScene lifecycle and interaction", () => {
     vi.stubGlobal("matchMedia", () => ({ matches: true }));
     vi.stubGlobal("devicePixelRatio", 3);
     vi.spyOn(performance, "now").mockReturnValue(0);
-    // The 30fps cap only matters while animating; static scenes render on demand.
+    // Animate so the loop runs; static scenes render on demand.
     props.reducedMotion = false;
     mount();
     frame(50);
     const { renderer, root } = rendered();
     expect(renderer.setPixelRatio).toHaveBeenLastCalledWith(1.25);
     const renders = renderer.render.mock.calls.length;
-    frame(60);
-    expect(renderer.render).toHaveBeenCalledTimes(renders);
-    frame(90);
+    // Mobile renders at the display rate (60fps), only resolution is capped.
+    frame(66);
     expect(renderer.render).toHaveBeenCalledTimes(renders + 1);
+    frame(83);
+    expect(renderer.render).toHaveBeenCalledTimes(renders + 2);
     const notify = (visible: boolean) =>
       intersect(
         [{ isIntersecting: visible } as IntersectionObserverEntry],
@@ -958,8 +959,8 @@ describe("CubeScene lifecycle and interaction", () => {
     expect(frames.size).toBe(1);
     notify(true);
     expect(frames.size).toBe(1);
-    frame(50);
-    expect(renderer.render).toHaveBeenCalledTimes(renders + 2);
+    frame(100);
+    expect(renderer.render).toHaveBeenCalledTimes(renders + 3);
     app.unmount();
     mounted = false;
     expect(intersectionDisconnect).toHaveBeenCalledOnce();
