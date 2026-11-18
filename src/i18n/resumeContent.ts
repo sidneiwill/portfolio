@@ -22,7 +22,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       headline:
         "I build management systems that keep field work and internal teams moving.",
       summary:
-        "Computer Engineer focused on web, mobile, and desktop application development using Vue.js, Node.js, and Go, with experience in embedded systems, IoT, and hardware-software integration. Public-sector background developing practical and efficient solutions for process automation and management.",
+        "Web, mobile, and desktop with Vue.js, Node.js, and Go, grounded in embedded systems and IoT. Public-sector experience automating processes.",
       primaryCta: "Contact",
       secondaryCta: "View projects",
       availability: "Open to opportunities",
@@ -179,7 +179,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       headline:
         "Construo sistemas de gestão para que equipes internas e trabalho de campo continuem fluindo.",
       summary:
-        "Engenheiro de Computação com foco em desenvolvimento de aplicações web, mobile e desktop utilizando Vue.js, Node.js e Go, além de experiência em sistemas embarcados, IoT e integração hardware-software. Vivência no setor público, desenvolvendo soluções práticas e eficientes para automação e gestão de processos.",
+        "Web, mobile e desktop com Vue.js, Node.js e Go, com base em sistemas embarcados e IoT. Vivência no setor público automatizando processos.",
       primaryCta: "Contato",
       secondaryCta: "Ver projetos",
       availability: "Aberto a oportunidades",
@@ -336,7 +336,7 @@ export const resumeContent: Record<Locale, ResumeContent> = {
       headline:
         "Creo sistemas de gestión para que equipos internos y trabajo de campo sigan en marcha.",
       summary:
-        "Ingeniero en Computación enfocado en el desarrollo de aplicaciones web, móviles y desktop con Vue.js, Node.js y Go, además de experiencia en sistemas embebidos, IoT e integración hardware-software. Experiencia en el sector público, desarrollando soluciones prácticas y eficientes para automatización y gestión de procesos.",
+        "Web, mobile y desktop con Vue.js, Node.js y Go, con base en sistemas embebidos e IoT. Experiencia en el sector público automatizando procesos.",
       primaryCta: "Contacto",
       secondaryCta: "Ver proyectos",
       availability: "Abierto a oportunidades",
