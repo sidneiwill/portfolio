@@ -21,7 +21,8 @@ defineProps<{ content: ResumeContent }>();
 
     <aside class="hero-card" :aria-label="content.hero.profileLabel">
       <div class="photo-frame">
-        <img src="/profile.jpeg" alt="Sidnei William de Oliveira" />
+        <img src="/profile.webp" alt="Sidnei William de Oliveira" width="264" height="274"
+          loading="lazy" decoding="async" />
       </div>
       <div class="status-panel">
         <span class="status-dot" aria-hidden="true"></span>

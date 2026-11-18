@@ -117,7 +117,7 @@ textarea {
 .terminal-command {
   margin: 0 0 12px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .terminal-command span {
   color: var(--accent);
@@ -307,7 +307,7 @@ textarea {
 }
 .explorer-panel > .eyebrow {
   color: var(--accent);
-  font-size: 11px;
+  font-size: 12px;
 }
 .explorer-panel > h1 {
   max-width: none;
@@ -324,7 +324,7 @@ textarea {
 .part-heading {
   margin: 2rem 0 0.5rem;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
 }
 .part-buttons {
@@ -348,7 +348,7 @@ textarea {
 }
 .part-buttons button span:first-child {
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .part-buttons button span:last-child {
   color: var(--muted);
@@ -427,7 +427,7 @@ textarea {
 .project-name {
   margin: 0 0 0.45rem;
   color: var(--accent);
-  font-size: 11px;
+  font-size: 12px;
 }
 h1,
 h2,
@@ -518,7 +518,7 @@ h3 {
 .status-panel p {
   margin: 0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.4;
 }
 .status-dot {
@@ -631,7 +631,7 @@ h3 {
   grid-column: 1;
   margin: 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .timeline-item h3,
 .timeline-item .place,
@@ -684,7 +684,7 @@ h3 {
   padding: 0;
   border: 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
 }
 .project-downloads,
 .project-actions {
@@ -702,7 +702,7 @@ h3 {
   background: transparent;
   color: var(--accent);
   cursor: pointer;
-  font-size: 11px;
+  font-size: 12px;
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
@@ -743,7 +743,7 @@ h3 {
 .modal-eyebrow {
   margin-bottom: 0.5rem;
   color: var(--accent);
-  font-size: 11px;
+  font-size: 12px;
 }
 .macos-warning h3 {
   margin-bottom: 0.5rem;
@@ -798,7 +798,7 @@ address a:hover {
   gap: 1rem;
   padding: 0.7rem 0 1rem;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .site-footer p {
   margin: 0;
